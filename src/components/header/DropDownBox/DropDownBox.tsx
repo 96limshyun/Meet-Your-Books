@@ -21,9 +21,7 @@ const DropDownBox = () => {
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
         >
-            <Text margin="auto" fontSize="sm">
-                {curSelect.label}
-            </Text>
+            <Text margin="auto">{curSelect.label}</Text>
             {isHover && (
                 <DropdownList>
                     {DROP_DOWN_ITEMS.map((item) => (
@@ -44,7 +42,7 @@ export default DropDownBox;
 
 const DropdownContainer = styled.div`
     position: relative;
-    width: 60px;
+    width: 70px;
     height: 100%;
     text-align: center;
     display: flex;
@@ -80,6 +78,7 @@ const DropdownList = styled.ul`
 `;
 
 const DropdownItem = styled.li`
+    font-size: 1rem;
     padding: 8px;
     margin: auto;
     font-size: 0.9rem;

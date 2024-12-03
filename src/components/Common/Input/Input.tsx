@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import theme from "@/styles/theme";
 interface InputProps {
+    fontSize?: keyof typeof theme.fontSize;
     width?: string;
     height?: string;
     color?: keyof typeof theme.colors;
@@ -18,6 +19,7 @@ interface InputProps {
 const Input = forwardRef<HTMLInputElement, InputProps>(
     (
         {
+            fontSize = "md",
             width = "300px",
             height = "40px",
             color = "lightGray",
@@ -33,6 +35,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     ) => {
         return (
             <InputContainer
+                
                 $width={width}
                 $height={height}
                 $border={border}
@@ -42,6 +45,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                 {leftIcon && <IconWrapper>{leftIcon}</IconWrapper>}
                 <CustomInput
                     ref={ref}
+                    $fontSize={fontSize}
                     placeholder={placeholder}
                     $color={color}
                     $fontColor={fontColor}
@@ -76,10 +80,12 @@ const InputContainer = styled.div<{
 `;
 
 const CustomInput = styled.input<{
+    $fontSize: keyof typeof theme.fontSize;
     $color: keyof typeof theme.colors;
     $fontColor: keyof typeof theme.fontColor;
     $hasIcon: boolean;
 }>`
+    font-size: ${({ $fontSize }) => theme.fontSize[$fontSize!]};
     width: 100%;
     height: 100%;
     padding: ${({ $hasIcon }) => ($hasIcon ? "0 40px" : "0")};
