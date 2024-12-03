@@ -1,17 +1,22 @@
 import { Heading, Spacing } from "@components/Common";
 import { HeaderInput } from "@components/header";
-import { Outlet } from "react-router-dom";
+import NavigationPanel from "@components/header/NavigationPanel/NavigationPanel";
+import { Link, Outlet } from "react-router-dom";
 import styled from "styled-components";
+
+import { PATH } from "@/constants/path";
 
 const DefaultLayout = () => {
     return (
         <>
             <HeaderContainer>
                 <HeaderWrap>
-                    <Heading fontWeight="bold">Meet Your Books</Heading>
-                    <HeaderInput/>
+                    <HomeButton to={PATH.HOME}>
+                        <Heading fontWeight="bold">Meet Your Books</Heading>
+                    </HomeButton>
+                    <HeaderInput />
+                    <NavigationPanel />
                 </HeaderWrap>
-                
             </HeaderContainer>
             <Spacing height="xxl" />
             <Outlet />
@@ -36,3 +41,7 @@ const HeaderWrap = styled.section`
     justify-content: space-between;
 `;
 
+const HomeButton = styled(Link)`
+    text-decoration: none;
+    cursor: pointer;
+`;
