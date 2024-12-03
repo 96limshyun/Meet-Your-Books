@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import theme from "@/styles/theme";
 
-interface TitleProps {
+interface HeadingProps {
     fontSize?: keyof typeof theme.fontSize;
     fontWeight?: keyof typeof theme.fontWeight;
     lineHeight?: keyof typeof theme.lineHeight;
@@ -11,28 +11,28 @@ interface TitleProps {
     children: ReactNode;
 }
 
-const Title = ({
-    fontSize = "1",
+const Heading = ({
+    fontSize = "2xl",
     fontWeight = "normal",
-    lineHeight = "1",
+    lineHeight = "normal",
     color = "black",
     children,
-}: TitleProps) => {
+}: HeadingProps) => {
     return (
-        <CustomTitle
+        <CustomHeading
             $fontSize={fontSize}
             $fontWeight={fontWeight}
             $lineHeight={lineHeight}
             $color={color}
         >
             {children}
-        </CustomTitle>
+        </CustomHeading>
     );
 };
 
-export default Title;
+export default Heading;
 
-const CustomTitle = styled.h1<{
+const CustomHeading = styled.h1<{
     $fontSize: keyof typeof theme.fontSize;
     $fontWeight: keyof typeof theme.fontWeight;
     $lineHeight: keyof typeof theme.lineHeight;

@@ -18,10 +18,10 @@ interface ButtonProps {
 
 const Button = ({
     width = "fit-content",
-    height = "40px",
-    color = "primary",
+    height = "",
+    color = "lightGray",
     fontColor = "black",
-    fontSize = "1",
+    fontSize = "md",
     fontWeight = "normal",
     border = "1px solid transparent",
     borderRadius = "8px",

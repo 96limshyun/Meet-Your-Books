@@ -12,9 +12,9 @@ interface TextProps {
 }
 
 const Text = ({
-    fontSize = "1",
+    fontSize = "md",
     fontWeight = "normal",
-    lineHeight = "1",
+    lineHeight = "normal",
     color = "black",
     children,
 }: TextProps) => {
