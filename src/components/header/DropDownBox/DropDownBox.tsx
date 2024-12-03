@@ -1,24 +1,29 @@
 import { Text } from "@components/Common";
 import { useState } from "react";
-import styled, {keyframes} from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import { DROP_DOWN_ITEMS } from "@/constants";
 import { DropDownItemType } from "@/types/dropDownType";
 
 const DropDownBox = () => {
     const [isHover, setIsHover] = useState<boolean>(false);
-    const [curSelect, setSelect] = useState<DropDownItemType>(DROP_DOWN_ITEMS[0]);
+    const [curSelect, setSelect] = useState<DropDownItemType>(
+        DROP_DOWN_ITEMS[0]
+    );
 
     const handleClickItem = (item: DropDownItemType) => {
-        setSelect(item)
-        console.log(item)
+        setSelect(item);
+        setIsHover(false);
+        console.log(item);
     };
     return (
         <DropdownContainer
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
         >
-            <Text margin="auto" fontSize="sm">{curSelect.label}</Text>
+            <Text margin="auto" fontSize="sm">
+                {curSelect.label}
+            </Text>
             {isHover && (
                 <DropdownList>
                     {DROP_DOWN_ITEMS.map((item) => (

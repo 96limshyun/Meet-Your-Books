@@ -1,4 +1,4 @@
-import NavigationLayout from "@components/Layout/NavigationLayout";
+import DefaultLayout from "@components/Layout/DefaultLayout";
 import { createBrowserRouter } from "react-router-dom";
 
 import { Home, BookDetail, FavoriteBook, LibraryInfo, RegionInfo } from "@/pages";
@@ -7,7 +7,7 @@ const routes = createBrowserRouter(
     [
         {
             path: "/",
-            element: <NavigationLayout/>,
+            element: <DefaultLayout/>,
             children: [
                 {
                     index: true,
