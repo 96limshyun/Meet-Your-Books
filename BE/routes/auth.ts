@@ -54,11 +54,9 @@ const getUserInfo = async (accessToken: string) => {
 
 authRouter.post("/kakaoAuth", async (req, res) => {
     const { code } = req.body;
-
     const { accessToken } = await getKakaoToken(code);
     if (accessToken) {
         const { id, nickname } = await getUserInfo(accessToken);
-
         res.status(200).json({
             message: MESSAGE.AUTH_SUCCESSFUL,
             data: { accessToken, id, nickname },

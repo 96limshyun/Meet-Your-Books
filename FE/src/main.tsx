@@ -9,10 +9,12 @@ import GlobalStyle from "./styles/globalStyle.ts";
 import theme from "./styles/theme.ts";
 
 createRoot(document.getElementById("root")!).render(
-    <StrictMode>
+    // <StrictMode>
+    <>
         <GlobalStyle />
         <ThemeProvider theme={theme}>
             <RouterProvider router={routes} />
         </ThemeProvider>
-    </StrictMode>
+    </>
+    // </StrictMode>
 );
