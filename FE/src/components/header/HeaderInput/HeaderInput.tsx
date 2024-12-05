@@ -1,5 +1,5 @@
 import { Input } from "@components/Common";
-import DropDownBox from "@components/header/DropDownBox/DropDownBox";
+import DropDownBox from "@components/Header/DropDownBox/DropDownBox";
 import React, { useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
