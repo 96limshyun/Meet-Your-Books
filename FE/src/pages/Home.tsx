@@ -1,7 +1,8 @@
+import FilterDisplay from "@components/FilterDisplay/FilterDisplay";
+
 const Home = () => {
     return (
-        <div>
-        </div>
+        <FilterDisplay/>
     );
 };
 
