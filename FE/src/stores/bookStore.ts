@@ -1,15 +1,12 @@
 import { create } from "zustand";
 
-import { Sort, Order } from "@/types/booksType";
-
-
 interface StoreState {
     booksItem: [];
     searchText: string;
     page: number;
     size: number;
-    sort: Sort;
-    order: Order;
+    sort: string;
+    order: string;
     selectedValue: string;
     keywordFilter: [];
     exactMatch: boolean;
@@ -17,8 +14,8 @@ interface StoreState {
     setSearchText: (searchText: string) => void;
     setPage: (pageNum: number) => void;
     setSize: (size: number) => void;
-    setSort: (type: Sort) => void;
-    setOrder: (type: Order) => void;
+    setSort: (type: string) => void;
+    setOrder: (type: string) => void;
     setSelectedValue: (value: string) => void;
     setKeywordFilter: (keyword: []) => void;
     setExactMatch: (isExactMatch: boolean) => void;

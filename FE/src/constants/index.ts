@@ -19,6 +19,21 @@ export const ROUTES = [
     },
 ] as const;
 
+export const SORT_ITEMS = [
+    { name: "도서명 순", value: "title" },
+    { name: "저자명 순", value: "author" },
+    { name: "출판사 순", value: "pub" },
+    { name: "출판년도 순", value: "pubYear" },
+    { name: "ISBN 순", value: "isbn" },
+    { name: "대출건수 순", value: "loan" },
+]
+
+export const ORDER_ITEMS = [
+    { name: "오름차순", value: "asc" },
+    { name: "내림차순", value: "desc" },
+]
+
+
 export const LOGIN_ROUTES = {
     name: "로그인",
     href: "login",

@@ -3,6 +3,11 @@ import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
+
+    :root {
+    --border-color: #e9e7e7;
+    }
+
     #root {
         position: absolute;
         top: 0;
