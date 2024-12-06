@@ -1,7 +1,9 @@
 import { create } from "zustand";
 
+import { BookDoc } from "@/types/booksType";
+
 interface StoreState {
-    booksItem: [];
+    booksItem: BookDoc[];
     searchText: string;
     page: number;
     size: number;
@@ -10,7 +12,7 @@ interface StoreState {
     selectedValue: string;
     keyword: string[];
     exactMatch: boolean;
-    setBooksItem: (books: []) => void;
+    setBooksItem: (books: BookDoc[]) => void;
     setSearchText: (searchText: string) => void;
     setPage: (pageNum: number) => void;
     setSize: (size: number) => void;

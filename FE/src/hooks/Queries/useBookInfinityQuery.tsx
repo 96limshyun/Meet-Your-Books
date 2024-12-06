@@ -1,25 +1,43 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
+
+import useBookStore from "@/stores/bookStore";
 
 const AUTH_KEY = import.meta.env.VITE_LIBRARY_AUTH_KEY;
 const API_URL = import.meta.env.VITE_BOOK_API_URL;
 
-const defaultFetch = async (url: string) => {
-    console.log(url)
-    const response = await fetch(url);
+const fetchPage = async (pageParam: number, queryString: string) => {
+    const response = await fetch(
+        `${API_URL}srchBooks?authKey=${AUTH_KEY}&format=json&pageNo=${pageParam}&${queryString}`
+    );
+
     if (!response.ok) {
-        throw new Error("에러");
+        throw new Error("Failed to fetch data");
     }
-    return await response.json();
+
+    const data = await response.json();
+
+    const { pageNo, pageSize } = data.response.request;
+    const totalItems = data.response.numFound;
+    const totalPages = Math.ceil(totalItems / pageSize);
+
+    return {
+        data: data.response.docs,
+        nextCursor: pageNo < totalPages ? pageNo + 1 : undefined,
+        prevCursor: pageNo > 1 ? pageNo - 1 : undefined,
+        lastPage: !totalItems ? true : pageNo === totalPages,
+        totalItems: totalItems
+    };
 };
 
-const useBookInfinityQuery = (key: string, path: string, query: string) => {
-    return useQuery({
-        queryKey: [key],
-        queryFn: () =>
-            defaultFetch(
-                `${API_URL}${path}?authKey=${AUTH_KEY}&format=json&${query}`
-            ),
-        throwOnError: true,
+const useBookInfinityQuery = (queryString: string) => {
+    const { page } = useBookStore();
+
+    return useInfiniteQuery({
+        queryKey: ["books", queryString],
+        queryFn: ({ pageParam = page }) => fetchPage(pageParam, queryString),
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+        getPreviousPageParam: (firstPage) => firstPage.prevCursor,
+        initialPageParam: page,
     });
 };
 
