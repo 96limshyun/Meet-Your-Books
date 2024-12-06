@@ -24,7 +24,7 @@ interface StoreState {
 const useBookStore = create<StoreState>((set) => ({
     booksItem: [],
     searchText: "",
-    page: 0,
+    page: 1,
     size: 20,
     sort: "",
     order: "",
