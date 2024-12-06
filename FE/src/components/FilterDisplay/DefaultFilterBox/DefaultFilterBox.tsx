@@ -31,6 +31,7 @@ const DefaultFilterBox = ({
             <ListWrap $isOpen={isOpen}>
                 {items.map((curItem) => (
                     <Item
+                        key={curItem.value}
                         name={curItem.name}
                         value={curItem.value}
                         isChecked={curSelected === curItem.value}
