@@ -1,3 +1,4 @@
+import BookDisplay from "@components/BookDisplay/BookDisplay";
 import FilterDisplay from "@components/FilterDisplay/FilterDisplay";
 import styled from "styled-components";
 
@@ -7,6 +8,7 @@ const Home = () => {
             <FilterWrap>
                 <FilterDisplay />
             </FilterWrap>
+            <BookDisplay />
         </HomeContainer>
     );
 };
