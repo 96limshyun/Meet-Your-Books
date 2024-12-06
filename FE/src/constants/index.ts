@@ -38,3 +38,7 @@ export const LOGIN_ROUTES = {
     name: "로그인",
     href: "login",
 } as const;
+
+
+export const ANIMATION_TIME = 100;
+export const FIRST_PAGE = 1;

@@ -20,7 +20,7 @@ const KeywordFilter = ({
     selectedKeywords,
     handleKeywordClick,
 }: KeywordFilterProps) => {
-    const { data } = useGetQuery(
+    const { data, isLoading } = useGetQuery(
         "monthlyKeywords",
         "keywords",
         `${year}-${month}`

@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_BOOK_API_URL;
 const defaultFetch = async(url: string) => {
     const response = await fetch(url);
     if (!response.ok) {
-        throw new Error("에러");
+        throw new Error("키워드 API 에러");
     }
     return await response.json();
 }
