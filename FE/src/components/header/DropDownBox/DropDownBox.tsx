@@ -1,11 +1,13 @@
 import { Text } from "@components/Common";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
 import { DROP_DOWN_ITEMS } from "@/constants";
+import useBookStore from "@/stores/bookStore";
 import { DropDownItemType } from "@/types/dropDownType";
 
 const DropDownBox = () => {
+    const {selectedValue, setSelectedValue } = useBookStore();
     const [isHover, setIsHover] = useState<boolean>(false);
     const [curSelect, setSelect] = useState<DropDownItemType>(
         DROP_DOWN_ITEMS[0]
@@ -14,8 +16,12 @@ const DropDownBox = () => {
     const handleClickItem = (item: DropDownItemType) => {
         setSelect(item);
         setIsHover(false);
-        console.log(item);
+        setSelectedValue(item.value)
     };
+
+    useEffect(() => {
+        console.log(selectedValue)
+    }, [selectedValue])
     return (
         <DropdownContainer
             onMouseEnter={() => setIsHover(true)}

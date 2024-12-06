@@ -35,11 +35,11 @@ const useBookStore = create<StoreState>((set) => ({
     setSearchText: (searchText) => set({ searchText }),
     setPage: (pageNum) => set({ page: pageNum }),
     setSize: (size) => set({ size }),
-    setSort: (type) => set({sort: type}),
-    setOrder: (type) => set({order: type}),
+    setSort: (type) => set({ sort: type }),
+    setOrder: (type) => set({ order: type }),
     setSelectedValue: (value) => set({ selectedValue: value }),
     setKeyword: (keywords) => set({ keyword: keywords }),
-    setExactMatch: (isExactMatch) => set({exactMatch: isExactMatch})
+    setExactMatch: (isExactMatch) => set({ exactMatch: isExactMatch }),
 }));
 
 export default useBookStore;
