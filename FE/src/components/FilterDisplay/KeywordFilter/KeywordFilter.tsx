@@ -9,7 +9,7 @@ import Item from "../Item/Item";
 
 interface KeywordFilterProps {
     selectedKeywords: string[];
-    handleKeywordClick: (keyword: string) => void;
+    handleKeywordClick: (keywordValue: string) => void;
 }
 
 const date = new Date();

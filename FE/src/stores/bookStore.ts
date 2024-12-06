@@ -8,7 +8,7 @@ interface StoreState {
     sort: string;
     order: string;
     selectedValue: string;
-    keywordFilter: string[];
+    keyword: string[];
     exactMatch: boolean;
     setBooksItem: (books: []) => void;
     setSearchText: (searchText: string) => void;
@@ -17,7 +17,7 @@ interface StoreState {
     setSort: (type: string) => void;
     setOrder: (type: string) => void;
     setSelectedValue: (value: string) => void;
-    setKeywordFilter: (keyword: string[]) => void;
+    setKeyword: (keyword: string[]) => void;
     setExactMatch: (isExactMatch: boolean) => void;
 }
 
@@ -29,7 +29,7 @@ const useBookStore = create<StoreState>((set) => ({
     sort: "",
     order: "",
     selectedValue: "title",
-    keywordFilter: [],
+    keyword: [],
     exactMatch: false,
     setBooksItem: (books) => set({ booksItem: books }),
     setSearchText: (searchText) => set({ searchText }),
@@ -38,7 +38,7 @@ const useBookStore = create<StoreState>((set) => ({
     setSort: (type) => set({sort: type}),
     setOrder: (type) => set({order: type}),
     setSelectedValue: (value) => set({ selectedValue: value }),
-    setKeywordFilter: (keywords) => set({ keywordFilter: keywords }),
+    setKeyword: (keywords) => set({ keyword: keywords }),
     setExactMatch: (isExactMatch) => set({exactMatch: isExactMatch})
 }));
 

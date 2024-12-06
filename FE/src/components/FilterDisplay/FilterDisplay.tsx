@@ -8,17 +8,17 @@ import DefaultFilterBox from "./DefaultFilterBox/DefaultFilterBox";
 import KeywordFilter from "./KeywordFilter/KeywordFilter";
 
 const FilterDisplay = () => {
-    const { order, sort, setOrder, setSort, keywordFilter, setKeywordFilter } = useBookStore();
+    const { order, sort, setOrder, setSort, keyword, setKeyword } = useBookStore();
 
     const handleItemClick =
         (current: string, setState: (value: string) => void) =>
         (type: string) => setState(current === type ? "" : type);
 
-        const handleKeywordClick = (keyword: string) => {
-            const newKeywords = keywordFilter.includes(keyword)
-                ? keywordFilter.filter(curK => curK !== keyword)
-                : [...keywordFilter, keyword];
-            setKeywordFilter(newKeywords)
+        const handleKeywordClick = (keywordValue: string) => {
+            const newKeywords = keyword.includes(keywordValue)
+                ? keyword.filter(curK => curK !== keywordValue)
+                : [...keyword, keywordValue];
+            setKeyword(newKeywords);
         };
     return (
         <FilterContainer>
@@ -27,7 +27,7 @@ const FilterDisplay = () => {
             </Heading>
             <Spacing height="md" />
             <FilterWrap>
-                <KeywordFilter selectedKeywords={keywordFilter} handleKeywordClick={handleKeywordClick}/>
+                <KeywordFilter selectedKeywords={keyword} handleKeywordClick={handleKeywordClick}/>
                 <DefaultFilterBox
                     curSelected={sort}
                     filterType="정렬 필드"
