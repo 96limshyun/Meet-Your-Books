@@ -1,15 +1,21 @@
 import { Input } from "@components/Common";
-import DropDownBox from "@components/header/DropDownBox/DropDownBox";
+import DropDownBox from "@components/Header/DropDownBox/DropDownBox";
 import React, { useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 
+import useBookStore from "@/stores/bookStore";
+
 const HeaderInput = () => {
-    const inputRef = useRef<HTMLInputElement | null>(null)
+    const { setSearchText } = useBookStore();
+    const inputRef = useRef<HTMLInputElement | null>(null);
     const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        console.log(inputRef.current?.value)
-    }
+        e.preventDefault();
+        if(inputRef.current?.value) {
+            setSearchText(inputRef.current?.value);
+        }
+    };
+
     return (
         <InputWrap onSubmit={handleSubmit}>
             <DropDownBox />
