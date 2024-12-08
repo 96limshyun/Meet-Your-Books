@@ -1,16 +1,27 @@
 import { Button, Text } from "@components/Common";
+import { useState } from "react";
 import { IoChatbubbleSharp } from "react-icons/io5";
 import styled from "styled-components";
 
+import { INITIAL_CHAT_MESSAGE } from "@/constants";
 import useOpen from "@/hooks/Common/useOpen";
+import { ChatHistory } from "@/types/openAIType";
 
 import AIChatBox from "./AIChatBox/AIChatBox";
 
 const AIChatPopup = () => {
     const { isOpen, toggleOpen } = useOpen();
+    const [chatHistory, setHistory] =
+        useState<ChatHistory[]>(INITIAL_CHAT_MESSAGE);
     return (
         <ChatPopupContainer>
-            {isOpen && <AIChatBox ChatClose={toggleOpen}/>}
+            {isOpen && (
+                <AIChatBox
+                    ChatClose={toggleOpen}
+                    chatHistory={chatHistory}
+                    setHistory={setHistory}
+                />
+            )}
             <AIButton
                 color="midnightBlue"
                 fontColor="white"
@@ -34,11 +45,9 @@ const AIButton = styled(Button)`
     gap: 4px;
 `;
 
-
 const ChatPopupContainer = styled.div`
     position: fixed;
     bottom: 40px;
     right: 40px;
     z-index: 9999;
 `;
-

@@ -37,7 +37,7 @@ const Login = () => {
 
     return (
         <>
-                <Spacing height="xxl"/>
+            <Spacing height="xxl" />
             <AuthContainer>
                 <AuthCard>
                     <Header>
@@ -90,7 +90,7 @@ const AuthTitle = styled.h2`
 const Button = styled.button`
     width: 100%;
     padding: 10px;
-    background-color: #FEE500;
+    background-color: #fee500;
     color: black;
     font-weight: bold;
     border-radius: 8px;
@@ -102,9 +102,9 @@ const Button = styled.button`
     align-items: center;
     justify-content: center;
     gap: 8px;
-    
+
     &:hover {
-        background-color: #FFD43B;
+        background-color: #ffd43b;
     }
 `;
 

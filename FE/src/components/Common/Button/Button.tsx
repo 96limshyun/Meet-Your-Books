@@ -4,6 +4,7 @@ import styled from "styled-components";
 import theme from "@/styles/theme";
 
 interface ButtonProps {
+    type?: "button" | "submit" | "reset";
     width?: string;
     height?: string;
     color?: keyof typeof theme.colors;
@@ -18,6 +19,7 @@ interface ButtonProps {
 }
 
 const Button = ({
+    type = "button",
     width = "fit-content",
     height = "",
     color = "lightGray",
@@ -32,6 +34,7 @@ const Button = ({
 }: ButtonProps) => {
     return (
         <CustomButton
+            type={type}
             className={className}
             $width={width}
             $height={height}
