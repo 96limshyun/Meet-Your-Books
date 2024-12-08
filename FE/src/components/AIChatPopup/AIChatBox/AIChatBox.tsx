@@ -1,23 +1,98 @@
+import { OpenAIOutlined, UserOutlined, SendOutlined } from "@ant-design/icons";
 import { Button, Text } from "@components/Common";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
+const INITIAL_CHAT_MESSAGE: ChatHistory[] = [
+    {
+        role: "assistant",
+        content:
+            "안녕하세요! 저는 도서 추천 AI입니다. 찾고 싶은 책의 주제나 장르를 입력해 주세요.",
+    },
+];
+
+type Role = "user" | "assistant";
+interface ChatHistory {
+    role: Role;
+    content: string;
+}
 interface AIChatBoxProps {
     ChatClose: () => void;
 }
 
-const AIChatBox = ({ChatClose}: AIChatBoxProps) => {
+const AIChatBox = ({ ChatClose }: AIChatBoxProps) => {
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    const [chatHistory, setHistory] =
+        useState<ChatHistory[]>(INITIAL_CHAT_MESSAGE);
+
+    const handleRequest = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const message = inputRef.current?.value;
+        if (!message) return;
+        if (inputRef.current) inputRef.current.value = "";
+
+        setHistory((prev) => [...prev, { role: "user", content: message }]);
+        const response = await fetch("http://localhost:4000/openAI", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message }),
+        });
+        const data = await response.json();
+        console.log(data);
+        setHistory((prev) => [
+            ...prev,
+            { role: "assistant", content: data.message },
+        ]);
+    };
+
     return (
         <ChatBox>
             <ChatHeader>
-                <Text color="white" fontWeight="bold">AI 도서 추천받기</Text>
+                <Text color="white" fontWeight="bold">
+                    AI 도서 추천받기
+                </Text>
                 <CloseButton onClick={ChatClose}>✕</CloseButton>
             </ChatHeader>
             <ChatContent>
-                <Message $isAI={false}>You: 책 추천 부탁드립니다!</Message>
-                <Message $isAI={true}>AI: 어떤 장르를 원하시나요?</Message>
+                {chatHistory.map((message, idx) => (
+                    <MessageWrapper key={idx} $isAI={message.role}>
+                        {message.role === "assistant" ? (
+                            <>
+                                <OpenAIOutlined />
+                                <Message fontSize="sm" $isAI={message.role}>
+                                <Markdown remarkPlugins={[remarkGfm]}>
+                                {message.content}
+                                </Markdown>
+                                </Message>
+                            </>
+                        ) : (
+                            <>
+                                <Message fontSize="sm" $isAI={message.role}>
+                                    {message.content}
+                                </Message>
+                                <UserOutlined />
+                            </>
+                        )}
+                    </MessageWrapper>
+                ))}
             </ChatContent>
-            <ChatInputWrap>
-                <ChatInput placeholder="메시지를 입력하세요..." />
-                <SendButton color="midnightBlue" fontColor="white" fontSize="sm">전송</SendButton>
+            <ChatInputWrap onSubmit={handleRequest}>
+                <ChatInput
+                    ref={inputRef}
+                    placeholder="메시지를 입력하세요..."
+                />
+                <SendButton
+                    color="midnightBlue"
+                    fontColor="white"
+                    fontSize="sm"
+                    onClick={handleRequest}
+                >
+                    <SendOutlined />
+                </SendButton>
             </ChatInputWrap>
         </ChatBox>
     );
@@ -51,7 +126,6 @@ const ChatHeader = styled.div`
     font-weight: bold;
 `;
 
-
 const CloseButton = styled.button`
     background: none;
     border: none;
@@ -70,15 +144,26 @@ const ChatContent = styled.div`
     background-color: #f9f9f9;
 `;
 
-const Message = styled.div<{ $isAI?: boolean }>`
-    align-self: ${({ $isAI }) => ($isAI ? "flex-start" : "flex-end")};
-    background-color: ${({ $isAI }) => ($isAI ? "#e3f2fd" : "#19275f")};
-    color: ${({ $isAI }) => ($isAI ? "#000" : "#fff")};
-    padding: 8px 12px;
-    border-radius: 16px;
+const MessageWrapper = styled.div<{ $isAI?: Role }>`
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 8px;
+    align-self: ${({ $isAI }) =>
+        $isAI === "assistant" ? "flex-start" : "flex-end"};
 `;
 
-const ChatInputWrap = styled.div`
+const Message = styled(Text)<{ $isAI?: Role }>`
+    background-color: ${({ $isAI }) =>
+        $isAI === "assistant" ? "#e3f2fd" : "#19275f"};
+    color: ${({ $isAI }) => ($isAI === "assistant" ? "#000" : "#fff")};
+    padding: 8px 12px;
+    border-radius: 16px;
+    max-width: 75%;
+    word-wrap: break-word;
+`;
+
+const ChatInputWrap = styled.form`
     display: flex;
     padding: 8px;
     background-color: ${({ theme }) => theme.colors.lightGray};

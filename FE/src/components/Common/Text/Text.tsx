@@ -10,6 +10,7 @@ interface TextProps {
     color?: keyof typeof theme.fontColor;
     margin?: string;
     children: ReactNode;
+    className?: string;
 }
 
 const Text = ({
@@ -19,9 +20,11 @@ const Text = ({
     color = "black",
     margin = "0",
     children,
+    className,
 }: TextProps) => {
     return (
         <CustomText
+            className={className}
             $fontSize={fontSize}
             $fontWeight={fontWeight}
             $lineHeight={lineHeight}
@@ -47,7 +50,7 @@ const CustomText = styled.p<{
     line-height: ${({ $lineHeight }) => theme.lineHeight[$lineHeight!]};
     margin: ${({ $margin }) => $margin};
     color: ${({ $color }) => theme.fontColor[$color!]};
-    
+
     /* overflow: hidden; */
     /* white-space: nowrap;
     text-overflow: ellipsis; */

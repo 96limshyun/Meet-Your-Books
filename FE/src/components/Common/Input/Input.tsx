@@ -14,6 +14,7 @@ interface InputProps {
     placeholder?: string;
     borderRadius?: string;
     onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+    className?: string
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -29,13 +30,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             leftIcon,
             placeholder = "검색어를 입력하세요.",
             borderRadius = "0px",
+            className,
             ...props
         },
         ref
     ) => {
         return (
             <InputContainer
-                
+                className={className}
                 $width={width}
                 $height={height}
                 $border={border}
