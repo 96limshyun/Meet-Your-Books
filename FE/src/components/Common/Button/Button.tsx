@@ -14,6 +14,7 @@ interface ButtonProps {
     borderRadius?: string;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
     children: ReactNode;
+    className?: string;
 }
 
 const Button = ({
@@ -27,9 +28,11 @@ const Button = ({
     borderRadius = "8px",
     onClick,
     children,
+    className,
 }: ButtonProps) => {
     return (
         <CustomButton
+            className={className}
             $width={width}
             $height={height}
             $color={color}
