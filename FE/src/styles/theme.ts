@@ -42,7 +42,8 @@ export const theme = {
         dark: "#343A40",
         white: "#FFFFFF",
         black: "#000000",
-        lightGray: "#EFEFEF"
+        lightGray: "#EFEFEF",
+        midnightBlue: "#19275F",
     },
     spacing: {
         xs: "4px",

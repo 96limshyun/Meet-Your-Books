@@ -1,6 +1,8 @@
+import AIChatPopup from "@components/AIChatPopup/AIChatPopup";
 import BookDisplay from "@components/BookDisplay/BookDisplay";
 import FilterDisplay from "@components/FilterDisplay/FilterDisplay";
 import styled from "styled-components";
+
 
 const Home = () => {
     return (
@@ -9,6 +11,7 @@ const Home = () => {
                 <FilterDisplay />
             </FilterWrap>
             <BookDisplay />
+            <AIChatPopup/>
         </HomeContainer>
     );
 };

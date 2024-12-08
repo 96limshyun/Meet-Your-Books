@@ -4,6 +4,7 @@ import styled from "styled-components";
 import theme from "@/styles/theme";
 
 interface ButtonProps {
+    type?: "button" | "submit" | "reset";
     width?: string;
     height?: string;
     color?: keyof typeof theme.colors;
@@ -14,9 +15,11 @@ interface ButtonProps {
     borderRadius?: string;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
     children: ReactNode;
+    className?: string;
 }
 
 const Button = ({
+    type = "button",
     width = "fit-content",
     height = "",
     color = "lightGray",
@@ -27,9 +30,12 @@ const Button = ({
     borderRadius = "8px",
     onClick,
     children,
+    className,
 }: ButtonProps) => {
     return (
         <CustomButton
+            type={type}
+            className={className}
             $width={width}
             $height={height}
             $color={color}

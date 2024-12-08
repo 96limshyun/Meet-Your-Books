@@ -1,3 +1,4 @@
+import { ChatHistory } from "@/types/openAIType";
 export const DROP_DOWN_ITEMS = [
     { value: "title", label: "제목" },
     { value: "author", label: "저자" },
@@ -38,6 +39,14 @@ export const LOGIN_ROUTES = {
     name: "로그인",
     href: "login",
 } as const;
+
+export const INITIAL_CHAT_MESSAGE: ChatHistory[] = [
+    {
+        role: "assistant",
+        content:
+            "안녕하세요! 저는 도서 추천 AI입니다. 찾고 싶은 책의 주제나 장르를 입력해 주세요.",
+    },
+];
 
 
 export const ANIMATION_TIME = 100;
