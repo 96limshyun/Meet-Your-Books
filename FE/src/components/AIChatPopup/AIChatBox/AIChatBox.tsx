@@ -1,23 +1,12 @@
 import { OpenAIOutlined, UserOutlined, SendOutlined } from "@ant-design/icons";
 import { Button, Text } from "@components/Common";
 import React, { useRef, useState } from "react";
-import styled from "styled-components";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import styled from "styled-components";
 
-const INITIAL_CHAT_MESSAGE: ChatHistory[] = [
-    {
-        role: "assistant",
-        content:
-            "안녕하세요! 저는 도서 추천 AI입니다. 찾고 싶은 책의 주제나 장르를 입력해 주세요.",
-    },
-];
-
-type Role = "user" | "assistant";
-interface ChatHistory {
-    role: Role;
-    content: string;
-}
+import { INITIAL_CHAT_MESSAGE } from "@/constants";
+import { ChatHistory } from "@/types/openAIType";
 interface AIChatBoxProps {
     ChatClose: () => void;
 }
