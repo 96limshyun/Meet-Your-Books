@@ -2,14 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import { fetchAPI } from "../services/fetchAPI";
 import { MESSAGE } from "../constants";
+import { Data } from "../types";
 dotenv.config();
-
-interface Data {
-    grant_type: string;
-    client_id: string;
-    code: string;
-    [key: string]: string;
-}
 
 const header = {
     "Content-Type": process.env.KAKAO_CONTENT_TYPE!,
@@ -55,14 +49,18 @@ const getUserInfo = async (accessToken: string) => {
 authRouter.post("/kakaoAuth", async (req, res) => {
     const { code } = req.body;
     const { accessToken } = await getKakaoToken(code);
-    if (accessToken) {
-        const { id, nickname } = await getUserInfo(accessToken);
-        res.status(200).json({
-            message: MESSAGE.AUTH_SUCCESSFUL,
-            data: { accessToken, id, nickname },
-        });
-    } else {
-        res.status(500).json({ message: MESSAGE.EMPTY_TOKEN });
+    try {
+        if (accessToken) {
+            const { id, nickname } = await getUserInfo(accessToken);
+            res.status(200).json({
+                message: MESSAGE.AUTH_SUCCESSFUL,
+                data: { accessToken, id, nickname },
+            });
+        } else {
+            res.status(500).json({ message: MESSAGE.EMPTY_TOKEN });
+        }
+    } catch(error) {
+        res.status(500).json({ message: MESSAGE.AUTH_FAILED });
     }
 });
 
