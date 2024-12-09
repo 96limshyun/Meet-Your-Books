@@ -1,15 +1,20 @@
-import { Button } from "@components/Common";
 import { useState } from "react";
 import styled from "styled-components";
 
 interface CommentCreateTextareaProps {
     message?: string;
     curComment?: string;
+    onClick: (comment: string) => void;
 }
 
-const CommentCreateTextarea = ({message = "", curComment = ""}: CommentCreateTextareaProps) => {
+const CommentCreateTextarea = ({message = "", curComment = "", onClick}: CommentCreateTextareaProps) => {
     const [isActive, setActive] = useState(false);
     const [comment, setComment] = useState(curComment)
+
+    const handleSubmit = () => {
+        onClick(comment);
+        setComment("");
+    };
     return (
         <CommentCreateWrap $isActive={isActive}>
             <Placeholder>{message}</Placeholder>
@@ -21,10 +26,8 @@ const CommentCreateTextarea = ({message = "", curComment = ""}: CommentCreateTex
                 onChange={(e) => setComment(e.target.value)}
             />
             <CommentCreateBtn
-                color="primary"
-                fontColor="white"
-                width="100px"
-                height="40px"
+                disabled={!comment.trim()}
+                onClick={() => handleSubmit()}
             >
                 완료
             </CommentCreateBtn>
@@ -67,12 +70,18 @@ const CommentTextarea = styled.textarea<{ $isActive: boolean }>`
     transition: background-color 0.3s;
 `;
 
-const CommentCreateBtn = styled(Button)`
+const CommentCreateBtn = styled.button<{ disabled: boolean }>`
+    width: 100px;
+    height: 40px;
     position: absolute;
     bottom: 10px;
     right: 10px;
-    &:hover {
-        background-color: ${({ color }) =>
-            color === "primary" ? "#0056b3" : "#444"};
-    }
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+    background-color: ${({ disabled }) => (disabled ? "#e0e0e0" : "#007bff")};
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: bold;
 `;

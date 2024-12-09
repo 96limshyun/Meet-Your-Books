@@ -12,6 +12,8 @@ interface CommentBoxProps {
     timestamp: Date;
     content: string;
     isAuthor: boolean;
+    handleDelete: (_id: string) => void;
+    handlePatch: (_id: string, comment: string) => void;
 }
 const CommentBox = ({
     _id,
@@ -19,8 +21,15 @@ const CommentBox = ({
     timestamp,
     content,
     isAuthor,
+    handleDelete,
+    handlePatch
 }: CommentBoxProps) => {
     const [isEdit, setEdit] = useState(false);
+
+    const handleEdit = (comment: string) => {
+        handlePatch(_id, comment)
+        setEdit(false)
+    }
     return (
         <CommentArea key={_id}>
             <CommentHeader>
@@ -30,31 +39,27 @@ const CommentBox = ({
                     </Heading>
                     <Text>{formatRelativeTime(timestamp)}</Text>
                 </CommentInfoWrap>
-                {isAuthor && (
-                    <Text fontSize="sm" fontWeight="normal">
-                        작성자
-                    </Text>
-                )}
-
+                <ActionWrap>
                 {isEdit ? (
                     <StyledButton onClick={() => setEdit(false)}>
                         수정 취소
                     </StyledButton>
                 ) : (
-                    isAuthor && ( // 작성자만 수정/삭제 버튼 표시
+                    isAuthor && (
                         <>
                             <StyledButton onClick={() => setEdit(true)}>
                                 <EditIcon /> 수정
                             </StyledButton>
-                            <StyledButton>
+                            <StyledButton onClick={() => handleDelete(_id)}>
                                 <DeleteIcon /> 삭제
                             </StyledButton>
                         </>
                     )
                 )}
+                </ActionWrap>
             </CommentHeader>
             {isEdit ? (
-                <CommentCreateTextarea curComment={content} />
+                <CommentCreateTextarea curComment={content} onClick={handleEdit}/>
             ) : (
                 <Comment>{content}</Comment>
             )}
@@ -63,6 +68,10 @@ const CommentBox = ({
 };
 
 export default CommentBox;
+
+const ActionWrap = styled.div`
+display: flex;
+`;
 
 const CommentArea = styled.div`
     width: 100%;

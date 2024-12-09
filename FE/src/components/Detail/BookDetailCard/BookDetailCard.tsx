@@ -9,6 +9,7 @@ import { Heading, Spacing, Text } from "@components/Common";
 import styled from "styled-components";
 
 import { BookDetailType } from "@/types/bookDetailType";
+import { handleImageError } from "@/utils";
 interface BookDetailCardProps {
     bookData: BookDetailType;
 }
@@ -29,12 +30,15 @@ const BookDetailCard = ({ bookData }: BookDetailCardProps) => {
     return (
         <Card>
             <CardHeader>
-                <Heading fontSize="xl" fontWeight="bold">{bookname}</Heading>
+                <Heading fontSize="xl" fontWeight="bold">
+                    {bookname}
+                </Heading>
             </CardHeader>
             <CardContent>
                 <BookImageWrapper>
                     <StyledImage
-                        src={bookImageURL}
+                        src={bookImageURL || "/images/errorImg.png"}
+                        onError={handleImageError}
                         alt={bookname}
                         width={200}
                         height={300}
@@ -73,7 +77,7 @@ const BookDetailCard = ({ bookData }: BookDetailCardProps) => {
                     <Separator />
                     <div>
                         <Heading fontSize="xl">책 소개</Heading>
-                        <Spacing height="md"/>
+                        <Spacing height="md" />
                         <Description>{description}</Description>
                     </div>
                 </BookDetails>

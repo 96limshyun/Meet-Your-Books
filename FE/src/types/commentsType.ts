@@ -5,3 +5,9 @@ export interface CommentType {
     username: string;
     _id: string;
 }
+
+export interface CommentPayload {
+    userid: string;
+    username: string;
+    content: string;
+}

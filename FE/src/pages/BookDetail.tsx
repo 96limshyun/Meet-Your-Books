@@ -2,30 +2,23 @@ import { Heading, Spacing } from "@components/Common";
 import { BookDetailCard } from "@components/Detail";
 import CommentBox from "@components/Detail/CommentBox/CommentBox";
 import CommentCreateTextarea from "@components/Detail/CommentCreateTextarea/CommentCreateTextarea";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import useCommentQuery from "@/hooks/Queries/comments/useCommentQuery";
-import useGetQuery from "@/hooks/Queries/useGetQuery";
-import { BookDetailType } from "@/types/bookDetailType";
+import useBookDetailLogic from "@/hooks/BookDetail/useBookDetailLogic";
+import useCommentHandlers from "@/hooks/BookDetail/useCommentHandlers";
 
 const BookDetail = () => {
-    const { isbn } = useParams();
-    const { data, isLoading: isBookLoading } = useGetQuery(
-        "usageAnalysisList",
-        `${isbn}`,
-        `&isbn13=${isbn}`
-    );
+    const { isbn, book, comments, isBookLoading, isCommentsLoading } =
+        useBookDetailLogic();
 
-    const { data: comments, isLoading: isCommentsLoading } = useCommentQuery(
-        `${isbn}`
-    );
+    const {
+        userId,
+        handleCreateCommentClick,
+        handleDeleteComment,
+        handlePatchComment,
+    } = useCommentHandlers(`${isbn}`);
 
     if (isBookLoading || isCommentsLoading) return <div>...loading</div>;
-
-    const userInfo = localStorage.getItem("USER_INFO");
-    const userId = userInfo ? JSON.parse(userInfo).id : null;
-    const book: BookDetailType = data.response.book;
 
     return (
         <Container>
@@ -35,19 +28,32 @@ const BookDetail = () => {
                     <Heading fontWeight="bold">리뷰</Heading>
                 </HeadingWrap>
                 <Spacing height="sm" />
-                <CommentWrap>
-                    {comments?.map((comment) => (
-                        <CommentBox
-                            _id={comment._id}
-                            username={comment.username}
-                            timestamp={comment.timestamp}
-                            content={comment.content}
-                            isAuthor={userId === comment.userid}
-                        />
-                    ))}
-                </CommentWrap>
+                {comments?.length === 0 ? (
+                    <HeadingWrap>
+                        리뷰가 없습니다! 처음으로 리뷰를 달아보세요!
+                    </HeadingWrap>
+                ) : (
+                    <CommentWrap>
+                        {comments?.map((comment) => (
+                            <CommentBox
+                                key={comment._id}
+                                _id={comment._id}
+                                username={comment.username}
+                                timestamp={comment.timestamp}
+                                content={comment.content}
+                                isAuthor={userId === comment.userid}
+                                handleDelete={handleDeleteComment}
+                                handlePatch={handlePatchComment}
+                            />
+                        ))}
+                    </CommentWrap>
+                )}
+
                 <Spacing height="lg" />
-                <CommentCreateTextarea message="리뷰를 작성해주세요!" />
+                <CommentCreateTextarea
+                    message="리뷰를 작성해주세요!"
+                    onClick={handleCreateCommentClick}
+                />
 
                 <Spacing height="lg" />
             </CommentContainer>
@@ -81,7 +87,7 @@ const CommentWrap = styled.div`
     gap: 12px;
 `;
 
-// 책 상세 정보
+// 책 상세 정보 : 완료
 // 대출 추이 그래프
 // 소장도서관 보기(팝업으로?)
-// 댓글
+// 댓글 : 완료
