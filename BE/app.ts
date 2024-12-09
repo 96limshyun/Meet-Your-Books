@@ -5,6 +5,8 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import openAIRouter from "./routes/openAI";
 import mongoose from "mongoose";
+import CommentGroup from "./Models/CommentSchema";
+import commentRouter from "./routes/comment";
 
 dotenv.config();
 const MONGO_URL = process.env.MONGO_URL!;
@@ -26,11 +28,12 @@ const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 db.once("open", async () => {
-    console.log("MongoDB 연결");
+    console.log("MongoDB 연결 완료");
 });
 
 app.use("/", authRouter);
 app.use("/", openAIRouter);
+app.use("/", commentRouter);
 
 app.listen(port, () => {
     console.log(port + "연결 완료");
