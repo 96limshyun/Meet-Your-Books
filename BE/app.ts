@@ -5,10 +5,10 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import openAIRouter from "./routes/openAI";
 import mongoose from "mongoose";
-import CommentGroup from "./Models/CommentSchema";
 import commentRouter from "./routes/comment";
 
 dotenv.config();
+
 const MONGO_URL = process.env.MONGO_URL!;
 const app = express();
 const port = 4000;
