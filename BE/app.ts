@@ -1,21 +1,40 @@
-import express from "express"
+import express from "express";
 import authRouter from "./routes/auth";
-import cors from "cors"
+import cors from "cors";
 import bodyParser from "body-parser";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 import openAIRouter from "./routes/openAI";
+import mongoose from "mongoose";
+import CommentGroup from "./Models/CommentSchema";
+import commentRouter from "./routes/comment";
 
 dotenv.config();
-
-const app = express()
+const MONGO_URL = process.env.MONGO_URL!;
+const app = express();
 const port = 4000;
 
-app.use(cors())
-app.use(bodyParser.json())
+app.use(cors());
+app.use(bodyParser.json());
 
-app.use("/", authRouter)
-app.use("/", openAIRouter)
+mongoose
+    .connect(MONGO_URL, {
+        autoIndex: true,
+        bufferCommands: true,
+    })
+    .then(() => console.log("MongoDB 연결 성공"))
+    .catch((err) => console.error("MongoDB 연결 실패:", err));
+
+const db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+db.once("open", async () => {
+    console.log("MongoDB 연결 완료");
+});
+
+app.use("/", authRouter);
+app.use("/", openAIRouter);
+app.use("/", commentRouter);
 
 app.listen(port, () => {
-    console.log(port + "연결 완료")
-})
+    console.log(port + "연결 완료");
+});
