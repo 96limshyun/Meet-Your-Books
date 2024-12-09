@@ -17,7 +17,7 @@ const BookDisplay = () => {
         isLastPage,
         observerRefCallback,
     } = useBookLogic();
-    console.log(booksItem);
+    
     return (
         <BookContainer>
             <ViewSelector viewMode={viewMode} setViewMode={setViewMode} />

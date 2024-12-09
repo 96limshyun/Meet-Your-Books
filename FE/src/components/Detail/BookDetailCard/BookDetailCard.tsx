@@ -29,7 +29,7 @@ const BookDetailCard = ({ bookData }: BookDetailCardProps) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>{bookname}</CardTitle>
+                <Heading fontSize="xl" fontWeight="bold">{bookname}</Heading>
             </CardHeader>
             <CardContent>
                 <BookImageWrapper>
@@ -97,11 +97,6 @@ const CardHeader = styled.div`
     background: #f8f9fa;
 `;
 
-const CardTitle = styled.h2`
-    font-size: 1.5rem;
-    font-weight: bold;
-`;
-
 const CardContent = styled.div`
     display: grid;
     grid-template-columns: repeat(1, 1fr);
@@ -144,11 +139,6 @@ const Badge = styled(Text)`
 
 const BookDetails = styled.div`
     grid-column: span 2;
-
-    @media (min-width: 768px) {
-        grid-column: span 2;
-    }
-
     display: flex;
     flex-direction: column;
     gap: 16px;
