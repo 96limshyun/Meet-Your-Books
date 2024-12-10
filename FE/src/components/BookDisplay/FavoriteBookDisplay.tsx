@@ -9,12 +9,32 @@ const FavoriteBookDisplay = () => {
     const [favorites, setFavorites] = useState<BookDoc[]>([]);
     const [viewMode, setViewMode] = useState<ViewType>("grid");
 
+    // useEffect(() => {
+    //     const storedFavorites = JSON.parse(
+    //         localStorage.getItem("favorites") || "[]"
+    //     );
+    //     setFavorites(storedFavorites);
+    // }, []); 
+
+    const USER_INFO = JSON.parse(localStorage.getItem("USER_INFO") || "{}");
+    
     useEffect(() => {
-        const storedFavorites = JSON.parse(
-            localStorage.getItem("favorites") || "[]"
-        );
-        setFavorites(storedFavorites);
-    }, []);
+        const fetchFavorites = async () => {
+            try {
+                const response = await fetch(import.meta.env.VITE_BACK_END_API_URL + `favorites?userId=${USER_INFO.id}`);
+                if (!response.ok) {
+                    throw new Error("네트워크 응답이 좋지 않습니다.");
+                }
+                const data = await response.json();
+                setFavorites(data.map((fav: any) => fav.book));
+            } catch (err) {
+                console.log("🚀 USER_INFO.id:", USER_INFO.id);
+                console.error("찜한 책을 가져오는 중 오류 발생:", err);
+            }
+        };
+
+        fetchFavorites();
+    }, [USER_INFO.id]);
 
     return (
         <BookContainer>
