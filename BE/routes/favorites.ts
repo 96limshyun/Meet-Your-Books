@@ -6,12 +6,12 @@ const favoriteRouter = express.Router();
 favoriteRouter.get("/favorites", async (req, res) => {
     const userId = req.query.userId;
     try {
-        const favorites = await Favorite.find({ userId });
-        if(!favorites) {
-            res.status(200).json([])
-        } else {
-            res.status(200).json(favorites);
+        let favorites = await Favorite.findOne({ userId });
+        if (!favorites) {
+            favorites = await Favorite.create({ userId, book: [] });
         }
+        console.log(favorites);
+        res.status(200).json(favorites);
     } catch (err) {
         res.status(500).json({ error: "찜한 책 조회 중 에러 발생" });
     }
@@ -20,8 +20,9 @@ favoriteRouter.get("/favorites", async (req, res) => {
 favoriteRouter.post("/favorites", async (req, res) => {
     const { userId, book } = req.body;
     try {
-        const newFavorite = new Favorite({ userId, book });
-        await newFavorite.save();
+        const newFavorite = await Favorite.findOne({ userId });
+        newFavorite?.book.push(book)
+        await newFavorite?.save();
         res.status(201).json(newFavorite);
     } catch (err) {
         res.status(500).json({ error: "책 찜하기 실패" });

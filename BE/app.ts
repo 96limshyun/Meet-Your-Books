@@ -7,7 +7,7 @@ import openAIRouter from "./routes/openAI";
 import mongoose from "mongoose";
 import commentRouter from "./routes/comment";
 import favoriteRouter from "./routes/favorites";
-
+import Favorite from "./Models/FavoriteSchema";
 dotenv.config();
 
 const MONGO_URL = process.env.MONGO_URL!;

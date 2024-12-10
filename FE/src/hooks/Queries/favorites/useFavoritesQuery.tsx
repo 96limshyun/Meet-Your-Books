@@ -1,3 +1,5 @@
+import { useQuery } from "@tanstack/react-query";
+
 import { favoriteAPI } from "@/services";
 
 const fetchFavorites = async (userId: string) => {
@@ -8,7 +10,7 @@ const fetchFavorites = async (userId: string) => {
     return response.json();
 };
 
-import { useQuery } from "@tanstack/react-query";
+
 
 export const useFavoritesQuery = (userId: string) => {
     return useQuery({
