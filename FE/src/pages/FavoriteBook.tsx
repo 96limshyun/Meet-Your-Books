@@ -1,6 +1,11 @@
+import FavoriteBookDisplay from "@components/BookDisplay/FavoriteBookDisplay";
 
 const favoriteBook = () => {
-    return <div>favoriteBook</div>;
+    return (
+        <>
+            <FavoriteBookDisplay />
+        </>
+    );
 };
 
 export default favoriteBook;
