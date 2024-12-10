@@ -5,6 +5,7 @@ import {
     ReadOutlined,
     BookOutlined,
 } from "@ant-design/icons";
+import { ShopOutlined } from "@ant-design/icons";
 import { Button, Heading, Spacing, Text } from "@components/Common";
 import styled from "styled-components";
 
@@ -84,16 +85,17 @@ const BookDetailCard = ({ bookData }: BookDetailCardProps) => {
                     <div>
                         <DescriptionHeader>
                             <Heading fontSize="xl">책 소개</Heading>
-                            <Button
+                            <LibraryFindBtn
                                 color="primary"
                                 fontColor="white"
-                                height="30px"
-                                width="80px"
+                                height="32px"
+                                width="100px"
                                 fontSize="sm"
                                 onClick={() => setOpen(true)}
                             >
+                                <ShopOutlined />
                                 소장 도서관
-                            </Button>
+                            </LibraryFindBtn>
                         </DescriptionHeader>
                         <Spacing height="md" />
                         <Description>{description}</Description>
@@ -101,7 +103,7 @@ const BookDetailCard = ({ bookData }: BookDetailCardProps) => {
                 </BookDetails>
             </CardContent>
         </Card>
-        {isOpen && <LibrariesFindPopup closePopup={closePopup}/>}
+        {isOpen && <LibrariesFindPopup closePopup={closePopup} isbn13={isbn13}/>}
         </>
     );
 };
@@ -194,3 +196,11 @@ const DescriptionHeader = styled.div`
     align-items: center;
     text-align: center;
 `;
+
+const LibraryFindBtn = styled(Button)`
+    padding: 5px;
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+`
