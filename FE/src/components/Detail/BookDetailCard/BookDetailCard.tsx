@@ -5,11 +5,14 @@ import {
     ReadOutlined,
     BookOutlined,
 } from "@ant-design/icons";
-import { Heading, Spacing, Text } from "@components/Common";
+import { Button, Heading, Spacing, Text } from "@components/Common";
 import styled from "styled-components";
 
+import useOpen from "@/hooks/Common/useOpen";
 import { BookDetailType } from "@/types/bookDetailType";
 import { handleImageError } from "@/utils";
+
+import LibrariesFindPopup from "../LibrariesFindPopup/LibrariesFindPopup";
 interface BookDetailCardProps {
     bookData: BookDetailType;
 }
@@ -27,7 +30,10 @@ const BookDetailCard = ({ bookData }: BookDetailCardProps) => {
         vol,
         description,
     } = bookData;
+    const { isOpen, setOpen } = useOpen();
+    const closePopup = () => setOpen(false)
     return (
+        <>
         <Card>
             <CardHeader>
                 <Heading fontSize="xl" fontWeight="bold">
@@ -76,13 +82,27 @@ const BookDetailCard = ({ bookData }: BookDetailCardProps) => {
                     )}
                     <Separator />
                     <div>
-                        <Heading fontSize="xl">책 소개</Heading>
+                        <DescriptionHeader>
+                            <Heading fontSize="xl">책 소개</Heading>
+                            <Button
+                                color="primary"
+                                fontColor="white"
+                                height="30px"
+                                width="80px"
+                                fontSize="sm"
+                                onClick={() => setOpen(true)}
+                            >
+                                소장 도서관
+                            </Button>
+                        </DescriptionHeader>
                         <Spacing height="md" />
                         <Description>{description}</Description>
                     </div>
                 </BookDetails>
             </CardContent>
         </Card>
+        {isOpen && <LibrariesFindPopup closePopup={closePopup}/>}
+        </>
     );
 };
 
@@ -166,4 +186,11 @@ const Separator = styled.hr`
     border: none;
     border-top: 1px solid #dee2e6;
     margin: 16px 0;
+`;
+
+const DescriptionHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
 `;
