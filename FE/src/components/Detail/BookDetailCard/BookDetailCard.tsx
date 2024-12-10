@@ -106,7 +106,7 @@ const CardContent = styled.div`
     grid-template-columns: repeat(1, 1fr);
     gap: 24px;
 
-    @media (min-width: 768px) {
+    @media (min-width: 600px) {
         grid-template-columns: repeat(3, 1fr);
     }
 
@@ -130,7 +130,7 @@ const StyledImage = styled.img`
 `;
 
 const Badge = styled(Text)`
-    width: 60%;
+    width: 65%;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -27,7 +27,7 @@ export interface BookDetailType {
     loanCnt: number;
 }
 
-interface LoanHistory {
+export interface LoanHistory {
     loan: {
         month: string;
         loanCnt: number;
@@ -35,7 +35,13 @@ interface LoanHistory {
     };
 }
 
-interface LoanGroup {
+export interface BarLoanGroup {
+    age: string;
+    대출건수: number;
+    순위: number;
+}
+
+export interface LoanGroup {
     loanGrp: {
         age: string;
         gender: string;
