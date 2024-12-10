@@ -101,7 +101,7 @@ const ListCard = styled(Card)`
 
 const Image = styled.img`
     object-fit: cover;
-    width: 9rem;
+    width: 150px;
     height: 13rem;
     border-radius: 0.375rem;
 `;
@@ -145,7 +145,8 @@ const MetaInfo = styled.p`
 
 const FavoritesBtnWrap = styled.span`
     position: absolute;
-    right: 10px;
+    right: 8px;
+    top: 8px;
     z-index: 10;
 `;
 
