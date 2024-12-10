@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { BookDetailType } from "@/types/bookDetailType";
+import { BookDetailType, LoanHistory, LoanGroup } from "@/types/bookDetailType";
 
 import useCommentQuery from "../Queries/comments/useCommentQuery";
 import useGetQuery from "../Queries/useGetQuery";
@@ -15,10 +15,29 @@ const useBookDetailLogic = () => {
     const { data: comments, isLoading: isCommentsLoading } = useCommentQuery(
         `${isbn}`
     );
-    const book:BookDetailType = data?.response?.book || null;
+    const transformLoanHistory = (loanHistory: LoanHistory[] | undefined) =>
+        loanHistory?.map((item) => ({
+            month: item.loan.month,
+            대출건수: item.loan.loanCnt,
+            순위: item.loan.ranking,
+        })) || [];
+
+    const transformLoanGroups = (loanGrps: LoanGroup[] | undefined) =>
+        loanGrps?.map((item) => ({
+            age: item.loanGrp.age,
+            대출건수: item.loanGrp.loanCnt,
+            순위: item.loanGrp.ranking,
+        })) || [];
+
+    const book: BookDetailType = data?.response?.book || null;
+    const loanHistory = transformLoanHistory(data?.response?.loanHistory);
+    const loanGrps = transformLoanGroups(data?.response?.loanGrps);
+    
     return {
         isbn,
         book,
+        loanHistory,
+        loanGrps,
         comments,
         isBookLoading,
         isCommentsLoading,

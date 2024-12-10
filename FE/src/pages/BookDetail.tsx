@@ -1,15 +1,26 @@
 import { Heading, Spacing } from "@components/Common";
-import { BookDetailCard } from "@components/Detail";
-import CommentBox from "@components/Detail/CommentBox/CommentBox";
-import CommentCreateTextarea from "@components/Detail/CommentCreateTextarea/CommentCreateTextarea";
+import {
+    BookDetailCard,
+    CommentBox,
+    CommentCreateTextarea,
+    LineRechart,
+} from "@components/Detail";
+import BarRechart from "@components/Detail/BarRechart/BarRechart";
 import styled from "styled-components";
 
 import useBookDetailLogic from "@/hooks/BookDetail/useBookDetailLogic";
 import useCommentHandlers from "@/hooks/BookDetail/useCommentHandlers";
 
 const BookDetail = () => {
-    const { isbn, book, comments, isBookLoading, isCommentsLoading } =
-        useBookDetailLogic();
+    const {
+        isbn,
+        book,
+        loanHistory,
+        loanGrps,
+        comments,
+        isBookLoading,
+        isCommentsLoading,
+    } = useBookDetailLogic();
 
     const {
         userId,
@@ -19,10 +30,23 @@ const BookDetail = () => {
     } = useCommentHandlers(`${isbn}`);
 
     if (isBookLoading || isCommentsLoading) return <div>...loading</div>;
-
     return (
         <Container>
             <BookDetailCard bookData={book} />
+            <LineRechart
+                chartName="대출 추이"
+                data={loanHistory}
+                dataKey="대출건수"
+                XDataKey="month"
+            />
+            {loanGrps.length !== 0 && (
+                <BarRechart
+                    chartName="연령대별 대출 추이"
+                    data={loanGrps}
+                    XDataKey="age"
+                />
+            )}
+
             <CommentContainer>
                 <HeadingWrap>
                     <Heading fontWeight="bold">리뷰</Heading>
