@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import useBookStore from "@/stores/bookStore";
+
 const HeaderInput = ({
     placeholder = "Search For Book...",
     customHandleSubmit,

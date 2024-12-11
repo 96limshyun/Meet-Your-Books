@@ -1,13 +1,13 @@
+import { HeaderInput } from "@components/Header";
 import { useState } from "react";
 import styled from "styled-components";
 
 import { useFavoritesQuery } from "@/hooks/Queries/favorites/useFavoritesQuery";
+import useBookStore from "@/stores/bookStore";
 import { BookDoc, ViewType } from "@/types/booksType";
 
 import BookCard from "./BookCard/BookCard";
 import ViewSelector from "./ViewSelector/ViewSelector";
-import { HeaderInput } from "@components/Header";
-import useBookStore from "@/stores/bookStore";
 
 const FavoriteBookDisplay = () => {
     const USER_INFO = JSON.parse(localStorage.getItem("USER_INFO") || "{}");
