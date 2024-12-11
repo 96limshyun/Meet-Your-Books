@@ -7,7 +7,6 @@ import openAIRouter from "./routes/openAI";
 import mongoose from "mongoose";
 import commentRouter from "./routes/comment";
 import favoriteRouter from "./routes/favorites";
-import Favorite from "./Models/FavoriteSchema";
 import regionRouter from "./routes/region";
 
 dotenv.config();
@@ -38,7 +37,6 @@ app.use("/", authRouter);
 app.use("/", openAIRouter);
 app.use("/", commentRouter);
 app.use("/", favoriteRouter);
-
 app.use("/", regionRouter);
 
 app.listen(port, () => {

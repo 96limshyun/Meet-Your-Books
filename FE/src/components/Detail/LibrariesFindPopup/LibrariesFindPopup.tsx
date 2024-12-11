@@ -1,25 +1,123 @@
-import { Overlay } from "@components/Common";
-import { useRef } from "react";
+import { CloseOutlined } from "@ant-design/icons";
+import { Heading } from "@components/Common";
+import { useLayoutEffect, useRef, useState } from "react";
+import styled, { keyframes } from "styled-components";
 
+import { DEFAULT_INDEX } from "@/constants";
+import { REGIONS } from "@/constants/regions";
 import useOnClickOutside from "@/hooks/Common/useOnClickOutside";
-import useGetQuery from "@/hooks/Queries/useGetQuery";
+// import useGetQuery from "@/hooks/Queries/useGetQuery";
+import useSubRegionQuery from "@/hooks/Queries/libraryCollection/useSubRegionQuery";
+import { RegionType } from "@/types/regionType";
+
+import RegionSelectBox from "../RegionSelectBox/RegionSelectBox";
 interface LibrariesFindPopupProps {
     closePopup: () => void;
-    isbn13: string
+    isbn13: string;
 }
-const LibrariesFindPopup = ({ closePopup, isbn13 }: LibrariesFindPopupProps) => {
-    const {data, isLoading} = useGetQuery("libSrchByBook", "libraries", `&isbn=${isbn13}&region=11`)
+const LibrariesFindPopup = ({
+    closePopup,
+    isbn13,
+}: LibrariesFindPopupProps) => {
+    const [selectedRegion, setSelectedRegion] = useState(
+        REGIONS[DEFAULT_INDEX]
+    );
+    const { data: subRegion = [], isLoading: subRegionLoading } =
+        useSubRegionQuery(selectedRegion.code);
+    const [selectedSubRegion, setSelectedSubRegion] = useState(
+        subRegion[DEFAULT_INDEX]
+    );
+    // const {data, isLoading} = useGetQuery("libSrchByBook", "libraries", `&isbn=${isbn13}&region=11`)
     const inSideRef = useRef<HTMLDivElement | null>(null);
     useOnClickOutside(inSideRef, closePopup);
 
-    console.log(data)
+    useLayoutEffect(() => {
+        if (!subRegionLoading && subRegion.length > 0) {
+            setSelectedSubRegion(subRegion[DEFAULT_INDEX]);
+        }
+    }, [subRegion, subRegionLoading]);
+
+    const handleRegionClick = (region: RegionType) => setSelectedRegion(region);
+    const handleSubRegionClick = (region: RegionType) =>
+        setSelectedSubRegion(region);
 
     return (
         <Overlay>
-            {!isLoading && <div ref={inSideRef}>팝업</div>}
-            
+            {/* {!isLoading && <div ref={inSideRef}>팝업</div>} */}
+            <Card ref={inSideRef}>
+                <PopupHeader>
+                    <Heading fontWeight="bold" fontSize="lg">
+                        소장 도서관 검색
+                    </Heading>
+                    <CloseOutlined onClick={closePopup} />
+                </PopupHeader>
+                <RegionSelectWrap>
+                    <RegionDetailWrap>
+                        <RegionSelectBox
+                            regionBoxName="지역"
+                            regions={REGIONS}
+                            curSelected={selectedRegion.name}
+                            onClick={handleRegionClick}
+                        />
+                    </RegionDetailWrap>
+                    <RegionDetailWrap>
+                        {subRegion.length > 0 && selectedSubRegion && (
+                            <RegionSelectBox
+                                regionBoxName="상세지역"
+                                regions={subRegion}
+                                curSelected={selectedSubRegion.name}
+                                onClick={handleSubRegionClick}
+                            />
+                        )}
+                    </RegionDetailWrap>
+                </RegionSelectWrap>
+            </Card>
         </Overlay>
     );
 };
 
 export default LibrariesFindPopup;
+
+const fadeIn = keyframes`
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+`;
+
+const Overlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+`;
+
+const Card = styled.div`
+    background: white;
+    width: 450px;
+    height: 450px;
+    border-radius: 12px;
+    padding: 24px;
+    animation: ${fadeIn} 0.3s ease-out forwards;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+`;
+
+const PopupHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
+const RegionSelectWrap = styled.div`
+    display: flex;
+    gap: 1rem;
+`;
+
+const RegionDetailWrap = styled.div`
+    flex: 1;
+`;

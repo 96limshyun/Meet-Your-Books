@@ -51,3 +51,4 @@ export const INITIAL_CHAT_MESSAGE: ChatHistory[] = [
 
 export const ANIMATION_TIME = 100;
 export const FIRST_PAGE = 1;
+export const DEFAULT_INDEX = 0;
