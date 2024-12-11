@@ -6,7 +6,8 @@ import dotenv from "dotenv";
 import openAIRouter from "./routes/openAI";
 import mongoose from "mongoose";
 import commentRouter from "./routes/comment";
-
+import favoriteRouter from "./routes/favorites";
+import Favorite from "./Models/FavoriteSchema";
 dotenv.config();
 
 const MONGO_URL = process.env.MONGO_URL!;
@@ -34,6 +35,7 @@ db.once("open", async () => {
 app.use("/", authRouter);
 app.use("/", openAIRouter);
 app.use("/", commentRouter);
+app.use("/", favoriteRouter);
 
 app.listen(port, () => {
     console.log(port + "연결 완료");
