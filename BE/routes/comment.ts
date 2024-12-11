@@ -60,9 +60,9 @@ commentRouter.patch("/comments/:isbn/:_id", async (req, res) => {
     try {
         const { isbn, _id } = req.params;
         const { content } = req.body;
-        
+
         const commentGroup = await CommentGroup.findById(isbn);
-        
+
         const comment = commentGroup?.comments.find(
             (comment) => comment._id && comment._id.toString() === _id
         );
