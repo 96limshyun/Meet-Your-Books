@@ -1,11 +1,10 @@
 import { StarOutlined, StarFilled } from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { BookDoc } from "@/types/booksType";
+import useAddFavoriteMutation from "@/hooks/Queries/favorites/useAddFavoriteMutation";
 import { useFavoritesQuery } from "@/hooks/Queries/favorites/useFavoritesQuery";
 import useRemoveFavoriteMutation from "@/hooks/Queries/favorites/useRemoveFavoriteMutation";
-import useAddFavoriteMutation from "@/hooks/Queries/favorites/useAddFavoriteMutation";
+import { BookDoc } from "@/types/booksType";
 
 interface FavoritesBtnProps {
     item: BookDoc;
