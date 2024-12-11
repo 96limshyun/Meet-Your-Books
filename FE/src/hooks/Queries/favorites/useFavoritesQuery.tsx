@@ -7,15 +7,12 @@ const fetchFavorites = async (userId: string) => {
     if (!response.ok) {
         throw new Error("찜 목록 가져오기 실패");
     }
-    return response.json();
+    return await response.json();
 };
-
-
 
 export const useFavoritesQuery = (userId: string) => {
     return useQuery({
         queryKey: ["favorites", userId],
         queryFn: () => fetchFavorites(userId),
-        staleTime: 1000 * 60 * 5, // 5분 동안 데이터 캐싱
     });
 };

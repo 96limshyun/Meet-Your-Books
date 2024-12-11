@@ -10,7 +10,7 @@ favoriteRouter.get("/favorites", async (req, res) => {
         if (!favorites) {
             favorites = await Favorite.create({ userId, book: [] });
         }
-        console.log(favorites);
+
         res.status(200).json(favorites);
     } catch (err) {
         res.status(500).json({ error: "찜한 책 조회 중 에러 발생" });
@@ -21,7 +21,7 @@ favoriteRouter.post("/favorites", async (req, res) => {
     const { userId, book } = req.body;
     try {
         const newFavorite = await Favorite.findOne({ userId });
-        newFavorite?.book.push(book)
+        newFavorite?.book.push(book);
         await newFavorite?.save();
         res.status(201).json(newFavorite);
     } catch (err) {
@@ -29,10 +29,14 @@ favoriteRouter.post("/favorites", async (req, res) => {
     }
 });
 
-favoriteRouter.delete("/favorites/:isbn", async (req, res) => {
-    const { userId, isbn13 } = req.body;
+favoriteRouter.delete("/favorites", async (req, res) => {
+    const { userId, isbn } = req.query;
+
     try {
-        await Favorite.findOneAndDelete({ userId, "book.isbn13": isbn13 });
+        await Favorite.findOneAndUpdate(
+            { userId },
+            { $pull: { book: { isbn13: isbn } } }
+        );
         res.status(200).json({ message: "내가 찜한 책에서 삭제 성공" });
     } catch (err) {
         res.status(500).json({ error: "내가 찜한 책에서 삭제 실패" });

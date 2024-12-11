@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 import { useFavoritesQuery } from "@/hooks/Queries/favorites/useFavoritesQuery";
@@ -9,42 +9,20 @@ import ViewSelector from "./ViewSelector/ViewSelector";
 
 const FavoriteBookDisplay = () => {
     const USER_INFO = JSON.parse(localStorage.getItem("USER_INFO") || "{}");
-    // 로그인 했는지 검증
-    const [favorites, setFavorites] = useState<BookDoc[]>([]);
+    
     const [viewMode, setViewMode] = useState<ViewType>("grid");
-    const {data, isLoading} = useFavoritesQuery(USER_INFO.id)
-
-    if (isLoading) return <div>...loading</div> 
+    const { data, isLoading } = useFavoritesQuery(USER_INFO.id);
+    console.log("🚀 ~ FavoriteBookDisplay ~ data:", data)
+    if (isLoading) return <div>...loading</div>;
     
+    const books = data?.book || [];
     
-    
-    console.log(data)
-    // useEffect(() => {
-    //     const fetchFavorites = async () => {
-    //         try {
-    //             const response = await fetch(import.meta.env.VITE_BACK_END_API_URL + `favorites?userId=george`);
-    //             if (!response.ok) {
-    //                 throw new Error("네트워크 응답이 좋지 않습니다.");
-    //             }
-    //             const data = await response.json();
-    //             // console.log(data)
-    //             console.log(data)
-    //             // setFavorites(data.map((fav: any) => fav.book));
-    //         } catch (err) {
-    //             console.log("🚀 USER_INFO.id:", USER_INFO.id);
-    //             console.error("찜한 책을 가져오는 중 오류 발생:", err);
-    //         }
-    //     };
-
-    //     fetchFavorites();
-    // }, [USER_INFO.id]);
-
     return (
         <BookContainer>
             <ViewSelector viewMode={viewMode} setViewMode={setViewMode} />
-            {favorites.length > 0 ? (
+            {books.length > 0 ? (
                 <BookWrap $viewMode={viewMode}>
-                    {favorites.map((book) => (
+                    {books.map((book: BookDoc) => (
                         <BookCard
                             key={book.isbn13}
                             bookData={book}
