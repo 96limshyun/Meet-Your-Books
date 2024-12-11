@@ -6,12 +6,18 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import useBookStore from "@/stores/bookStore";
-const HeaderInput = () => {
+const HeaderInput = ({
+    placeholder = "Search For Book...",
+    customHandleSubmit,
+}: {
+    placeholder?: string;
+    customHandleSubmit?: (e: React.FormEvent) => void;
+}) => {
     const navigate = useNavigate();
-    const location = useLocation()
+    const location = useLocation();
     const { setSearchText } = useBookStore();
     const inputRef = useRef<HTMLInputElement | null>(null);
-    const handleSubmit = (e: React.FormEvent) => {
+    const defaultHandleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (inputRef.current?.value) {
             setSearchText(inputRef.current?.value);
@@ -23,12 +29,14 @@ const HeaderInput = () => {
         }
     };
 
+    const handleSubmit = customHandleSubmit || defaultHandleSubmit;
+
     return (
         <InputWrap onSubmit={handleSubmit}>
             <DropDownBox />
             <Input
                 ref={inputRef}
-                placeholder="Search For Book..."
+                placeholder={placeholder}
                 height="90%"
                 color="white"
             />
