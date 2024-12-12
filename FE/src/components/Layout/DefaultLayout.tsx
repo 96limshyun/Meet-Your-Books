@@ -14,7 +14,7 @@ const DefaultLayout = () => {
                     <HomeButton to={PATH.HOME}>
                         <Heading fontWeight="bold">Meet Your Books</Heading>
                     </HomeButton>
-                    <HeaderInput />
+                    {/* <HeaderInput /> */}
                     <NavigationPanel />
                 </HeaderWrap>
             </HeaderContainer>

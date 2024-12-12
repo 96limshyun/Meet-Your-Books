@@ -53,8 +53,8 @@ const LabelStyled = styled.label`
 
 const DropdownContainer = styled.div`
     position: relative;
-    width: 80%;
-    border: 1px solid #ccc;
+    width: 92%;
+    border: 1px solid #e5e7eb;
     border-radius: 8px;
     padding: 8px;
 `;
@@ -76,9 +76,10 @@ const DropdownList = styled.ul`
     top: 100%;
     left: 0;
     width: 100%;
-    height: 200px;
+    max-height: 200px;
+    min-height:50px;
     overflow-y: auto;
-    border: 1px solid #ccc;
+    border: 1px solid #e5e7eb;
     border-radius: 8px;
     z-index: 10;
     list-style: none;

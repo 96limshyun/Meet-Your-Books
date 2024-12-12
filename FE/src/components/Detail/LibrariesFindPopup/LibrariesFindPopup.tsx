@@ -6,10 +6,10 @@ import styled, { keyframes } from "styled-components";
 import { DEFAULT_INDEX } from "@/constants";
 import { REGIONS } from "@/constants/regions";
 import useOnClickOutside from "@/hooks/Common/useOnClickOutside";
-// import useGetQuery from "@/hooks/Queries/useGetQuery";
 import useSubRegionQuery from "@/hooks/Queries/libraryCollection/useSubRegionQuery";
 import { RegionType } from "@/types/regionType";
 
+import LibrariesDisplay from "../LibrariesDisplay/LibrariesDisplay";
 import RegionSelectBox from "../RegionSelectBox/RegionSelectBox";
 interface LibrariesFindPopupProps {
     closePopup: () => void;
@@ -24,10 +24,10 @@ const LibrariesFindPopup = ({
     );
     const { data: subRegion = [], isLoading: subRegionLoading } =
         useSubRegionQuery(selectedRegion.code);
-    const [selectedSubRegion, setSelectedSubRegion] = useState(
-        subRegion[DEFAULT_INDEX]
-    );
-    // const {data, isLoading} = useGetQuery("libSrchByBook", "libraries", `&isbn=${isbn13}&region=11`)
+
+    const [selectedSubRegion, setSelectedSubRegion] =
+        useState<RegionType | null>(null);
+
     const inSideRef = useRef<HTMLDivElement | null>(null);
     useOnClickOutside(inSideRef, closePopup);
 
@@ -43,7 +43,6 @@ const LibrariesFindPopup = ({
 
     return (
         <Overlay>
-            {/* {!isLoading && <div ref={inSideRef}>팝업</div>} */}
             <Card ref={inSideRef}>
                 <PopupHeader>
                     <Heading fontWeight="bold" fontSize="lg">
@@ -71,6 +70,13 @@ const LibrariesFindPopup = ({
                         )}
                     </RegionDetailWrap>
                 </RegionSelectWrap>
+                {selectedSubRegion && (
+                    <LibrariesDisplay
+                        isbn13={isbn13}
+                        regionCode={selectedRegion.code}
+                        subRegionCode={selectedSubRegion.code}
+                    />
+                )}
             </Card>
         </Overlay>
     );
