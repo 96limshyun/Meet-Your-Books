@@ -1,42 +1,38 @@
 import { Input } from "@components/Common";
-import DropDownBox from "@components/Header/DropDownBox/DropDownBox";
 import React, { useRef } from "react";
 import { FaSearch } from "react-icons/fa";
-import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import useBookStore from "@/stores/bookStore";
+interface FavoriteBookInputProps {
+    setSearchText: React.Dispatch<React.SetStateAction<string>>;
+}
 
-const HeaderInput = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { setSearchText } = useBookStore();
+const FavoriteBookInput: React.FC<FavoriteBookInputProps> = ({
+    setSearchText,
+}) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (inputRef.current?.value) {
-            setSearchText(inputRef.current?.value);
-            const currentPath = location.pathname;
 
-            if (currentPath !== "/") {
-                navigate("/");
-            }
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (inputRef.current) {
+            setSearchText(inputRef.current.value.trim());
         }
     };
 
     return (
-        <InputWrap onSubmit={handleSubmit}>
-            <DropDownBox />
+        <InputWrap onSubmit={handleSearch}>
             <Input
                 ref={inputRef}
-                placeholder="Search For Book..."
+                placeholder="내가 찜한 책 검색..."
                 height="90%"
                 color="white"
             />
-            <SearchField onClick={handleSubmit} />
+            <SearchField onClick={handleSearch} />
         </InputWrap>
     );
 };
+
+export default FavoriteBookInput;
 
 const InputWrap = styled.form`
     border: 1px solid ${({ theme }) => theme.colors.lightGray};
@@ -59,5 +55,3 @@ const SearchField = styled(FaSearch)`
     justify-content: center;
     cursor: pointer;
 `;
-
-export default HeaderInput;
