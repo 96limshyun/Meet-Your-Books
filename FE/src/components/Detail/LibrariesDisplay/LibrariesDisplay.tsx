@@ -1,12 +1,14 @@
 import { EnvironmentOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Heading } from "@components/Common";
-import { useEffect, useState } from "react";
+import KakaoMap from "@components/Common/KakaoMap/KakaoMap";
+import { message } from "antd";
+import { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 
 import { DEFAULT_INDEX } from "@/constants";
+import useCheckLoanStatus from "@/hooks/Queries/Detail/useCheckLoanStatus";
 import useGetQuery from "@/hooks/Queries/useGetQuery";
 import { LibrariesType } from "@/types/libraryType";
-
 interface LibrariesDisplayProps {
     isbn13: string;
     regionCode: string;
@@ -18,6 +20,10 @@ const LibrariesDisplay = ({
     regionCode,
     subRegionCode,
 }: LibrariesDisplayProps) => {
+    const loanRequestRef = useRef<{ libCode: string; isRequest: boolean }>({
+        libCode: "",
+        isRequest: false,
+    });
     const [selectedLibrary, setSelectedLibrary] =
         useState<LibrariesType | null>(null);
     const { data, isLoading } = useGetQuery(
@@ -25,6 +31,7 @@ const LibrariesDisplay = ({
         `${regionCode}&${subRegionCode}`,
         `&isbn=${isbn13}&region=${regionCode}&dtl_region=${subRegionCode}`
     );
+    const { mutate } = useCheckLoanStatus(isbn13);
     useEffect(() => {
         if (!isLoading && data.response.libs.length > 0) {
             setSelectedLibrary(data.response.libs[DEFAULT_INDEX]);
@@ -32,50 +39,90 @@ const LibrariesDisplay = ({
     }, [data, isLoading]);
     if (isLoading) return <div>...isLoading</div>;
 
+    const handleLoanStatusClick = (libCode: string) => {
+        if (loanRequestRef.current.libCode)
+            return message.error("현재 대출 조회 중입니다.");
+        loanRequestRef.current.libCode = libCode;
+        loanRequestRef.current.isRequest = true;
+
+        mutate(libCode, {
+            onSuccess: (data) => {
+                if (data.response.result.loanAvailable === "Y")
+                    return message.success("대출이 가능합니다!");
+                return message.warning("현재 대출이 불가능합니다..");
+            },
+            onSettled: () => {
+                loanRequestRef.current.libCode = "";
+                loanRequestRef.current.isRequest = false;
+            },
+        });
+    };
+
     const libraries: LibrariesType[] = data.response.libs;
 
-    console.log(libraries)
-
     return (
-        <ListWrap>
-            {libraries.map((item) => (
-                <LibraryCard
-                    key={item.lib.libCode}
-                    $selected={
-                        item.lib.libCode === selectedLibrary?.lib.libCode
-                    }
-                    onClick={() => setSelectedLibrary(item)}
-                >
-                    <LibraryContent>
-                        <LibraryDetails>
-                            <Heading fontSize="md" fontWeight="bold">
-                                {item.lib.libName}
-                            </Heading>
-                            <LibraryInfo>
-                                <InfoRow>
-                                    <EnvironmentOutlined />
-                                    <span>{item.lib.address}</span>
-                                </InfoRow>
-                                <InfoRow>
-                                    <PhoneOutlined />
-                                    <span>{item.lib.tel}</span>
-                                </InfoRow>
-                            </LibraryInfo>
-                        </LibraryDetails>
-                        <ActionsContainer>
-                            <HomepageButton
-                                href={item.lib.homepage}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                홈페이지
-                            </HomepageButton>
-                            <StyledButton>대출확인</StyledButton>
-                        </ActionsContainer>
-                    </LibraryContent>
-                </LibraryCard>
-            ))}
-        </ListWrap>
+        <>
+            <ListWrap>
+                {libraries.map((item) => (
+                    <LibraryCard
+                        key={item.lib.libCode}
+                        $selected={
+                            item.lib.libCode === selectedLibrary?.lib.libCode
+                        }
+                        onClick={() => setSelectedLibrary(item)}
+                    >
+                        <LibraryContent>
+                            <LibraryDetails>
+                                <Heading fontSize="md" fontWeight="bold">
+                                    {item.lib.libName}
+                                </Heading>
+                                <LibraryInfo>
+                                    <InfoRow>
+                                        <EnvironmentOutlined />
+                                        <span>{item.lib.address}</span>
+                                    </InfoRow>
+                                    <InfoRow>
+                                        <PhoneOutlined />
+                                        <span>{item.lib.tel}</span>
+                                    </InfoRow>
+                                </LibraryInfo>
+                            </LibraryDetails>
+                            <ActionsContainer>
+                                <HomepageButton
+                                    href={item.lib.homepage}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    홈페이지
+                                </HomepageButton>
+                                <StyledButton
+                                    onClick={() =>
+                                        handleLoanStatusClick(item.lib.libCode)
+                                    }
+                                    disabled={
+                                        loanRequestRef.current.libCode ===
+                                            item.lib.libCode &&
+                                        loanRequestRef.current.isRequest
+                                    }
+                                >
+                                    {loanRequestRef.current.libCode ===
+                                        item.lib.libCode &&
+                                    loanRequestRef.current.isRequest
+                                        ? "요청 중"
+                                        : "대출확인"}
+                                </StyledButton>
+                            </ActionsContainer>
+                        </LibraryContent>
+                    </LibraryCard>
+                ))}
+            </ListWrap>
+            {selectedLibrary && (
+                <KakaoMap
+                    lat={Number(selectedLibrary.lib.latitude)}
+                    lng={Number(selectedLibrary.lib.longitude)}
+                />
+            )}
+        </>
     );
 };
 
@@ -85,10 +132,11 @@ const ListWrap = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    max-height: 400px;
+    gap: 0.5rem;
+    height: 350px;
     overflow-y: auto;
-    padding-right: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
 
     &::-webkit-scrollbar {
         width: 8px;

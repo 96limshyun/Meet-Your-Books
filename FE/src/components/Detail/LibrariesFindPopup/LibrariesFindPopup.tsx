@@ -6,7 +6,7 @@ import styled, { keyframes } from "styled-components";
 import { DEFAULT_INDEX } from "@/constants";
 import { REGIONS } from "@/constants/regions";
 import useOnClickOutside from "@/hooks/Common/useOnClickOutside";
-import useSubRegionQuery from "@/hooks/Queries/libraryCollection/useSubRegionQuery";
+import useSubRegionQuery from "@/hooks/Queries/Detail/useSubRegionQuery";
 import { RegionType } from "@/types/regionType";
 
 import LibrariesDisplay from "../LibrariesDisplay/LibrariesDisplay";
@@ -105,13 +105,13 @@ const Overlay = styled.div`
 const Card = styled.div`
     background: white;
     width: 450px;
-    height: 450px;
+    height: 700px;
     border-radius: 12px;
     padding: 24px;
     animation: ${fadeIn} 0.3s ease-out forwards;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
 `;
 
 const PopupHeader = styled.div`
