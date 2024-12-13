@@ -6,7 +6,7 @@ import styled, { keyframes } from "styled-components";
 import { DEFAULT_INDEX } from "@/constants";
 import { REGIONS } from "@/constants/regions";
 import useOnClickOutside from "@/hooks/Common/useOnClickOutside";
-import useSubRegionQuery from "@/hooks/Queries/libraryCollection/useSubRegionQuery";
+import useSubRegionQuery from "@/hooks/Queries/Detail/useSubRegionQuery";
 import { RegionType } from "@/types/regionType";
 
 import LibrariesDisplay from "../LibrariesDisplay/LibrariesDisplay";
