@@ -1,5 +1,5 @@
 import FavoriteBookDisplay from "@components/BookDisplay/FavoriteBookDisplay";
-import FavoriteSearchSection from "@components/FavoriteInputDisplay/FavoriteInputDisplay";
+import FavoriteSearchSection from "@components/FavoriteSearchSection/FavoriteSearchSection";
 import { useState } from "react";
 import styled from "styled-components";
 

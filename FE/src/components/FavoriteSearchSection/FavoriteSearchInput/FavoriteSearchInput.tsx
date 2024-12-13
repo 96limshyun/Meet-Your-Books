@@ -3,11 +3,11 @@ import { Input } from "@components/Common";
 import React, { useRef } from "react";
 import styled from "styled-components";
 
-export interface FavoriteBookSearchInputProps {
+export interface FavoriteSearchInputProps {
     setSearchText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const FavoriteBookSearchInput: React.FC<FavoriteBookSearchInputProps> = ({
+const FavoriteSearchInput: React.FC<FavoriteSearchInputProps> = ({
     setSearchText,
 }) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -32,7 +32,7 @@ const FavoriteBookSearchInput: React.FC<FavoriteBookSearchInputProps> = ({
     );
 };
 
-export default FavoriteBookSearchInput;
+export default FavoriteSearchInput;
 
 const InputWrap = styled.form`
     border: 1px solid ${({ theme }) => theme.colors.lightGray};

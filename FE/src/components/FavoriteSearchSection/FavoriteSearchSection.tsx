@@ -2,11 +2,9 @@ import { Heading, Spacing } from "@components/Common";
 import React from "react";
 import styled from "styled-components";
 
-import FavoriteBookSearchInput, {
-    FavoriteBookSearchInputProps,
-} from "./FavoriteBookInput/FavoriteBookInput";
+import FavoriteSearchInput, { FavoriteSearchInputProps } from "./FavoriteSearchInput/FavoriteSearchInput";
 
-const FavoriteSearchSection: React.FC<FavoriteBookSearchInputProps> = ({
+const FavoriteSearchSection: React.FC<FavoriteSearchInputProps> = ({
     setSearchText,
 }) => {
     return (
@@ -15,7 +13,7 @@ const FavoriteSearchSection: React.FC<FavoriteBookSearchInputProps> = ({
                 Favorite Books
             </Heading>
             <Spacing height="md" />
-            <FavoriteBookSearchInput setSearchText={setSearchText} />
+            <FavoriteSearchInput setSearchText={setSearchText} />
         </InputContainer>
     );
 };
