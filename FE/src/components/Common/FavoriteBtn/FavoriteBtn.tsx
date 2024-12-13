@@ -28,18 +28,13 @@ const FavoriteBtn = ({ item }: FavoritesBtnProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
-    const showModal = () => setIsModalOpen(true);
-    const hideModal = () => setIsModalOpen(false);
-
     const handleLoginRedirect = () => {
-        console.log("🚀 ~ handleLoginRedirect ~ login:");
         navigate("/login");
     };
     const handleFavorite = (e: React.MouseEvent) => {
         e.stopPropagation();
         if (!USER_INFO?.id) {
-            console.log("로그인해라");
-            showModal();
+            setIsModalOpen(true);
         }
 
         if (isFavorite) {
@@ -54,11 +49,11 @@ const FavoriteBtn = ({ item }: FavoritesBtnProps) => {
             <ButtonWrap onClick={handleFavorite}>
                 {isFavorite ? <FavoriteButton /> : <UnFavoriteButton />}
             </ButtonWrap>
-            <div onClick={showModal}>
+            <div onClick={() => setIsModalOpen(true)}>
                 <ModalComponent
                     isModalOpen={isModalOpen}
                     callBack={handleLoginRedirect}
-                    onCancel={hideModal}
+                    onCancel={() => setIsModalOpen(true)}
                     message="로그인이 필요합니다!"
                 />
             </div>
