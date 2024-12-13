@@ -29,7 +29,11 @@ const FavoriteBookDisplay: React.FC<FavoriteBookDisplayProps> = ({
 
     return (
         <BookContainer>
-            <ViewSelector viewMode={viewMode} setViewMode={setViewMode} />
+            <ViewSelector
+                title="Favorite Books"
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+            />
             <Spacing height="md" />
             {books.length === 0 ? (
                 <EmptyContentText>찜한 책이 없습니다.</EmptyContentText>
