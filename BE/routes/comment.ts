@@ -1,6 +1,5 @@
 import express from "express";
 import CommentGroup from "../Models/CommentSchema";
-import { Types } from "mongoose";
 const commentRouter = express.Router();
 
 commentRouter.get("/comments/:isbn", async (req, res) => {
