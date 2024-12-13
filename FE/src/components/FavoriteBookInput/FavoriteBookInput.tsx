@@ -41,7 +41,7 @@ const InputWrap = styled.form`
     display: flex;
     align-items: center;
     height: 2.4rem;
-    padding-right: 10px;
+    padding: 0 10px;
 `;
 
 const SearchField = styled(FaSearch)`

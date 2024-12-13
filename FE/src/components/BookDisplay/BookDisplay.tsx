@@ -17,10 +17,11 @@ const BookDisplay = () => {
         isLastPage,
         observerRefCallback,
     } = useBookLogic();
-    
+
     return (
         <BookContainer>
             <ViewSelector viewMode={viewMode} setViewMode={setViewMode} />
+            <Spacing height="md" />
             <BookWrap $viewMode={viewMode}>
                 {booksItem.map((book: Doc, index: number) => (
                     <BookCard

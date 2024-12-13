@@ -30,11 +30,12 @@ const FavoriteBookDisplay = () => {
                     Favorite Books
                 </Heading>
                 <Spacing height="md" />
-
                 <FavoriteBookInput setSearchText={setSearchText} />
             </InputContainer>
             <FavoriteContainer>
                 <ViewSelector viewMode={viewMode} setViewMode={setViewMode} />
+                <Spacing height="md" />
+
                 {books.length === 0 ? (
                     <EmptyContentText>찜한 책이 없습니다.</EmptyContentText>
                 ) : searchText && filteredBooks.length === 0 ? (
