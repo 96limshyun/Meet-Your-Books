@@ -1,7 +1,7 @@
+import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "@components/Common";
 import DropDownBox from "@components/Header/DropDownBox/DropDownBox";
 import React, { useRef } from "react";
-import { FaSearch } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
@@ -33,7 +33,7 @@ const HeaderInput = () => {
                 height="90%"
                 color="white"
             />
-            <SearchField onClick={handleSubmit} />
+            <SearchOutlined onClick={handleSubmit} />
         </InputWrap>
     );
 };
@@ -46,18 +46,6 @@ const InputWrap = styled.form`
     align-items: center;
     height: 2.4rem;
     padding-right: 10px;
-`;
-
-const SearchField = styled(FaSearch)`
-    width: full;
-    height: 90%;
-    font-size: 1rem;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
 `;
 
 export default HeaderInput;

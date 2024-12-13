@@ -1,6 +1,6 @@
+import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "@components/Common";
 import React, { useRef } from "react";
-import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 
 interface FavoriteBookInputProps {
@@ -27,12 +27,10 @@ const FavoriteBookInput: React.FC<FavoriteBookInputProps> = ({
                 height="90%"
                 color="white"
             />
-            <SearchField onClick={handleSearch} />
+            <SearchOutlined onClick={handleSearch} />
         </InputWrap>
     );
 };
-
-export default FavoriteBookInput;
 
 const InputWrap = styled.form`
     border: 1px solid ${({ theme }) => theme.colors.lightGray};
@@ -44,14 +42,4 @@ const InputWrap = styled.form`
     padding: 0 10px;
 `;
 
-const SearchField = styled(FaSearch)`
-    width: full;
-    height: 90%;
-    font-size: 1rem;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-`;
+export default FavoriteBookInput;
