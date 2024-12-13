@@ -105,13 +105,13 @@ const Overlay = styled.div`
 const Card = styled.div`
     background: white;
     width: 450px;
-    height: 450px;
+    height: 700px;
     border-radius: 12px;
     padding: 24px;
     animation: ${fadeIn} 0.3s ease-out forwards;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
 `;
 
 const PopupHeader = styled.div`

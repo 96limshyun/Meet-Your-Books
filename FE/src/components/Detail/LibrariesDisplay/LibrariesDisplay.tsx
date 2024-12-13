@@ -1,5 +1,6 @@
 import { EnvironmentOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Heading } from "@components/Common";
+import KakaoMap from "@components/Common/KakaoMap/KakaoMap";
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
@@ -33,49 +34,54 @@ const LibrariesDisplay = ({
     if (isLoading) return <div>...isLoading</div>;
 
     const libraries: LibrariesType[] = data.response.libs;
-
-    console.log(libraries)
-
     return (
-        <ListWrap>
-            {libraries.map((item) => (
-                <LibraryCard
-                    key={item.lib.libCode}
-                    $selected={
-                        item.lib.libCode === selectedLibrary?.lib.libCode
-                    }
-                    onClick={() => setSelectedLibrary(item)}
-                >
-                    <LibraryContent>
-                        <LibraryDetails>
-                            <Heading fontSize="md" fontWeight="bold">
-                                {item.lib.libName}
-                            </Heading>
-                            <LibraryInfo>
-                                <InfoRow>
-                                    <EnvironmentOutlined />
-                                    <span>{item.lib.address}</span>
-                                </InfoRow>
-                                <InfoRow>
-                                    <PhoneOutlined />
-                                    <span>{item.lib.tel}</span>
-                                </InfoRow>
-                            </LibraryInfo>
-                        </LibraryDetails>
-                        <ActionsContainer>
-                            <HomepageButton
-                                href={item.lib.homepage}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                홈페이지
-                            </HomepageButton>
-                            <StyledButton>대출확인</StyledButton>
-                        </ActionsContainer>
-                    </LibraryContent>
-                </LibraryCard>
-            ))}
-        </ListWrap>
+        <>
+            <ListWrap>
+                {libraries.map((item) => (
+                    <LibraryCard
+                        key={item.lib.libCode}
+                        $selected={
+                            item.lib.libCode === selectedLibrary?.lib.libCode
+                        }
+                        onClick={() => setSelectedLibrary(item)}
+                    >
+                        <LibraryContent>
+                            <LibraryDetails>
+                                <Heading fontSize="md" fontWeight="bold">
+                                    {item.lib.libName}
+                                </Heading>
+                                <LibraryInfo>
+                                    <InfoRow>
+                                        <EnvironmentOutlined />
+                                        <span>{item.lib.address}</span>
+                                    </InfoRow>
+                                    <InfoRow>
+                                        <PhoneOutlined />
+                                        <span>{item.lib.tel}</span>
+                                    </InfoRow>
+                                </LibraryInfo>
+                            </LibraryDetails>
+                            <ActionsContainer>
+                                <HomepageButton
+                                    href={item.lib.homepage}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    홈페이지
+                                </HomepageButton>
+                                <StyledButton>대출확인</StyledButton>
+                            </ActionsContainer>
+                        </LibraryContent>
+                    </LibraryCard>
+                ))}
+            </ListWrap>
+            {selectedLibrary && (
+                <KakaoMap
+                    lat={Number(selectedLibrary.lib.latitude)}
+                    lng={Number(selectedLibrary.lib.longitude)}
+                />
+            )}
+        </>
     );
 };
 
@@ -85,10 +91,11 @@ const ListWrap = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    max-height: 400px;
+    gap: 0.5rem;
+    height: 350px;
     overflow-y: auto;
-    padding-right: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
 
     &::-webkit-scrollbar {
         width: 8px;

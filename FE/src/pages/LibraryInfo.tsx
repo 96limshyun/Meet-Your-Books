@@ -1,4 +1,3 @@
-
 const LibraryInfo = () => {
     return <div>LibraryInfo</div>;
 };
