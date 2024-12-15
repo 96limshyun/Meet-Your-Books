@@ -3,7 +3,6 @@ import BookDisplay from "@components/BookDisplay/BookDisplay";
 import FilterDisplay from "@components/FilterDisplay/FilterDisplay";
 import styled from "styled-components";
 
-
 const Home = () => {
     return (
         <HomeContainer>
@@ -11,7 +10,7 @@ const Home = () => {
                 <FilterDisplay />
             </FilterWrap>
             <BookDisplay />
-            <AIChatPopup/>
+            <AIChatPopup />
         </HomeContainer>
     );
 };
