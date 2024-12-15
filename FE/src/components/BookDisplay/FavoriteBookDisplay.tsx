@@ -1,5 +1,4 @@
-import { Heading, Spacing } from "@components/Common";
-import FavoriteBookInput from "@components/FavoriteBookInput/FavoriteBookInput";
+import { Spacing } from "@components/Common";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -9,10 +8,15 @@ import { BookDoc, ViewType } from "@/types/booksType";
 import BookCard from "./BookCard/BookCard";
 import ViewSelector from "./ViewSelector/ViewSelector";
 
-const FavoriteBookDisplay = () => {
+interface FavoriteBookDisplayProps {
+    searchText: string;
+}
+
+const FavoriteBookDisplay: React.FC<FavoriteBookDisplayProps> = ({
+    searchText,
+}) => {
     const USER_INFO = JSON.parse(localStorage.getItem("USER_INFO") || "{}");
     const [viewMode, setViewMode] = useState<ViewType>("grid");
-    const [searchText, setSearchText] = useState<string>("");
 
     const { data, isLoading } = useFavoritesQuery(USER_INFO.id);
 
@@ -25,35 +29,29 @@ const FavoriteBookDisplay = () => {
 
     return (
         <BookContainer>
-            <InputContainer>
-                <Heading fontSize="xl" fontWeight="bold">
-                    Favorite Books
-                </Heading>
-                <Spacing height="md" />
-                <FavoriteBookInput setSearchText={setSearchText} />
-            </InputContainer>
-            <FavoriteContainer>
-                <ViewSelector viewMode={viewMode} setViewMode={setViewMode} />
-                <Spacing height="md" />
-
-                {books.length === 0 ? (
-                    <EmptyContentText>찜한 책이 없습니다.</EmptyContentText>
-                ) : searchText && filteredBooks.length === 0 ? (
-                    <EmptyContentText>검색 결과가 없습니다.</EmptyContentText>
-                ) : (
-                    <BookWrap $viewMode={viewMode}>
-                        {(searchText ? filteredBooks : books).map(
-                            (book: BookDoc) => (
-                                <BookCard
-                                    key={book.isbn13}
-                                    bookData={book}
-                                    viewMode={viewMode}
-                                />
-                            )
-                        )}
-                    </BookWrap>
-                )}
-            </FavoriteContainer>
+            <ViewSelector
+                title="Favorite Books"
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+            />
+            <Spacing height="md" />
+            {books.length === 0 ? (
+                <EmptyContentText>찜한 책이 없습니다.</EmptyContentText>
+            ) : searchText && filteredBooks.length === 0 ? (
+                <EmptyContentText>검색 결과가 없습니다.</EmptyContentText>
+            ) : (
+                <BookWrap $viewMode={viewMode}>
+                    {(searchText ? filteredBooks : books).map(
+                        (book: BookDoc) => (
+                            <BookCard
+                                key={book.isbn13}
+                                bookData={book}
+                                viewMode={viewMode}
+                            />
+                        )
+                    )}
+                </BookWrap>
+            )}
         </BookContainer>
     );
 };
@@ -61,18 +59,6 @@ const FavoriteBookDisplay = () => {
 export default FavoriteBookDisplay;
 
 const BookContainer = styled.div`
-    max-width: 970px;
-    margin: 0 auto;
-    display: flex;
-    max-width: 1200px;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin: 0px auto;
-`;
-
-const FavoriteContainer = styled.div`
     width: 770px;
 `;
 
@@ -93,8 +79,4 @@ const BookWrap = styled.div<{ $viewMode: ViewType }>`
 const EmptyContentText = styled.div`
     text-align: center;
     padding: 30px 0;
-`;
-
-const InputContainer = styled.div`
-    max-width: 240px;
 `;

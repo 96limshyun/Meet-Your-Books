@@ -4,14 +4,15 @@ import styled from "styled-components";
 
 import { ViewType } from "@/types/booksType";
 interface ViewSelectorProps {
+    title: string;
     setViewMode: React.Dispatch<React.SetStateAction<ViewType>>;
     viewMode: ViewType;
 }
 
-const ViewSelector = ({ viewMode, setViewMode }: ViewSelectorProps) => {
+const ViewSelector = ({ title, viewMode, setViewMode }: ViewSelectorProps) => {
     return (
         <Container>
-            <Title>Books</Title>
+            <Title>{title}</Title>
             <IconButtonGroup>
                 <ListButton
                     $active={viewMode}
