@@ -6,7 +6,6 @@ import { Keyword } from "@/types/keywordType";
 
 import Header from "../Header/Header";
 import Item from "../Item/Item";
-
 interface KeywordFilterProps {
     selectedKeywords: string[];
     handleKeywordClick: (keywordValue: string) => void;
@@ -20,7 +19,7 @@ const KeywordFilter = ({
     selectedKeywords,
     handleKeywordClick,
 }: KeywordFilterProps) => {
-    const { data, isLoading } = useGetQuery(
+    const { data } = useGetQuery(
         "monthlyKeywords",
         "keywords",
         `&${year}-${month}`
