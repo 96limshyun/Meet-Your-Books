@@ -14,9 +14,10 @@ const defaultFetch = async(url: string) => {
 const useGetQuery = (path: string, key: string, query: string = "") => {
     return useQuery({
         queryKey: [key],
-        queryFn: () => defaultFetch(`${API_URL}${path}?authKey=${AUTH_KEY}&format=json${query}`),
+        queryFn: () => defaultFetch(`${API_URL}${path}?authKey=${AUTH_KEY}${query}&format=json`),
         throwOnError: true,
     });
 };
 
 export default useGetQuery;
+// http://data4library.kr/api/usageAnalysisList?authKey=bc1a3c82651b5c3e65599b87bb74151e1cc1be37d1b6514a1287c7f42fd770bf&isbn13=9788901033518&format=json
