@@ -13,6 +13,7 @@ const AIChatPopup = () => {
     const { isOpen, toggleOpen } = useOpen();
     const [chatHistory, setHistory] =
         useState<ChatHistory[]>(INITIAL_CHAT_MESSAGE);
+
     return (
         <ChatPopupContainer>
             {isOpen && (

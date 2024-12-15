@@ -9,7 +9,7 @@ const SkeletonLoader = () => {
                 </Heading>
             </SkeletonHeader>
             <SkeletonList>
-                {Array.from({ length: 5 }).map((_, idx) => (
+                {Array.from({ length: 10 }).map((_, idx) => (
                     <SkeletonItem key={idx}>
                         <SkeletonLabel />
                     </SkeletonItem>
@@ -65,6 +65,7 @@ const SkeletonLabel = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    border-radius: 12px;
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200px 100%;
     animation: ${skeletonAnimation} 1.2s ease-in-out infinite;

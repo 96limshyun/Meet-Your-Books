@@ -1,9 +1,10 @@
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import ModalComponent from "@components/Modal/Modal";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { PATH } from "@/constants/path";
 import useAddFavoriteMutation from "@/hooks/Queries/favorites/useAddFavoriteMutation";
 import { useFavoritesQuery } from "@/hooks/Queries/favorites/useFavoritesQuery";
 import useRemoveFavoriteMutation from "@/hooks/Queries/favorites/useRemoveFavoriteMutation";
@@ -14,23 +15,20 @@ interface FavoritesBtnProps {
 }
 
 const FavoriteBtn = ({ item }: FavoritesBtnProps) => {
+    const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const USER_INFO = JSON.parse(localStorage.getItem("USER_INFO") || "{}");
     const { data } = useFavoritesQuery(USER_INFO.id);
     const books = data?.book || [];
+    const addFavoriteMutation = useAddFavoriteMutation(USER_INFO.id);
+    const removeFavoriteMutation = useRemoveFavoriteMutation(USER_INFO.id);
 
     const isFavorite = books.some(
         (book: { isbn13: string }) => book.isbn13 === item.isbn13
     );
 
-    const addFavoriteMutation = useAddFavoriteMutation(USER_INFO.id);
-    const removeFavoriteMutation = useRemoveFavoriteMutation(USER_INFO.id);
+    const handleLoginRedirect = () => navigate(PATH.LOGIN);
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const navigate = useNavigate();
-
-    const handleLoginRedirect = () => {
-        navigate("/login");
-    };
     const handleFavorite = (e: React.MouseEvent) => {
         e.stopPropagation();
         if (!USER_INFO?.id) {
@@ -53,7 +51,7 @@ const FavoriteBtn = ({ item }: FavoritesBtnProps) => {
                 <ModalComponent
                     isModalOpen={isModalOpen}
                     callBack={handleLoginRedirect}
-                    onCancel={() => setIsModalOpen(true)}
+                    onCancel={() => setIsModalOpen(false)}
                     message="로그인이 필요합니다!"
                 />
             </div>
