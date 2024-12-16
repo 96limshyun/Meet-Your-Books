@@ -1,6 +1,7 @@
 import { CloseOutlined } from "@ant-design/icons";
 import { Heading } from "@components/Common";
-import { useLayoutEffect, useRef, useState } from "react";
+import LoadingSpin from "@components/Common/Spin/Spin";
+import { Suspense, useLayoutEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
 import { DEFAULT_INDEX } from "@/constants";
@@ -70,6 +71,7 @@ const LibrariesFindPopup = ({
                         )}
                     </RegionDetailWrap>
                 </RegionSelectWrap>
+                <Suspense fallback={<LoadingSpin/>}>
                 {selectedSubRegion && (
                     <LibrariesDisplay
                         isbn13={isbn13}
@@ -77,6 +79,7 @@ const LibrariesFindPopup = ({
                         subRegionCode={selectedSubRegion.code}
                     />
                 )}
+                </Suspense>
             </Card>
         </Overlay>
     );
@@ -127,3 +130,7 @@ const RegionSelectWrap = styled.div`
 const RegionDetailWrap = styled.div`
     flex: 1;
 `;
+
+// 댓글달때 로그인 필요 모달
+// 상세페이지 들어갈때 로딩
+// 에러바운더리 처리

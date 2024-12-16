@@ -57,7 +57,7 @@ const FilterDisplay = () => {
 export default FilterDisplay;
 
 const FilterContainer = styled.div`
-    max-width: 240px;
+    max-width: 200px;
 `;
 
 const FilterWrap = styled.div`

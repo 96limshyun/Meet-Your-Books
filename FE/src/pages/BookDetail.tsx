@@ -1,4 +1,5 @@
 import { Heading, Spacing } from "@components/Common";
+import LoadingSpin from "@components/Common/Spin/Spin";
 import {
     BookDetailCard,
     CommentBox,
@@ -29,7 +30,7 @@ const BookDetail = () => {
         handlePatchComment,
     } = useCommentHandlers(`${isbn}`);
 
-    if (isBookLoading || isCommentsLoading) return <div>...loading</div>;
+    if (isBookLoading || isCommentsLoading) return <LoadingSpin/>;
     return (
         <Container>
             <BookDetailCard bookData={book} />
@@ -75,7 +76,7 @@ const BookDetail = () => {
 
                 <Spacing height="lg" />
                 <CommentCreateTextarea
-                    message="리뷰를 작성해주세요!"
+                    infoMessage="리뷰를 작성해주세요!"
                     onClick={handleCreateCommentClick}
                 />
 

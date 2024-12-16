@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 import { BookDetailType, LoanHistory, LoanGroup } from "@/types/bookDetailType";
 
 import useCommentQuery from "../Queries/comments/useCommentQuery";
-import useGetQuery from "../Queries/useGetQuery";
+import useDefaultQuery from "../Queries/useDefaultQuery";
 
 const useBookDetailLogic = () => {
     const { isbn } = useParams();
-    const { data, isLoading: isBookLoading } = useGetQuery(
+    const { data, isLoading: isBookLoading } = useDefaultQuery(
         "usageAnalysisList",
         `${isbn}`,
         `&isbn13=${isbn}`

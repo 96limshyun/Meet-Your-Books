@@ -11,13 +11,11 @@ const defaultFetch = async(url: string) => {
     return await response.json();
 }
 
-const useGetQuery = (path: string, key: string, query: string = "") => {
+const useDefaultQuery = (path: string, key: string, query: string = "") => {
     return useSuspenseQuery({
         queryKey: [key],
         queryFn: () => defaultFetch(`${API_URL}${path}?authKey=${AUTH_KEY}${query}&format=json`),
-        
-        
     });
 };
 
-export default useGetQuery;
+export default useDefaultQuery;

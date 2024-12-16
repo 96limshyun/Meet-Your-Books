@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 import useOpen from "@/hooks/Common/useOpen";
-import useGetQuery from "@/hooks/Queries/useGetQuery";
+import useDefaultSuspenseQuery from "@/hooks/Queries/useDefaultSuspenseQuery";
 import { Keyword } from "@/types/keywordType";
 
 import Header from "../Header/Header";
@@ -19,7 +19,7 @@ const KeywordFilter = ({
     selectedKeywords,
     handleKeywordClick,
 }: KeywordFilterProps) => {
-    const { data } = useGetQuery(
+    const { data } = useDefaultSuspenseQuery(
         "monthlyKeywords",
         "keywords",
         `&${year}-${month}`

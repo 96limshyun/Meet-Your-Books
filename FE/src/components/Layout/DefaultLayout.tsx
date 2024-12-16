@@ -1,6 +1,6 @@
 import { Heading, Spacing } from "@components/Common";
-import { HeaderInput } from "@components/Header";
-import NavigationPanel from "@components/Header/NavigationPanel/NavigationPanel";
+import { HeaderInput } from "@components/header";
+import NavigationPanel from "@components/header/NavigationPanel/NavigationPanel";
 import { Link, Outlet } from "react-router-dom";
 import styled from "styled-components";
 
@@ -14,8 +14,10 @@ const DefaultLayout = () => {
                     <HomeButton to={PATH.HOME}>
                         <Heading fontWeight="bold">Meet Your Books</Heading>
                     </HomeButton>
-                    {/* <HeaderInput /> */}
-                    <NavigationPanel />
+                    <PanelWrap>
+                        <HeaderInput />
+                        <NavigationPanel />
+                    </PanelWrap>
                 </HeaderWrap>
             </HeaderContainer>
             <Spacing height="xxl" />
@@ -25,6 +27,13 @@ const DefaultLayout = () => {
 };
 
 export default DefaultLayout;
+
+const PanelWrap = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+`
 
 const HeaderContainer = styled.section`
     width: 100%;
