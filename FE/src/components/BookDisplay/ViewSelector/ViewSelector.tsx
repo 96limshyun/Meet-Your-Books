@@ -1,4 +1,5 @@
 import { MenuOutlined, AppstoreOutlined } from "@ant-design/icons";
+import { Heading } from "@components/Common";
 import React from "react";
 import styled from "styled-components";
 
@@ -12,7 +13,7 @@ interface ViewSelectorProps {
 const ViewSelector = ({ title, viewMode, setViewMode }: ViewSelectorProps) => {
     return (
         <Container>
-            <Title>{title}</Title>
+            <Heading fontSize="xl" fontWeight="bold">{title}</Heading>
             <IconButtonGroup>
                 <ListButton
                     $active={viewMode}
@@ -53,11 +54,6 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
-`;
-
-const Title = styled.h1`
-    font-size: 24px;
-    font-weight: 700;
 `;
 
 const IconButtonGroup = styled.div`

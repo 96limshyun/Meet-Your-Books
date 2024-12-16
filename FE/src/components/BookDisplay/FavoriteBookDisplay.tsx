@@ -1,5 +1,5 @@
 import { Spacing } from "@components/Common";
-import { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { useFavoritesQuery } from "@/hooks/Queries/favorites/useFavoritesQuery";

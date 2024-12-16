@@ -1,23 +1,27 @@
+import { message } from "antd";
 import { useState } from "react";
 import styled from "styled-components";
 
+import useUserInfo from "@/hooks/Common/useUserInfo";
 interface CommentCreateTextareaProps {
-    message?: string;
+    infoMessage?: string;
     curComment?: string;
     onClick: (comment: string) => void;
 }
 
-const CommentCreateTextarea = ({message = "", curComment = "", onClick}: CommentCreateTextareaProps) => {
+const CommentCreateTextarea = ({infoMessage = "", curComment = "", onClick}: CommentCreateTextareaProps) => {
+    const {userId} = useUserInfo()
     const [isActive, setActive] = useState(false);
     const [comment, setComment] = useState(curComment)
 
     const handleSubmit = () => {
+        if(!userId) return message.error("로그인이 필요합니다.")
         onClick(comment);
         setComment("");
     };
     return (
         <CommentCreateWrap $isActive={isActive}>
-            <Placeholder>{message}</Placeholder>
+            <Placeholder>{infoMessage}</Placeholder>
             <CommentTextarea
                 onFocus={() => setActive(true)}
                 onBlur={() => setActive(false)}

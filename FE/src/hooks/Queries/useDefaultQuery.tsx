@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 const AUTH_KEY = import.meta.env.VITE_LIBRARY_AUTH_KEY;
 const API_URL = import.meta.env.VITE_BOOK_API_URL;
@@ -11,13 +11,11 @@ const defaultFetch = async(url: string) => {
     return await response.json();
 }
 
-const useGetQuery = (path: string, key: string, query: string = "") => {
-    return useQuery({
+const useDefaultQuery = (path: string, key: string, query: string = "") => {
+    return useSuspenseQuery({
         queryKey: [key],
         queryFn: () => defaultFetch(`${API_URL}${path}?authKey=${AUTH_KEY}${query}&format=json`),
-        throwOnError: true,
     });
 };
 
-export default useGetQuery;
-// http://data4library.kr/api/usageAnalysisList?authKey=bc1a3c82651b5c3e65599b87bb74151e1cc1be37d1b6514a1287c7f42fd770bf&isbn13=9788901033518&format=json
+export default useDefaultQuery;

@@ -1,5 +1,4 @@
 import { Modal } from "antd";
-
 interface ModalComponentProps {
     isModalOpen: boolean;
     callBack: () => void;
@@ -19,7 +18,13 @@ export const ModalComponent = ({
 
     return (
         <div onClick={(e) => e.stopPropagation()}>
-            <Modal open={isModalOpen} onOk={handleOk} onCancel={onCancel}>
+            <Modal
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={onCancel}
+                width={350}
+                style={{ fontWeight: "bold"}}
+            >
                 {message}
             </Modal>
         </div>
