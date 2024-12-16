@@ -1,10 +1,11 @@
 import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
 import { Button, Spacing } from "@components/Common";
 import FilterDisplay from "@components/FilterDisplay/FilterDisplay";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
+import useOnClickOutside from "@/hooks/Common/useOnClickOutside";
 import useOpen from "@/hooks/Common/useOpen";
 import useBookStore from "@/stores/bookStore";
 
@@ -12,6 +13,7 @@ import DropDownBox from "../DropDownBox/DropDownBox";
 
 const HeaderInput = () => {
     const { isOpen, setOpen, toggleOpen } = useOpen();
+    const inSideRef = useRef<HTMLDivElement | null>(null);
     const navigate = useNavigate();
     const location = useLocation();
     const { searchText, setSearchText } = useBookStore();
@@ -24,8 +26,10 @@ const HeaderInput = () => {
         if (currentPath !== "/") navigate("/");
     };
 
+    useOnClickOutside(inSideRef, () => setOpen(false));
+    
     return (
-        <Container>
+        <Container ref={inSideRef}>
             <SearchIcon onClick={toggleOpen} />
             {isOpen && (
                 <Card>

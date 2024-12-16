@@ -1,21 +1,22 @@
 import { Button, Text } from "@components/Common";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { IoChatbubbleSharp } from "react-icons/io5";
 import styled from "styled-components";
 
 import { INITIAL_CHAT_MESSAGE } from "@/constants";
 import useOpen from "@/hooks/Common/useOpen";
 import { ChatHistory } from "@/types/openAIType";
-
+import useOnClickOutside from "@/hooks/Common/useOnClickOutside";
 import AIChatBox from "./AIChatBox/AIChatBox";
 
 const AIChatPopup = () => {
-    const { isOpen, toggleOpen } = useOpen();
+    const inSideRef = useRef<HTMLDivElement | null>(null)
+    const { isOpen, setOpen, toggleOpen } = useOpen();
     const [chatHistory, setHistory] =
         useState<ChatHistory[]>(INITIAL_CHAT_MESSAGE);
-
+    useOnClickOutside(inSideRef, () => setOpen(false))
     return (
-        <ChatPopupContainer>
+        <ChatPopupContainer ref={inSideRef}>
             {isOpen && (
                 <AIChatBox
                     ChatClose={toggleOpen}
