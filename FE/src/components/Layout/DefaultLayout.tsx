@@ -14,7 +14,7 @@ const DefaultLayout = () => {
                     <HomeButton to={PATH.HOME}>
                         <Heading fontWeight="bold">Meet Your Books</Heading>
                     </HomeButton>
-                    <HeaderInput />
+                    {/* <HeaderInput /> */}
                     <NavigationPanel />
                 </HeaderWrap>
             </HeaderContainer>
@@ -33,9 +33,9 @@ const HeaderContainer = styled.section`
 
 const HeaderWrap = styled.section`
     max-width: 1044px;
+    padding: 0 20px;
     min-width: 350px;
     margin: 1rem auto;
-    padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;

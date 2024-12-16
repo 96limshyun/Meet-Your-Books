@@ -4,14 +4,15 @@ import styled from "styled-components";
 
 import { ViewType } from "@/types/booksType";
 interface ViewSelectorProps {
+    title: string;
     setViewMode: React.Dispatch<React.SetStateAction<ViewType>>;
     viewMode: ViewType;
 }
 
-const ViewSelector = ({ viewMode, setViewMode }: ViewSelectorProps) => {
+const ViewSelector = ({ title, viewMode, setViewMode }: ViewSelectorProps) => {
     return (
         <Container>
-            <Title>Books</Title>
+            <Title>{title}</Title>
             <IconButtonGroup>
                 <ListButton
                     $active={viewMode}
@@ -33,27 +34,25 @@ const ViewSelector = ({ viewMode, setViewMode }: ViewSelectorProps) => {
 export default ViewSelector;
 
 const ModeButton = styled.span`
+    align-content: center;
     border: none;
     cursor: pointer;
     font-size: 1rem;
     padding: 1px 6px;
-    
-`
+`;
 
 const GridButton = styled(ModeButton)<{ $active: ViewType }>`
-    color: ${({ $active }) => $active === "grid" ? "#0064FF" : "gray"};
+    color: ${({ $active }) => ($active === "grid" ? "#0064FF" : "gray")};
 `;
 
 const ListButton = styled(ModeButton)<{ $active: ViewType }>`
-    color: ${({ $active }) => $active === "list" ? "#0064FF" : "gray"};
-    
+    color: ${({ $active }) => ($active === "list" ? "#0064FF" : "gray")};
 `;
 
 const Container = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
-    width: 100%
+    width: 100%;
 `;
 
 const Title = styled.h1`
@@ -66,4 +65,3 @@ const IconButtonGroup = styled.div`
     gap: 0.5rem;
     margin-right: 0.5rem;
 `;
-

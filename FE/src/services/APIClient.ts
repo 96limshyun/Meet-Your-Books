@@ -24,8 +24,16 @@ export class APIClient {
         })
     }
 
+    public patch<T>(body: T, query = "") {
+        return fetchAPI(this.#url + query, {
+            method: "PATCH",
+            headers: headers,
+            body: body ? JSON.stringify(body) : null
+        })
+    }
+
     public delete(id: string) {
-        return fetchAPI(`${this.#url}/${id}`, {
+        return fetchAPI(`${this.#url}${id}`, {
             method: "DELETE",
             headers: headers,
         })

@@ -23,7 +23,7 @@ const KeywordFilter = ({
     const { data, isLoading } = useGetQuery(
         "monthlyKeywords",
         "keywords",
-        `${year}-${month}`
+        `&${year}-${month}`
     );
     const { isOpen, toggleOpen } = useOpen(true);
 

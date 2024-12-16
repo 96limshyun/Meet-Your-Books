@@ -1,5 +1,6 @@
 import FavoriteBtn from "@components/Common/FavoriteBtn/FavoriteBtn";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { ANIMATION_TIME } from "@/constants";
@@ -12,8 +13,9 @@ interface BookItemProps {
 }
 
 const BookCard = ({ bookData, viewMode }: BookItemProps) => {
-    const { bookname, authors, publisher, publication_year, bookImageURL, loan_count } = bookData;
+    const { bookname, authors, publisher, publication_year, bookImageURL, loan_count, isbn13 } = bookData;
     const [isVisible, setIsVisible] = useState(false);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const timer = setTimeout(() => setIsVisible(true), ANIMATION_TIME);
@@ -23,7 +25,7 @@ const BookCard = ({ bookData, viewMode }: BookItemProps) => {
     return (
         <>
             {viewMode === "grid" ? (
-                <GridCard $isVisible={isVisible}>
+                <GridCard $isVisible={isVisible} onClick={() => navigate(`/book/${isbn13}`)}>
                     <FavoritesBtnWrap>
                         <FavoriteBtn item={bookData} />
                     </FavoritesBtnWrap>
@@ -39,7 +41,7 @@ const BookCard = ({ bookData, viewMode }: BookItemProps) => {
                     </TextContainer>
                 </GridCard>
             ) : (
-                <ListCard $isVisible={isVisible}>
+                <ListCard $isVisible={isVisible} onClick={() => navigate(`/book/${isbn13}`)}>
                     <FavoritesBtnWrap>
                         <FavoriteBtn item={bookData} />
                     </FavoritesBtnWrap>
@@ -99,7 +101,7 @@ const ListCard = styled(Card)`
 
 const Image = styled.img`
     object-fit: cover;
-    width: 9rem;
+    width: 150px;
     height: 13rem;
     border-radius: 0.375rem;
 `;
@@ -143,7 +145,8 @@ const MetaInfo = styled.p`
 
 const FavoritesBtnWrap = styled.span`
     position: absolute;
-    right: 10px;
+    right: 8px;
+    top: 8px;
     z-index: 10;
 `;
 
