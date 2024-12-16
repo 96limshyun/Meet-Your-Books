@@ -3,7 +3,7 @@ import { Button, Spacing } from "@components/Common";
 import FilterDisplay from "@components/FilterDisplay/FilterDisplay";
 import React, { useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import useOnClickOutside from "@/hooks/Common/useOnClickOutside";
 import useOpen from "@/hooks/Common/useOpen";
@@ -27,7 +27,7 @@ const HeaderInput = () => {
     };
 
     useOnClickOutside(inSideRef, () => setOpen(false));
-    
+
     return (
         <Container ref={inSideRef}>
             <SearchIcon onClick={toggleOpen} />
@@ -104,6 +104,11 @@ const SearchIcon = styled(SearchOutlined)`
     cursor: pointer;
 `;
 
+const fadeIn = keyframes`
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+`;
+
 const Card = styled.div`
     overflow-y: auto;
     width: 250px;
@@ -118,6 +123,7 @@ const Card = styled.div`
     background-color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    animation: ${fadeIn} 0.3s ease-out forwards;
 `;
 
 const InputWrap = styled.form`

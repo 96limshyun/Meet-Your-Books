@@ -130,7 +130,3 @@ const RegionSelectWrap = styled.div`
 const RegionDetailWrap = styled.div`
     flex: 1;
 `;
-
-// 댓글달때 로그인 필요 모달
-// 상세페이지 들어갈때 로딩
-// 에러바운더리 처리

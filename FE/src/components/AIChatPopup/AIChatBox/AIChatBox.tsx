@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import useAIRequestMutation from "@/hooks/Queries/openAI/useAIRequestMutation";
 import { ChatHistory, Role } from "@/types/openAIType";
@@ -107,6 +107,11 @@ const AIChatBox = ({ chatHistory, setHistory, ChatClose }: AIChatBoxProps) => {
 
 export default AIChatBox;
 
+const fadeIn = keyframes`
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+`;
+
 const ChatBox = styled.div`
     position: absolute;
     bottom: 70px;
@@ -120,6 +125,7 @@ const ChatBox = styled.div`
     flex-direction: column;
     overflow: hidden;
     z-index: 10000;
+    animation: ${fadeIn} 0.3s ease-out forwards;
 `;
 
 const ChatHeader = styled.div`

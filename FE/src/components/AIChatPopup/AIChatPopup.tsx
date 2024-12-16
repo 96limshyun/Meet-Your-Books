@@ -4,9 +4,10 @@ import { IoChatbubbleSharp } from "react-icons/io5";
 import styled from "styled-components";
 
 import { INITIAL_CHAT_MESSAGE } from "@/constants";
+import useOnClickOutside from "@/hooks/Common/useOnClickOutside";
 import useOpen from "@/hooks/Common/useOpen";
 import { ChatHistory } from "@/types/openAIType";
-import useOnClickOutside from "@/hooks/Common/useOnClickOutside";
+
 import AIChatBox from "./AIChatBox/AIChatBox";
 
 const AIChatPopup = () => {
@@ -39,6 +40,7 @@ const AIChatPopup = () => {
 };
 
 export default AIChatPopup;
+
 
 const AIButton = styled(Button)`
     display: flex;
