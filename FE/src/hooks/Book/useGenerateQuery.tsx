@@ -8,7 +8,7 @@ const useGenerateQuery = () => {
 
     const queryString = useMemo(() => {
         const queryParams = {
-            ...(searchText && { [selectedValue]: searchText }),
+            ...(searchText && { [selectedValue.value]: searchText }),
             pageSize: size,
             ...(sort && { sort }),
             ...(order && { order }),
@@ -19,8 +19,8 @@ const useGenerateQuery = () => {
         return Object.entries(queryParams)
             .map(([key, value]) => `${key}=${value}`)
             .join("&");
-    }, [searchText, size, sort, order, selectedValue, keyword]);
-
+    }, [searchText, selectedValue.value, size, sort, order, keyword]);
+    console.log(queryString)
     return queryString;
 };
 

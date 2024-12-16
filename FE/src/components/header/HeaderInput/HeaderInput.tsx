@@ -1,7 +1,7 @@
 import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
-import { Button, Input, Spacing } from "@components/Common";
+import { Button, Spacing } from "@components/Common";
 import FilterDisplay from "@components/FilterDisplay/FilterDisplay";
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
@@ -14,38 +14,29 @@ const HeaderInput = () => {
     const { isOpen, setOpen, toggleOpen } = useOpen();
     const navigate = useNavigate();
     const location = useLocation();
-    const { setSearchText } = useBookStore();
-    const inputRef = useRef<HTMLInputElement | null>(null);
-
+    const { searchText, setSearchText } = useBookStore();
+    const [inputValue, setInputValue] = useState(searchText);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (inputRef.current?.value) {
-            setSearchText(inputRef.current?.value);
-            const currentPath = location.pathname;
-
-            if (currentPath !== "/") {
-                navigate("/");
-            }
-        }
+        setSearchText(inputValue);
+        const currentPath = location.pathname;
+        if (currentPath !== "/") navigate("/");
     };
 
     return (
         <Container>
-            <SearchIcon onClick={toggleOpen}/>
+            <SearchIcon onClick={toggleOpen} />
             {isOpen && (
-                <Card >
-                    <CloseBtn onClick={() =>setOpen(false)}/>
+                <Card>
+                    <CloseBtn onClick={() => setOpen(false)} />
                     <InputWrap onSubmit={handleSubmit}>
                         <Wrap>
                             <DropDownBox />
                             <StyledInput
-                                ref={inputRef}
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
                                 placeholder="검색어 입력"
-                                height="100%"
-                                color="white"
-                                fontSize="md"
-                                borderBottom="1px solid #007BFF"
                             />
                         </Wrap>
                         <Spacing height="sm" />
@@ -74,13 +65,17 @@ const CloseBtn = styled(CloseOutlined)`
     position: absolute;
     top: 10px;
     right: 10px;
-`
+`;
 
-const StyledInput = styled(Input)`
+const StyledInput = styled.input`
+    width: 100%;
     text-align: center;
-    display: flex;
-    align-items: center;
-    padding-bottom: 1px;
+    padding: 1px;
+    height: 100%;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #007bff;
 `;
 
 const Wrap = styled.div`

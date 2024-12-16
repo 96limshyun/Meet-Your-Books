@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import { BookDoc } from "@/types/booksType";
+import { DropDownItemType } from "@/types/dropDownType";
 
 interface StoreState {
     booksItem: BookDoc[];
@@ -9,7 +10,7 @@ interface StoreState {
     size: number;
     sort: string;
     order: string;
-    selectedValue: string;
+    selectedValue: DropDownItemType;
     keyword: string[];
     exactMatch: boolean;
     setBooksItem: (books: BookDoc[]) => void;
@@ -18,7 +19,7 @@ interface StoreState {
     setSize: (size: number) => void;
     setSort: (type: string) => void;
     setOrder: (type: string) => void;
-    setSelectedValue: (value: string) => void;
+    setSelectedValue: (value: DropDownItemType) => void;
     setKeyword: (keyword: string[]) => void;
     setExactMatch: (isExactMatch: boolean) => void;
 }
@@ -30,7 +31,7 @@ const useBookStore = create<StoreState>((set) => ({
     size: 20,
     sort: "",
     order: "",
-    selectedValue: "title",
+    selectedValue: { value: "title", label: "제목" },
     keyword: [],
     exactMatch: false,
     setBooksItem: (books) => set({ booksItem: books }),

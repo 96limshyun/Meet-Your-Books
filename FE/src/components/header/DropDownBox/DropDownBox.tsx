@@ -7,16 +7,14 @@ import useBookStore from "@/stores/bookStore";
 import { DropDownItemType } from "@/types/dropDownType";
 
 const DropDownBox = () => {
-    const { setSelectedValue } = useBookStore();
+    const { selectedValue, setSelectedValue } = useBookStore();
     const [isHover, setIsHover] = useState<boolean>(false);
-    const [curSelect, setSelect] = useState<DropDownItemType>(
-        DROP_DOWN_ITEMS[0]
-    );
+    const [curSelect, setSelect] = useState<DropDownItemType>(selectedValue);
 
     const handleClickItem = (item: DropDownItemType) => {
         setSelect(item);
         setIsHover(false);
-        setSelectedValue(item.value)
+        setSelectedValue(item)
     };
 
     return (
