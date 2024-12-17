@@ -2,13 +2,11 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 import useBookStore from "@/stores/bookStore";
 
-const AUTH_KEY = import.meta.env.VITE_LIBRARY_AUTH_KEY;
-const API_URL = import.meta.env.VITE_BOOK_API_URL;
+const BACK_END_API_URL = import.meta.env.VITE_BACK_END_API_URL;
 
 const fetchPage = async (pageParam: number, queryString: string) => {
-    const response = await fetch(
-        `${API_URL}srchBooks?authKey=${AUTH_KEY}&format=json&pageNo=${pageParam}&${queryString}`
-    );
+    const url = `${BACK_END_API_URL}libraryOpenAPI?path=srchBooks&query=${encodeURIComponent(`pageNo=${pageParam}&${queryString}`)}`
+    const response = await fetch(url);
 
     if (!response.ok) {
         throw new Error("Failed to fetch data");

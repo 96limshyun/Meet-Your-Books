@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import commentRouter from "./routes/comment";
 import favoriteRouter from "./routes/favorites";
 import regionRouter from "./routes/region";
+import libraryOpenAPIRouter from "./routes/libraryOpenAPI";
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ app.use("/", openAIRouter);
 app.use("/", commentRouter);
 app.use("/", favoriteRouter);
 app.use("/", regionRouter);
+app.use("/", libraryOpenAPIRouter);
 
 app.listen(port, () => {
     console.log(port + "연결 완료");

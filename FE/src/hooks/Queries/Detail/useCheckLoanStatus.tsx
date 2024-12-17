@@ -1,10 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 
-const AUTH_KEY = import.meta.env.VITE_LIBRARY_AUTH_KEY;
-const API_URL = import.meta.env.VITE_BOOK_API_URL;
+const BACK_END_API_URL = import.meta.env.VITE_BACK_END_API_URL;
 
 const fetchCheckLoanStatus = async (libCode: string, isbn13: string) => {
-  const url = `${API_URL}bookExist?authKey=${AUTH_KEY}&libCode=${libCode}&isbn13=${isbn13}&format=json`;
+  const url = `${BACK_END_API_URL}libraryOpenAPI?path=bookExist&query=${encodeURIComponent(`libCode=${libCode}&isbn13=${isbn13}`)}`
   const response = await fetch(url);
 
   if (!response.ok) {
