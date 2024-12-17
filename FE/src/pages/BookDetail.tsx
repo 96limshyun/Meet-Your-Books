@@ -30,16 +30,19 @@ const BookDetail = () => {
         handlePatchComment,
     } = useCommentHandlers(`${isbn}`);
 
-    if (isBookLoading || isCommentsLoading) return <LoadingSpin/>;
+    if (isBookLoading || isCommentsLoading) return <LoadingSpin />;
     return (
         <Container>
             <BookDetailCard bookData={book} />
-            <LineRechart
-                chartName="대출 추이"
-                data={loanHistory}
-                dataKey="대출건수"
-                XDataKey="month"
-            />
+            {loanHistory.length !== 0 && (
+                <LineRechart
+                    chartName="대출 추이"
+                    data={loanHistory}
+                    dataKey="대출건수"
+                    XDataKey="month"
+                />
+            )}
+
             {loanGrps.length !== 0 && (
                 <BarRechart
                     chartName="연령대별 대출 추이"
@@ -111,8 +114,3 @@ const CommentWrap = styled.div`
     flex-direction: column;
     gap: 12px;
 `;
-
-// 책 상세 정보 : 완료
-// 대출 추이 그래프
-// 소장도서관 보기(팝업으로?)
-// 댓글 : 완료

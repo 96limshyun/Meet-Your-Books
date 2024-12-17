@@ -1,13 +1,14 @@
 import { EnvironmentOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Heading } from "@components/Common";
 import KakaoMap from "@components/Common/KakaoMap/KakaoMap";
+import LoadingSpin from "@components/Common/Spin/Spin";
 import { message } from "antd";
 import { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 
 import { DEFAULT_INDEX } from "@/constants";
 import useCheckLoanStatus from "@/hooks/Queries/Detail/useCheckLoanStatus";
-import useDefaultSuspenseQuery from "@/hooks/Queries/useDefaultSuspenseQuery";
+import useLibraryOpenAPIQuery from "@/hooks/Queries/useLibraryOpenAPIQuery";
 import { LibrariesType } from "@/types/libraryType";
 interface LibrariesDisplayProps {
     isbn13: string;
@@ -26,19 +27,20 @@ const LibrariesDisplay = ({
     });
     const [selectedLibrary, setSelectedLibrary] =
         useState<LibrariesType | null>(null);
-    const { data, isLoading } = useDefaultSuspenseQuery(
+    const { data, isLoading } = useLibraryOpenAPIQuery(
         "libSrchByBook",
-        `${regionCode}&${subRegionCode}`,
+        [regionCode, subRegionCode],
         `&isbn=${isbn13}&region=${regionCode}&dtl_region=${subRegionCode}`
     );
 
     const { mutate } = useCheckLoanStatus(isbn13);
+
     useEffect(() => {
         if (!isLoading && data.response.libs.length > 0) {
             setSelectedLibrary(data.response.libs[DEFAULT_INDEX]);
         }
     }, [data, isLoading]);
-    if (isLoading) return <div>...isLoading</div>;
+    if (isLoading) return <LoadingSpin/>;
 
     const handleLoanStatusClick = (libCode: string) => {
         if (loanRequestRef.current.libCode)

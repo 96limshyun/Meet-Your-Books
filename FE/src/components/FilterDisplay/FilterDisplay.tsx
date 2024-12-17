@@ -1,6 +1,4 @@
 import { Heading, Spacing } from "@components/Common";
-import FilterSkeleton from "@components/Skeletons/FilterSkeleton";
-import { Suspense } from "react";
 import styled from "styled-components";
 
 import { ORDER_ITEMS, SORT_ITEMS } from "@/constants";
@@ -43,12 +41,10 @@ const FilterDisplay = () => {
                     onClick={handleItemClick(order, setOrder)}
                     items={ORDER_ITEMS}
                 />
-                <Suspense fallback={<FilterSkeleton/>}>
-                    <KeywordFilter
-                        selectedKeywords={keyword}
-                        handleKeywordClick={handleKeywordClick}
-                    />
-                </Suspense>
+                <KeywordFilter
+                    selectedKeywords={keyword}
+                    handleKeywordClick={handleKeywordClick}
+                />
             </FilterWrap>
         </FilterContainer>
     );

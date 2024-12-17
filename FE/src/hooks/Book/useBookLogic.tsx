@@ -15,6 +15,7 @@ const useBookLogic = () => {
         isFetchingNextPage,
         isLoading
     } = useBookInfinityQuery(queryString);
+    
     const { observe } = useInfiniteScroll(fetchNextPage);
 
     const booksItem = books?.pages.flatMap((page) => page.data) || [];
