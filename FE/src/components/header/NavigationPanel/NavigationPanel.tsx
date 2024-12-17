@@ -1,4 +1,5 @@
 import Overlay from "@components/Common/Overlay/Overlay";
+import { message } from "antd";
 import { useRef, useState, useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -17,7 +18,6 @@ const NavigationPanel = () => {
     const closePanel = () => setOpenPanel(false);
 
     const handleLogout = () => {
-        // 정말 로그아웃 하겠습니까? toast 추가
         localStorage.removeItem("ACCESS_TOKEN");
         localStorage.removeItem("USER_INFO");
         setIsLoggedIn(false);
@@ -47,9 +47,15 @@ const NavigationPanel = () => {
                             </RouteItem>
                         )}
                         {ROUTES.map((curRoute) => (
-                            <RouteItem to={curRoute.href} key={curRoute.href}>
+                            curRoute.name === "내가 찜한 책" ? <RouteItem to={curRoute.href} key={curRoute.href} onClick={closePanel}>
+                            {curRoute.name}
+                        </RouteItem> : <RouteItem to="/" key={curRoute.href} onClick={() => {
+                            message.warning("서비스 개발중입니다..")
+                            closePanel()
+                        }}>
                                 {curRoute.name}
                             </RouteItem>
+                            
                         ))}
                     </NavigationWrap>
                 </Overlay>

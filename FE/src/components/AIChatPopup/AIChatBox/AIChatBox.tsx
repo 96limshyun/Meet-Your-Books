@@ -1,10 +1,18 @@
 import { OpenAIOutlined, UserOutlined, SendOutlined } from "@ant-design/icons";
 import { Button, Text } from "@components/Common";
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Spin } from "antd";
+import React, {
+    Dispatch,
+    SetStateAction,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
+import useAIRequestMutation from "@/hooks/Queries/openAI/useAIRequestMutation";
 import { ChatHistory, Role } from "@/types/openAIType";
 interface AIChatBoxProps {
     chatHistory: ChatHistory[];
@@ -15,31 +23,30 @@ interface AIChatBoxProps {
 const AIChatBox = ({ chatHistory, setHistory, ChatClose }: AIChatBoxProps) => {
     const [inputValue, setInputValue] = useState("");
     const chatContentRef = useRef<HTMLDivElement | null>(null);
+    const { mutate, isPending } = useAIRequestMutation();
+
     const handleRequest = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!inputValue) return;
-        const message = inputValue
+        if (!inputValue.trim()) return;
+        const message = inputValue;
         setHistory((prev) => [...prev, { role: "user", content: message }]);
-        setInputValue("")
-        const response = await fetch("http://localhost:4000/openAI", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
+        setInputValue("");
+        mutate(message, {
+            onSuccess: (data) => {
+                setHistory((prev) => [
+                    ...prev,
+                    { role: "assistant", content: data.message },
+                ]);
             },
-            body: JSON.stringify({ message }),
         });
-        const data = await response.json();
-        setHistory((prev) => [
-            ...prev,
-            { role: "assistant", content: data.message },
-        ]);
     };
 
     useEffect(() => {
         if (chatContentRef.current) {
-            chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight;
+            chatContentRef.current.scrollTop =
+                chatContentRef.current.scrollHeight;
         }
-    }, [setHistory]);
+    }, [chatHistory]);
 
     return (
         <ChatBox>
@@ -56,7 +63,7 @@ const AIChatBox = ({ chatHistory, setHistory, ChatClose }: AIChatBoxProps) => {
                             <>
                                 <OpenAIOutlined />
                                 <MarkDownWrap remarkPlugins={[remarkGfm]}>
-                                {message.content}
+                                    {message.content}
                                 </MarkDownWrap>
                             </>
                         ) : (
@@ -69,6 +76,14 @@ const AIChatBox = ({ chatHistory, setHistory, ChatClose }: AIChatBoxProps) => {
                         )}
                     </MessageWrapper>
                 ))}
+                {isPending && (
+                    <MessageWrapper $isAI="assistant">
+                        <OpenAIOutlined />
+                            <LoadingWrap>
+                                <Spin size="small"/>
+                            </LoadingWrap>
+                    </MessageWrapper>
+                )}
             </ChatContent>
             <ChatInputWrap onSubmit={handleRequest}>
                 <ChatInput
@@ -92,6 +107,11 @@ const AIChatBox = ({ chatHistory, setHistory, ChatClose }: AIChatBoxProps) => {
 
 export default AIChatBox;
 
+const fadeIn = keyframes`
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+`;
+
 const ChatBox = styled.div`
     position: absolute;
     bottom: 70px;
@@ -105,6 +125,7 @@ const ChatBox = styled.div`
     flex-direction: column;
     overflow: hidden;
     z-index: 10000;
+    animation: ${fadeIn} 0.3s ease-out forwards;
 `;
 
 const ChatHeader = styled.div`
@@ -183,7 +204,17 @@ const SendButton = styled(Button)<{ disabled?: boolean }>`
     }
 `;
 
-const MarkDownWrap = styled(Markdown)<{ $isAI?: Role }>`
+const MarkDownWrap = styled(Markdown)`
+    background-color: #e3f2fd;
+    color: #000;
+    padding: 8px 12px;
+    border-radius: 16px;
+    max-width: 75%;
+    word-wrap: break-word;
+    font-size: 0.875rem;
+`;
+
+const LoadingWrap = styled.div`
     background-color: #e3f2fd;
     color: #000;
     padding: 8px 12px;

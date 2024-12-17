@@ -1,4 +1,5 @@
 import { Spacing } from "@components/Common";
+import LoadingSpin from "@components/Common/Spin/Spin";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -15,8 +16,17 @@ const BookDisplay = () => {
         hasNextPage,
         isFetchingNextPage,
         isLastPage,
-        observerRefCallback,
+        observerRef,
+        isLoading,
     } = useBookLogic();
+
+    if (isLoading) {
+        return (
+            <BookContainer>
+                <LoadingSpin />
+            </BookContainer>
+        );
+    }
 
     return (
         <BookContainer>
@@ -35,16 +45,13 @@ const BookDisplay = () => {
                     />
                 ))}
             </BookWrap>
-            {isFetchingNextPage && !isLastPage && <div>...loading</div>}
+            {isFetchingNextPage && !isLastPage && <LoadingSpin />}
             {booksItem.length === 0 && !isFetchingNextPage ? (
                 <EmptyContentText>검색 결과가 없습니다.</EmptyContentText>
             ) : (
                 <>
                     {hasNextPage ? (
-                        <div
-                            ref={observerRefCallback}
-                            style={{ height: "10px" }}
-                        />
+                        <div ref={observerRef} style={{ height: "10px" }} />
                     ) : (
                         <LastPageView>마지막 페이지 입니다.</LastPageView>
                     )}

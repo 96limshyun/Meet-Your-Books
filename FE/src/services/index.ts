@@ -5,3 +5,4 @@ export const authAPI = new APIClient(import.meta.env.VITE_BACK_END_API_URL + "ka
 export const commentAPI = new APIClient(import.meta.env.VITE_BACK_END_API_URL + "comments/")
 export const favoriteAPI = new APIClient(import.meta.env.VITE_BACK_END_API_URL + "favorites/")
 export const regionAPI = new APIClient(import.meta.env.VITE_BACK_END_API_URL + "region?")
+export const openAI_API = new APIClient(import.meta.env.VITE_BACK_END_API_URL + "openAI")

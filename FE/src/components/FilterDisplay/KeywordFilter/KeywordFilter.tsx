@@ -1,12 +1,12 @@
+import LoadingSpin from "@components/Common/Spin/Spin";
 import styled, { css } from "styled-components";
 
 import useOpen from "@/hooks/Common/useOpen";
-import useGetQuery from "@/hooks/Queries/useGetQuery";
+import useLibraryOpenAPIQuery from "@/hooks/Queries/useLibraryOpenAPIQuery";
 import { Keyword } from "@/types/keywordType";
 
 import Header from "../Header/Header";
 import Item from "../Item/Item";
-
 interface KeywordFilterProps {
     selectedKeywords: string[];
     handleKeywordClick: (keywordValue: string) => void;
@@ -15,18 +15,18 @@ interface KeywordFilterProps {
 const date = new Date();
 const year = date.getFullYear();
 const month = date.getMonth() + 1;
+const requestDate = `${year}-${month}`;
 
 const KeywordFilter = ({
     selectedKeywords,
     handleKeywordClick,
 }: KeywordFilterProps) => {
-    const { data, isLoading } = useGetQuery(
+    const { data, isLoading } = useLibraryOpenAPIQuery(
         "monthlyKeywords",
-        "keywords",
-        `&${year}-${month}`
+        ["keywords", requestDate],
+        requestDate
     );
     const { isOpen, toggleOpen } = useOpen(true);
-
     return (
         <Container>
             <Header
@@ -35,15 +35,21 @@ const KeywordFilter = ({
                 onClick={toggleOpen}
             />
             <ListWrap $isOpen={isOpen}>
-                {data && data?.response?.keywords.map((curKeyword: Keyword) => (
-                    <Item
-                        key={`${curKeyword.keyword.word}-${curKeyword.keyword.weight}`}
-                        name={curKeyword.keyword.word}
-                        value={curKeyword.keyword.word}
-                        isChecked={selectedKeywords.includes(curKeyword.keyword.word)}
-                        onChange={handleKeywordClick}
-                    />
-                ))}
+                {isLoading ? (
+                    <LoadingSpin />
+                ) : (
+                    data?.response?.keywords.map((curKeyword: Keyword) => (
+                        <Item
+                            key={`${curKeyword.keyword.word}-${curKeyword.keyword.weight}`}
+                            name={curKeyword.keyword.word}
+                            value={curKeyword.keyword.word}
+                            isChecked={selectedKeywords.includes(
+                                curKeyword.keyword.word
+                            )}
+                            onChange={handleKeywordClick}
+                        />
+                    ))
+                )}
             </ListWrap>
         </Container>
     );

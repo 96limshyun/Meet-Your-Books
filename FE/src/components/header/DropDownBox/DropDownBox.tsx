@@ -7,16 +7,14 @@ import useBookStore from "@/stores/bookStore";
 import { DropDownItemType } from "@/types/dropDownType";
 
 const DropDownBox = () => {
-    const { setSelectedValue } = useBookStore();
+    const { selectedValue, setSelectedValue } = useBookStore();
     const [isHover, setIsHover] = useState<boolean>(false);
-    const [curSelect, setSelect] = useState<DropDownItemType>(
-        DROP_DOWN_ITEMS[0]
-    );
+    const [curSelect, setSelect] = useState<DropDownItemType>(selectedValue);
 
     const handleClickItem = (item: DropDownItemType) => {
         setSelect(item);
         setIsHover(false);
-        setSelectedValue(item.value)
+        setSelectedValue(item)
     };
 
     return (
@@ -24,7 +22,7 @@ const DropDownBox = () => {
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
         >
-            <Text margin="auto">{curSelect.label}</Text>
+            <Text fontWeight="bold" margin="auto">{curSelect.label}</Text>
             {isHover && (
                 <DropdownList>
                     {DROP_DOWN_ITEMS.map((item) => (
@@ -45,11 +43,12 @@ export default DropDownBox;
 
 const DropdownContainer = styled.div`
     position: relative;
-    width: 70px;
+    width: 120px;
     height: 100%;
     text-align: center;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid #ccc;
 `;
 
 const dropdownAnimation = keyframes`
@@ -72,7 +71,7 @@ const DropdownList = styled.ul`
     background-color: ${({ theme }) => theme.body};
     border: 1px solid #ccc;
     border-radius: 8px;
-    z-index: 10;
+    z-index: 10000;
     list-style: none;
     margin: 0;
     padding: 0;

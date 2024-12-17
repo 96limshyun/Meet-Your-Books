@@ -1,13 +1,14 @@
 import { EnvironmentOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Heading } from "@components/Common";
 import KakaoMap from "@components/Common/KakaoMap/KakaoMap";
+import LoadingSpin from "@components/Common/Spin/Spin";
 import { message } from "antd";
 import { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 
 import { DEFAULT_INDEX } from "@/constants";
 import useCheckLoanStatus from "@/hooks/Queries/Detail/useCheckLoanStatus";
-import useGetQuery from "@/hooks/Queries/useGetQuery";
+import useLibraryOpenAPIQuery from "@/hooks/Queries/useLibraryOpenAPIQuery";
 import { LibrariesType } from "@/types/libraryType";
 interface LibrariesDisplayProps {
     isbn13: string;
@@ -26,18 +27,20 @@ const LibrariesDisplay = ({
     });
     const [selectedLibrary, setSelectedLibrary] =
         useState<LibrariesType | null>(null);
-    const { data, isLoading } = useGetQuery(
+    const { data, isLoading } = useLibraryOpenAPIQuery(
         "libSrchByBook",
-        `${regionCode}&${subRegionCode}`,
+        [regionCode, subRegionCode],
         `&isbn=${isbn13}&region=${regionCode}&dtl_region=${subRegionCode}`
     );
+
     const { mutate } = useCheckLoanStatus(isbn13);
+
     useEffect(() => {
         if (!isLoading && data.response.libs.length > 0) {
             setSelectedLibrary(data.response.libs[DEFAULT_INDEX]);
         }
     }, [data, isLoading]);
-    if (isLoading) return <div>...isLoading</div>;
+    if (isLoading) return <LoadingSpin/>;
 
     const handleLoanStatusClick = (libCode: string) => {
         if (loanRequestRef.current.libCode)
@@ -63,60 +66,71 @@ const LibrariesDisplay = ({
     return (
         <>
             <ListWrap>
-                {libraries.map((item) => (
-                    <LibraryCard
-                        key={item.lib.libCode}
-                        $selected={
-                            item.lib.libCode === selectedLibrary?.lib.libCode
-                        }
-                        onClick={() => setSelectedLibrary(item)}
-                    >
-                        <LibraryContent>
-                            <LibraryDetails>
-                                <Heading fontSize="md" fontWeight="bold">
-                                    {item.lib.libName}
-                                </Heading>
-                                <LibraryInfo>
-                                    <InfoRow>
-                                        <EnvironmentOutlined />
-                                        <span>{item.lib.address}</span>
-                                    </InfoRow>
-                                    <InfoRow>
-                                        <PhoneOutlined />
-                                        <span>{item.lib.tel}</span>
-                                    </InfoRow>
-                                </LibraryInfo>
-                            </LibraryDetails>
-                            <ActionsContainer>
-                                <HomepageButton
-                                    href={item.lib.homepage}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    홈페이지
-                                </HomepageButton>
-                                <StyledButton
-                                    onClick={() =>
-                                        handleLoanStatusClick(item.lib.libCode)
-                                    }
-                                    disabled={
-                                        loanRequestRef.current.libCode ===
+                {libraries.length === 0 ? (
+                    <NoLibrariesMessage>
+                        <SadIcon>😔</SadIcon>
+                        <div>해당 지역에 도서관이 없어요...</div>
+                        <div>다른 지역을 선택해보세요!</div>
+                    </NoLibrariesMessage>
+                ) : (
+                    libraries.map((item) => (
+                        <LibraryCard
+                            key={item.lib.libCode}
+                            $selected={
+                                item.lib.libCode ===
+                                selectedLibrary?.lib.libCode
+                            }
+                            onClick={() => setSelectedLibrary(item)}
+                        >
+                            <LibraryContent>
+                                <LibraryDetails>
+                                    <Heading fontSize="md" fontWeight="bold">
+                                        {item.lib.libName}
+                                    </Heading>
+                                    <LibraryInfo>
+                                        <InfoRow>
+                                            <EnvironmentOutlined />
+                                            <span>{item.lib.address}</span>
+                                        </InfoRow>
+                                        <InfoRow>
+                                            <PhoneOutlined />
+                                            <span>{item.lib.tel}</span>
+                                        </InfoRow>
+                                    </LibraryInfo>
+                                </LibraryDetails>
+                                <ActionsContainer>
+                                    <HomepageButton
+                                        href={item.lib.homepage}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        홈페이지
+                                    </HomepageButton>
+                                    <StyledButton
+                                        onClick={() =>
+                                            handleLoanStatusClick(
+                                                item.lib.libCode
+                                            )
+                                        }
+                                        disabled={
+                                            loanRequestRef.current.libCode ===
+                                                item.lib.libCode &&
+                                            loanRequestRef.current.isRequest
+                                        }
+                                    >
+                                        {loanRequestRef.current.libCode ===
                                             item.lib.libCode &&
                                         loanRequestRef.current.isRequest
-                                    }
-                                >
-                                    {loanRequestRef.current.libCode ===
-                                        item.lib.libCode &&
-                                    loanRequestRef.current.isRequest
-                                        ? "요청 중"
-                                        : "대출확인"}
-                                </StyledButton>
-                            </ActionsContainer>
-                        </LibraryContent>
-                    </LibraryCard>
-                ))}
+                                            ? "요청 중"
+                                            : "대출확인"}
+                                    </StyledButton>
+                                </ActionsContainer>
+                            </LibraryContent>
+                        </LibraryCard>
+                    ))
+                )}
             </ListWrap>
-            {selectedLibrary && (
+            {selectedLibrary && libraries.length !== 0 && (
                 <KakaoMap
                     lat={Number(selectedLibrary.lib.latitude)}
                     lng={Number(selectedLibrary.lib.longitude)}
@@ -227,4 +241,26 @@ export const StyledButton = styled.button`
     &:hover {
         background-color: #059669;
     }
+`;
+
+const NoLibrariesMessage = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #fef9c3;
+    color: #f59e0b;
+    border: 1px solid #fcd34d;
+    border-radius: 8px;
+    padding: 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    gap: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: auto;
+`;
+
+const SadIcon = styled.div`
+    font-size: 2rem;
 `;

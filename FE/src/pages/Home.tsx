@@ -3,7 +3,6 @@ import BookDisplay from "@components/BookDisplay/BookDisplay";
 import FilterDisplay from "@components/FilterDisplay/FilterDisplay";
 import styled from "styled-components";
 
-
 const Home = () => {
     return (
         <HomeContainer>
@@ -11,7 +10,7 @@ const Home = () => {
                 <FilterDisplay />
             </FilterWrap>
             <BookDisplay />
-            <AIChatPopup/>
+            <AIChatPopup />
         </HomeContainer>
     );
 };
@@ -23,11 +22,11 @@ const HomeContainer = styled.main`
     padding: 0 20px;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 2rem;
     margin: 0px auto;
-    @media (max-width: 1024px) {
-        gap: 0;
+    @media (max-width: 1000px) {
+        justify-content: center;
     }
 `;
 
