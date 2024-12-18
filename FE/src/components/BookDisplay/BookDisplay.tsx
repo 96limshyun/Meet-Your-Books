@@ -1,4 +1,5 @@
 import { Spacing } from "@components/Common";
+import LoadingBook from "@components/Common/LoadingBook/LoadingBook";
 import LoadingSpin from "@components/Common/Spin/Spin";
 import { useState } from "react";
 import styled from "styled-components";
@@ -23,7 +24,8 @@ const BookDisplay = () => {
     if (isLoading) {
         return (
             <BookContainer>
-                <LoadingSpin />
+                {/* <LoadingSpin /> */}
+                <LoadingBook/>
             </BookContainer>
         );
     }
