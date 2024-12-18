@@ -26,7 +26,8 @@ const FavoriteBtn = ({ item }: FavoritesBtnProps) => {
     const handleFavorite = (e: React.MouseEvent) => {
         e.stopPropagation();
         if (!USER_INFO?.id) return message.error("로그인이 필요합니다.")
-
+        if (addFavoriteMutation.isPending || removeFavoriteMutation.isPending) return;
+        
         if (isFavorite) {
             removeFavoriteMutation.mutate(item.isbn13);
         } else {
