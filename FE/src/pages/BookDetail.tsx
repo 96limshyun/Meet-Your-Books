@@ -1,5 +1,5 @@
 import { Heading, Spacing } from "@components/Common";
-import LoadingSpin from "@components/Common/Spin/Spin";
+import LoadingBook from "@components/Common/LoadingBook/LoadingBook";
 import {
     BookDetailCard,
     CommentBox,
@@ -30,7 +30,7 @@ const BookDetail = () => {
         handlePatchComment,
     } = useCommentHandlers(`${isbn}`);
 
-    if (isBookLoading || isCommentsLoading) return <LoadingSpin />;
+    if (isBookLoading || isCommentsLoading) return <LoadingBook />;
     return (
         <Container>
             <BookDetailCard bookData={book} />

@@ -1,4 +1,4 @@
-import LoadingSpin from "@components/Common/Spin/Spin";
+import { Skeleton } from "antd";
 import styled, { css } from "styled-components";
 
 import useOpen from "@/hooks/Common/useOpen";
@@ -36,7 +36,7 @@ const KeywordFilter = ({
             />
             <ListWrap $isOpen={isOpen}>
                 {isLoading ? (
-                    <LoadingSpin />
+                    <Skeleton active/>
                 ) : (
                     data?.response?.keywords.map((curKeyword: Keyword) => (
                         <Item
