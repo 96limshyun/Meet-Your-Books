@@ -24,7 +24,7 @@ const FavoriteBookDisplay: React.FC<FavoriteBookDisplayProps> = ({
     if (isLoading) {
         return (
             <BookContainer>
-                <LoadingBook/>
+                <LoadingBook />
             </BookContainer>
         );
     }
@@ -66,7 +66,11 @@ const FavoriteBookDisplay: React.FC<FavoriteBookDisplayProps> = ({
 export default FavoriteBookDisplay;
 
 const BookContainer = styled.div`
+    width: 100%;
     width: 770px;
+    @media (max-width: 1024px) {
+        max-width: 100%;
+    }
 `;
 
 const BookWrap = styled.div<{ $viewMode: ViewType }>`
