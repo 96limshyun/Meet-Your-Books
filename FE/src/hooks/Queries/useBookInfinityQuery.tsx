@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { HTTPError } from "async-error-boundary";
 
 import useBookStore from "@/stores/bookStore";
-
 const BACK_END_API_URL = import.meta.env.VITE_BACK_END_API_URL;
 
 const fetchPage = async (pageParam: number, queryString: string) => {
@@ -9,7 +9,7 @@ const fetchPage = async (pageParam: number, queryString: string) => {
     const response = await fetch(url);
 
     if (!response.ok) {
-        throw new Error("Failed to fetch data");
+        throw new HTTPError(response.status);
     }
 
     const data = await response.json();
@@ -36,6 +36,7 @@ const useBookInfinityQuery = (queryString: string) => {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
         getPreviousPageParam: (firstPage) => firstPage.prevCursor,
         initialPageParam: page,
+        throwOnError: true,
     });
 };
 

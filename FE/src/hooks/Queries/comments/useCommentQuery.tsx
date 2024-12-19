@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
+import { HTTPError } from "async-error-boundary";
 
 import { commentAPI } from "@/services";
 import { CommentType } from "@/types/commentsType";
 const fetchGetComments = async(query: string) => {
     const response = await commentAPI.get(query);
     if (!response.ok) {
-        throw new Error("댓글 가져오기 api 에러");
+        throw new HTTPError(response.status);
     }
     return await response.json();
 }
