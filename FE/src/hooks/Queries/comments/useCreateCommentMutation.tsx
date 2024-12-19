@@ -16,9 +16,19 @@ const useCreateCommentMutation = (isbn: string) => {
 
     return useMutation({
         mutationFn: (body: CommentPayload) => fetchCreateComment(isbn, body),
-        onSuccess: () =>
-            queryClient.invalidateQueries({ queryKey: ["comments", isbn] }),
-        throwOnError: true,
+        onMutate: async (body) => {
+            await queryClient.cancelQueries({queryKey: ["comments", isbn]});
+
+            const previousComments = queryClient.getQueryData(["comments", isbn])
+            
+            queryClient.setQueryData(["comments", isbn], (oldComments:CommentPayload[]) => [...oldComments, body])
+
+            return {previousComments}
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: ["comments", isbn] });
+        },
+        throwOnError: true
     });
 };
 

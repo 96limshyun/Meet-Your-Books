@@ -7,6 +7,7 @@ import { BookDoc, ViewType } from "@/types/booksType";
 
 import BookCard from "./BookCard/BookCard";
 import ViewSelector from "./ViewSelector/ViewSelector";
+import LoadingBook from "@components/Common/LoadingBook/LoadingBook";
 
 interface FavoriteBookDisplayProps {
     searchText: string;
@@ -20,7 +21,13 @@ const FavoriteBookDisplay: React.FC<FavoriteBookDisplayProps> = ({
 
     const { data, isLoading } = useFavoritesQuery(USER_INFO.id);
 
-    if (isLoading) return <div>...loading</div>;
+    if (isLoading) {
+        return (
+            <BookContainer>
+                <LoadingBook />
+            </BookContainer>
+        );
+    }
 
     const books = data?.book || [];
     const filteredBooks = searchText
@@ -59,7 +66,11 @@ const FavoriteBookDisplay: React.FC<FavoriteBookDisplayProps> = ({
 export default FavoriteBookDisplay;
 
 const BookContainer = styled.div`
+    width: 100%;
     width: 770px;
+    @media (max-width: 1024px) {
+        max-width: 100%;
+    }
 `;
 
 const BookWrap = styled.div<{ $viewMode: ViewType }>`
