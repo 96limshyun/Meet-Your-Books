@@ -13,6 +13,7 @@ const kakaoURL = `${
 }client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
 const Login = () => {
+    console.log(kakaoURL)
     const navigate = useNavigate();
     const handleLogin = () => (window.location.href = kakaoURL);
 
