@@ -8,12 +8,9 @@ import { authAPI } from "@/services";
 
 const Rest_api_key = import.meta.env.VITE_KAKAO_REST_API_KEY;
 const redirect_uri = import.meta.env.VITE_AUTH_REDIRECT_URL;
-const kakaoURL = `${
-    import.meta.env.VITE_KAKAO_URL
-}client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
+const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
 const Login = () => {
-    console.log(kakaoURL)
     const navigate = useNavigate();
     const handleLogin = () => (window.location.href = kakaoURL);
 
