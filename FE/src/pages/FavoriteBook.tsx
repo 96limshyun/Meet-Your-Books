@@ -28,12 +28,13 @@ const ContentWrapper = styled.div`
     display: flex;
     gap: 2rem;
 
-    @media (min-width: 1024px) {
+    @media (min-width: 1000px) {
         flex-direction: row;
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1000px) {
         flex-direction: column;
         gap: 1rem;
+        align-items: center;
     }
 `;

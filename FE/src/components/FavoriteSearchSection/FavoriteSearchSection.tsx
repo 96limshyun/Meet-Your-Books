@@ -23,5 +23,6 @@ const FavoriteSearchSection: React.FC<FavoriteSearchInputProps> = ({
 export default FavoriteSearchSection;
 
 const InputContainer = styled.div`
+    max-width: 770px;
     margin-bottom: 1rem;
 `;
