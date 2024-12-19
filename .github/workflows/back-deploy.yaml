@@ -3,7 +3,7 @@ name: Deploy Backend to EC2
 on:
   push:
     branches:
-      - deploy/cicd
+      - main
 
 jobs:
   deploy:
@@ -32,9 +32,7 @@ jobs:
 
           git sparse-checkout init --cone
           git sparse-checkout set BE
-          git fetch origin deploy/cicd
-          git checkout deploy/cicd
-          git pull origin deploy/cicd
+          git pull origin main
 
           cd BE
 
