@@ -40,6 +40,9 @@ app.use("/", commentRouter);
 app.use("/", favoriteRouter);
 app.use("/", regionRouter);
 app.use("/", libraryOpenAPIRouter);
+app.use("/cicdtest", (req, res) => {
+    res.json("cicd 완료")
+});
 
 app.listen(port, () => {
     console.log(port + "연결 완료");
