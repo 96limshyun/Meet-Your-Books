@@ -15,13 +15,11 @@ const ErrorFallBack = ({ statusCode = 404, resetError }: ErrorProps) => {
                 <Description>
                     {HTTP_ERROR_MESSAGE[currentStatusCode].BODY}
                 </Description>
-                {resetError && (
-                    <ButtonWrapper>
-                        <RetryButton onClick={resetError}>
-                            {HTTP_ERROR_MESSAGE[currentStatusCode].BUTTON}
-                        </RetryButton>
-                    </ButtonWrapper>
-                )}
+                <ButtonWrapper>
+                    <RetryButton onClick={resetError}>
+                        {HTTP_ERROR_MESSAGE[currentStatusCode].BUTTON}
+                    </RetryButton>
+                </ButtonWrapper>
             </ContentWrapper>
         </Container>
     );
@@ -61,12 +59,10 @@ const LogoText = styled(Link)`
     cursor: pointer;
 `;
 
-
 const Title = styled.h1`
     margin-top: 1rem;
     font-size: 1.875rem;
     font-weight: bold;
-    font-family: mono;
 
     @media (min-width: 640px) {
         font-size: 2.25rem;
