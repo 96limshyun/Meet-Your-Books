@@ -24,7 +24,6 @@ const BookDisplay = () => {
     if (isLoading) {
         return (
             <BookContainer>
-                {/* <LoadingSpin /> */}
                 <LoadingBook/>
             </BookContainer>
         );
