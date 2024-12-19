@@ -10,4 +10,5 @@ export interface CommentPayload {
     userid: string;
     username: string;
     content: string;
+    _id?: string;
 }

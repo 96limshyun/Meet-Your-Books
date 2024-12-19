@@ -1,14 +1,9 @@
 import { CloseOutlined } from "@ant-design/icons";
 import { Heading } from "@components/Common";
-import LoadingSpin from "@components/Common/Spin/Spin";
-import { Suspense, useLayoutEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
-import { DEFAULT_INDEX } from "@/constants";
 import { REGIONS } from "@/constants/regions";
-import useOnClickOutside from "@/hooks/Common/useOnClickOutside";
-import useSubRegionQuery from "@/hooks/Queries/Detail/useSubRegionQuery";
-import { RegionType } from "@/types/regionType";
+import useLibrariesPopupLogic from "@/hooks/BookDetail/useLibrariesPopupLogic";
 
 import LibrariesDisplay from "../LibrariesDisplay/LibrariesDisplay";
 import RegionSelectBox from "../RegionSelectBox/RegionSelectBox";
@@ -20,27 +15,15 @@ const LibrariesFindPopup = ({
     closePopup,
     isbn13,
 }: LibrariesFindPopupProps) => {
-    const [selectedRegion, setSelectedRegion] = useState(
-        REGIONS[DEFAULT_INDEX]
-    );
-    const { data: subRegion = [], isLoading: subRegionLoading } =
-        useSubRegionQuery(selectedRegion.code);
-
-    const [selectedSubRegion, setSelectedSubRegion] =
-        useState<RegionType | null>(null);
-
-    const inSideRef = useRef<HTMLDivElement | null>(null);
-    useOnClickOutside(inSideRef, closePopup);
-
-    useLayoutEffect(() => {
-        if (!subRegionLoading && subRegion.length > 0) {
-            setSelectedSubRegion(subRegion[DEFAULT_INDEX]);
-        }
-    }, [subRegion, subRegionLoading]);
-
-    const handleRegionClick = (region: RegionType) => setSelectedRegion(region);
-    const handleSubRegionClick = (region: RegionType) =>
-        setSelectedSubRegion(region);
+    const {
+        selectedRegion,
+        subRegion,
+        subRegionLoading,
+        selectedSubRegion,
+        inSideRef,
+        handleRegionClick,
+        handleSubRegionClick,
+    } = useLibrariesPopupLogic(closePopup);
 
     return (
         <Overlay>
@@ -61,17 +44,16 @@ const LibrariesFindPopup = ({
                         />
                     </RegionDetailWrap>
                     <RegionDetailWrap>
-                        {subRegion.length > 0 && selectedSubRegion && (
+                        <RegionDetailWrap>
                             <RegionSelectBox
                                 regionBoxName="상세지역"
-                                regions={subRegion}
-                                curSelected={selectedSubRegion.name}
+                                regions={subRegionLoading ? [] : subRegion}
+                                curSelected={selectedSubRegion?.name || ""}
                                 onClick={handleSubRegionClick}
                             />
-                        )}
+                        </RegionDetailWrap>
                     </RegionDetailWrap>
                 </RegionSelectWrap>
-                <Suspense fallback={<LoadingSpin/>}>
                 {selectedSubRegion && (
                     <LibrariesDisplay
                         isbn13={isbn13}
@@ -79,7 +61,6 @@ const LibrariesFindPopup = ({
                         subRegionCode={selectedSubRegion.code}
                     />
                 )}
-                </Suspense>
             </Card>
         </Overlay>
     );
