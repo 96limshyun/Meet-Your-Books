@@ -28,7 +28,7 @@ jobs:
           
           sudo su
 
-          cd/Meet-Your-Books
+          cd /Meet-Your-Books
 
           git sparse-checkout init --cone
           git sparse-checkout set BE
