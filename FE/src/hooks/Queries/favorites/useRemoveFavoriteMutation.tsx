@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { HTTPError } from "async-error-boundary";
 
 import { favoriteAPI } from "@/services";
 import { BookDoc } from "@/types/booksType";
-
 const removeFavorite = async (userId: string, isbn13: string) => {
     const response = await favoriteAPI.delete(
         `?userId=${userId}&isbn=${isbn13}`
     );
     if (!response.ok) {
-        throw new Error("찜 해제 실패");
+        throw new HTTPError(response.status);
     }
 };
 
@@ -37,10 +37,10 @@ const useRemoveFavoriteMutation = (userId: string) => {
 
             return { previousFavorites };
         },
-        onError: (error) => console.log(error),
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: ["favorites", userId] });
         },
+        throwOnError: true,
     });
 };
 
