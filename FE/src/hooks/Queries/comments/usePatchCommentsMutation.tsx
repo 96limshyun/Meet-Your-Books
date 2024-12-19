@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { HTTPError } from "async-error-boundary";
 
 import { commentAPI } from "@/services";
-
 const fetchPatchComment = async ({
     isbn,
     _id,
@@ -13,7 +13,7 @@ const fetchPatchComment = async ({
 }) => {
     const response = await commentAPI.patch({content: body}, `${isbn}/${_id}`);
     if (!response.ok) {
-        throw new Error("댓글 수정 실패");
+        throw new HTTPError(response.status);
     }
 };
 
@@ -22,10 +22,9 @@ const usePatchCommentsMutation = (isbn: string) => {
     return useMutation({
         mutationFn: ({ _id, body }: { _id: string; body: string }) =>
             fetchPatchComment({ isbn, _id, body }),
-        // toast 처리 예정
-        onError: (error) => console.log(error),
         onSuccess: () =>
             queryClient.invalidateQueries({ queryKey: ["comments", isbn] }),
+        throwOnError: true,
     });
 };
 

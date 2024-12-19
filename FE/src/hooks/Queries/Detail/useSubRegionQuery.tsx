@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
+import { HTTPError } from "async-error-boundary";
 
 import { regionAPI } from "@/services";
-
 const fetchGetSubRegion = async (regionCode: string) => {
     const response = await regionAPI.get(`regionCode=${regionCode}`);
     if (!response.ok) {
-        throw new Error("서브지역 api 에러");
+        throw new HTTPError(response.status);
     }
     return await response.json();
 };
