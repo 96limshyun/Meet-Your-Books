@@ -29,7 +29,7 @@ const LibrariesDisplay = ({
         useState<LibrariesType | null>(null);
     const { data, isLoading } = useLibraryOpenAPIQuery(
         "libSrchByBook",
-        [regionCode, subRegionCode],
+        [regionCode, subRegionCode, isbn13],
         `&isbn=${isbn13}&region=${regionCode}&dtl_region=${subRegionCode}`
     );
 
@@ -39,15 +39,16 @@ const LibrariesDisplay = ({
         if (!isLoading && data.response.libs.length > 0) {
             setSelectedLibrary(data.response.libs[DEFAULT_INDEX]);
         }
-    }, [data, isLoading]);
-    if (isLoading) return <LoadingSpin/>;
 
+    }, [data, isLoading]);
+
+    
     const handleLoanStatusClick = (libCode: string) => {
         if (loanRequestRef.current.libCode)
             return message.error("현재 대출 조회 중입니다.");
         loanRequestRef.current.libCode = libCode;
         loanRequestRef.current.isRequest = true;
-
+        
         mutate(libCode, {
             onSuccess: (data) => {
                 if (data.response.result.loanAvailable === "Y")
@@ -61,8 +62,11 @@ const LibrariesDisplay = ({
         });
     };
 
+    
+    if (isLoading) return <LoadingSpin/>;
+    
     const libraries: LibrariesType[] = data.response.libs;
-
+    
     return (
         <>
             <ListWrap>
