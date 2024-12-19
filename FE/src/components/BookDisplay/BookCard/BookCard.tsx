@@ -131,7 +131,7 @@ const ListTitle = styled.h3`
 
 const Subtitle = styled.p`
     font-size: 0.75rem;
-    margin-bottom: 0.25rem;
+    margin: 0.25rem 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
