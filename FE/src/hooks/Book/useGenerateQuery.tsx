@@ -20,7 +20,6 @@ const useGenerateQuery = () => {
             .map(([key, value]) => `${key}=${value}`)
             .join("&");
     }, [searchText, selectedValue.value, size, sort, order, keyword]);
-    console.log(queryString)
     return queryString;
 };
 
