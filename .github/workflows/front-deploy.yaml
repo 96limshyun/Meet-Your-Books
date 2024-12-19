@@ -18,6 +18,14 @@ jobs:
           sparse-checkout: |
             ./FE
 
+      - name: Create .env.production file
+        run: |
+          echo "VITE_KAKAO_URL=${{ secrets.VITE_KAKAO_URL }}" > .env.production
+          echo "VITE_KAKAO_REST_API_KEY=${{ secrets.VITE_KAKAO_REST_API_KEY }}" > .env.production
+          echo "VITE_KAKAO_JAVASCRIPT_API_KEY=${{ secrets.VITE_KAKAO_JAVASCRIPT_API_KEY }}" >> .env.production
+          echo "VITE_AUTH_REDIRECT_URL=${{ secrets.VITE_AUTH_REDIRECT_URL }}" >> .env.production
+          echo "VITE_BACK_END_API_URL=${{ secrets.VITE_BACK_END_API_URL }}" >> .env.production
+
       - name: Check Node version
         run: node -v
 
