@@ -8,8 +8,10 @@ const FavoriteBook = () => {
 
     return (
         <HomeContainer>
-            <FavoriteSearchSection setSearchText={setSearchText} />
-            <FavoriteBookDisplay searchText={searchText} />
+            <ContentWrapper>
+                <FavoriteSearchSection setSearchText={setSearchText} />
+                <FavoriteBookDisplay searchText={searchText} />
+            </ContentWrapper>
         </HomeContainer>
     );
 };
@@ -19,12 +21,20 @@ export default FavoriteBook;
 const HomeContainer = styled.main`
     max-width: 1044px;
     padding: 0 20px;
-    height: 100%;
+    margin: 0 auto;
+`;
+
+const ContentWrapper = styled.div`
     display: flex;
-    justify-content: center;
     gap: 2rem;
-    margin: 0px auto;
-    @media (max-width: 1024px) {
-        gap: 0;
+
+    @media (min-width: 1000px) {
+        flex-direction: row;
+    }
+
+    @media (max-width: 1000px) {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
     }
 `;
