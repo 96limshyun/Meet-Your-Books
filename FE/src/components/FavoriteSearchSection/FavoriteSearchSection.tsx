@@ -12,7 +12,7 @@ const FavoriteSearchSection: React.FC<FavoriteSearchInputProps> = ({
     return (
         <InputContainer>
             <Heading fontSize="xl" fontWeight="bold">
-                Favorite Books
+                Search Books
             </Heading>
             <Spacing height="md" />
             <FavoriteSearchInput setSearchText={setSearchText} />
