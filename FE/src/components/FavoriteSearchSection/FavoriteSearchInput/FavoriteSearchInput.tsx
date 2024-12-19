@@ -37,11 +37,9 @@ export default FavoriteSearchInput;
 const InputWrap = styled.form`
     border: 1px solid ${({ theme }) => theme.colors.lightGray};
     border-radius: 8px;
-    /* max-width: 450px; */
     display: flex;
     align-items: center;
     height: 2.4rem;
     padding: 0 10px;
-    margin: 0 10px;
     justify-content: space-between;
 `;
