@@ -4,6 +4,7 @@ import FilterDisplay from "@components/FilterDisplay/FilterDisplay";
 import styled from "styled-components";
 
 const Home = () => {
+    console.log("프론트엔드 cicd 테스트 1차")
     return (
         <HomeContainer>
             <FilterWrap>

@@ -1,0 +1,42 @@
+name: 'Deploy Frontend'
+
+on:
+  push:
+    branches:
+      - deploy/cicd
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./FE
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          sparse-checkout: |
+            ./FE
+
+      - name: Check Node v
+        run: node -v
+
+      - name: Install dependency
+        run: npm install
+
+      - name: build
+        run: npm run build
+
+      - name: deploy
+        env:
+          AWS_S3_ACCESS_KEY: ${{ secrets.AWS_S3_ACCESS_KEY }}
+          AWS_S3_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+          AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
+        run: |
+          aws s3 sync ./dist s3://${{ secrets.AWS_BUCKET_NAME }} --delete
+
+      - name: CloudFront Cache Invalidation
+        env: 
+          AWS_CLOUDFRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID }}
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_ID }}
