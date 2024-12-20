@@ -72,12 +72,12 @@ openAIRouter.post("/openAI", async (req, res) => {
                     return `
 <div style="border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin: 16px 0; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
   <h3 style="margin-bottom: 12px;">
-    <a href="http://localhost:5173/book/${isbn13}" style="color: #1a73e8; text-decoration: none; font-size: 0.8rem;">
+    <a href="https://www.meetyourbooks.shop/book/${isbn13}" target="_blank" style="color: #1a73e8; text-decoration: none; font-size: 0.8rem;">
       ${bookname}
     </a>
   </h3>
   <div style="text-align: center;">
-    <img src="${bookImageURL || "http://localhost:5173/images/errorImg.png"}" alt="${bookname}" style="width: 150px; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 8px;"/>
+    <img src="${bookImageURL || "https://www.meetyourbooks.shop/images/errorImg.png"}" alt="${bookname}" style="width: 150px; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 8px;"/>
   </div>
   <p style="margin-top: 8px; font-size: 0.95em; color: #555;">
     <strong>저자:</strong> ${authors}
