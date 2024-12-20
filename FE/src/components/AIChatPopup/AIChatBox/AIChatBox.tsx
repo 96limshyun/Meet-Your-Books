@@ -9,6 +9,7 @@ import React, {
     useState,
 } from "react";
 import Markdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import styled, { keyframes } from "styled-components";
 
@@ -40,7 +41,7 @@ const AIChatBox = ({ chatHistory, setHistory, ChatClose }: AIChatBoxProps) => {
             },
         });
     };
-
+    
     useEffect(() => {
         if (chatContentRef.current) {
             chatContentRef.current.scrollTop =
@@ -62,7 +63,7 @@ const AIChatBox = ({ chatHistory, setHistory, ChatClose }: AIChatBoxProps) => {
                         {message.role === "assistant" ? (
                             <>
                                 <OpenAIOutlined />
-                                <MarkDownWrap remarkPlugins={[remarkGfm]}>
+                                <MarkDownWrap remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
                                     {message.content}
                                 </MarkDownWrap>
                             </>
