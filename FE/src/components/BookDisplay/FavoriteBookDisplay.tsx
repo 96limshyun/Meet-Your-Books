@@ -1,4 +1,5 @@
 import { Spacing } from "@components/Common";
+import LoadingBook from "@components/Common/LoadingBook/LoadingBook";
 import React, { useState } from "react";
 import styled from "styled-components";
 
@@ -7,7 +8,6 @@ import { BookDoc, ViewType } from "@/types/booksType";
 
 import BookCard from "./BookCard/BookCard";
 import ViewSelector from "./ViewSelector/ViewSelector";
-import LoadingBook from "@components/Common/LoadingBook/LoadingBook";
 
 interface FavoriteBookDisplayProps {
     searchText: string;
