@@ -8,7 +8,7 @@ const useGenerateQuery = () => {
 
     const queryString = useMemo(() => {
         const queryParams = {
-            ...(searchText && { [selectedValue.value]: searchText }),
+            ...(searchText && { [selectedValue.value]: searchText.replace(/\s+/g, "") }),
             pageSize: size,
             ...(sort && { sort }),
             ...(order && { order }),
