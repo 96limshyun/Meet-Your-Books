@@ -47,7 +47,7 @@ const LibrariesFindPopup = ({
                         <RegionDetailWrap>
                             <RegionSelectBox
                                 regionBoxName="상세지역"
-                                regions={subRegionLoading ? [] : subRegion}
+                                regions={subRegionLoading ? ["종로구"] : subRegion}
                                 curSelected={selectedSubRegion?.name || ""}
                                 onClick={handleSubRegionClick}
                             />

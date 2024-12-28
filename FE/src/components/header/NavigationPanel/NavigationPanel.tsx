@@ -1,3 +1,4 @@
+import ModalComponent from "@components/Common/Modal/Modal";
 import Overlay from "@components/Common/Overlay/Overlay";
 import { message } from "antd";
 import { useRef, useState, useEffect } from "react";
@@ -12,8 +13,10 @@ import useOnClickOutside from "@/hooks/Common/useOnClickOutside";
 const NavigationPanel = () => {
     const inSideRef = useRef(null);
     const [isOpenPanel, setOpenPanel] = useState<boolean>(false);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!localStorage.getItem("ACCESS_TOKEN"));
-
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
+        !!localStorage.getItem("ACCESS_TOKEN")
+    );
+    const [isModalOpen, setModalOpen] = useState(false);
     const handlePanelClick = () => setOpenPanel((prev) => !prev);
     const closePanel = () => setOpenPanel(false);
 
@@ -22,6 +25,7 @@ const NavigationPanel = () => {
         localStorage.removeItem("USER_INFO");
         setIsLoggedIn(false);
         setOpenPanel(false);
+        setModalOpen(false)
     };
 
     useEffect(() => {
@@ -38,25 +42,52 @@ const NavigationPanel = () => {
                 <Overlay>
                     <NavigationWrap $isOpenPanel={isOpenPanel} ref={inSideRef}>
                         {isLoggedIn ? (
-                            <RouteItem to={PATH.HOME} onClick={handleLogout}>
-                                로그아웃
-                            </RouteItem>
+                            <>
+                                <RouteItem
+                                    to={PATH.HOME}
+                                    onClick={() => setModalOpen(true)}
+                                >
+                                    로그아웃
+                                </RouteItem>
+                            </>
                         ) : (
-                            <RouteItem to={LOGIN_ROUTES.href} key={LOGIN_ROUTES.href}>
+                            <RouteItem
+                                to={LOGIN_ROUTES.href}
+                                key={LOGIN_ROUTES.href}
+                            >
                                 로그인
                             </RouteItem>
                         )}
-                        {ROUTES.map((curRoute) => (
-                            curRoute.name === "내가 찜한 책" ? <RouteItem to={curRoute.href} key={curRoute.href} onClick={closePanel}>
-                            {curRoute.name}
-                        </RouteItem> : <RouteItem to="/" key={curRoute.href} onClick={() => {
-                            message.warning("서비스 개발중입니다..")
-                            closePanel()
-                        }}>
-                                {curRoute.name}
-                            </RouteItem>
-                            
-                        ))}
+                        {ROUTES.map((curRoute) =>
+                            curRoute.name === "내가 찜한 책" ? (
+                                <RouteItem
+                                    to={curRoute.href}
+                                    key={curRoute.href}
+                                    onClick={closePanel}
+                                >
+                                    {curRoute.name}
+                                </RouteItem>
+                            ) : (
+                                <RouteItem
+                                    to="/"
+                                    key={curRoute.href}
+                                    onClick={() => {
+                                        message.warning(
+                                            "서비스 개발중입니다.."
+                                        );
+                                        closePanel();
+                                    }}
+                                >
+                                    {curRoute.name}
+                                </RouteItem>
+                            )
+                        )}
+                        <ModalComponent
+                            isModalOpen={isModalOpen}
+                            callBack={handleLogout}
+                            onCancel={() => setModalOpen(false)}
+                            message="정말 로그아웃 하시겠습니까?"
+                        />
                     </NavigationWrap>
                 </Overlay>
             )}

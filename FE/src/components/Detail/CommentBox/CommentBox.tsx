@@ -1,5 +1,6 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Text, Heading } from "@components/Common";
+import ModalComponent from "@components/Common/Modal/Modal";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -25,7 +26,7 @@ const CommentBox = ({
     handlePatch
 }: CommentBoxProps) => {
     const [isEdit, setEdit] = useState(false);
-
+    const [isModalOpen, setModalOpen] = useState(false);
     const handleEdit = (comment: string) => {
         handlePatch(_id, comment)
         setEdit(false)
@@ -50,9 +51,15 @@ const CommentBox = ({
                             <StyledButton onClick={() => setEdit(true)}>
                                 <EditIcon /> 수정
                             </StyledButton>
-                            <StyledButton onClick={() => handleDelete(_id)}>
+                            <StyledButton onClick={() => setModalOpen(true)}>
                                 <DeleteIcon /> 삭제
                             </StyledButton>
+                            <ModalComponent
+                                isModalOpen={isModalOpen}
+                                callBack={() => handleDelete(_id)}
+                                onCancel={() => setModalOpen(false)}
+                                message="정말 삭제 하시겠습니까?"
+                            />
                         </>
                     )
                 )}
