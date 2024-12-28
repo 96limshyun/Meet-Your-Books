@@ -20,8 +20,7 @@ const useCreateCommentMutation = (isbn: string) => {
             await queryClient.cancelQueries({queryKey: ["comments", isbn]});
 
             const previousComments = queryClient.getQueryData(["comments", isbn])
-            
-            queryClient.setQueryData(["comments", isbn], (oldComments:CommentPayload[]) => [...oldComments, body])
+            queryClient.setQueryData(["comments", isbn], (oldComments:CommentPayload[]) => [...oldComments, {...body, timestamp: new Date()}])
 
             return {previousComments}
         },
