@@ -48,7 +48,7 @@ openAIRouter.post("/openAI", async (req, res) => {
             response: aiResponse,
             books,
         } = JSON.parse(parsedResponseContent!);
-        
+
         if (intent === "general") {
             res.status(200).json({
                 success: true,
@@ -64,7 +64,26 @@ openAIRouter.post("/openAI", async (req, res) => {
             );
 
             const topResults = searchResults.flat().slice(0, 3);
+            if (!topResults.length) {
+                const markDownBooks = books
+                    .map((book: { title: string; author: string }) => {
+                        return `
+<div style="border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin: 16px 0; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+  <h3 style="margin-bottom: 12px;">${book.title}</h3>
+  <p style="margin-top: 8px; font-size: 0.95em; color: #555;">
+    <strong>저자:</strong> ${book.author}
+  </p>
+</div>
+`;
+                    })
+                    .join("\n");
 
+                res.status(200).json({
+                    success: true,
+                    message: `${aiResponse}\n${markDownBooks}`,
+                });
+                return;
+            }
             const markdownContent = topResults
                 .map((book) => {
                     const { bookname, authors, bookImageURL, isbn13 } =
@@ -77,7 +96,9 @@ openAIRouter.post("/openAI", async (req, res) => {
     </a>
   </h3>
   <div style="text-align: center;">
-    <img src="${bookImageURL || "https://www.meetyourbooks.shop/images/errorImg.png"}" alt="${bookname}" style="width: 150px; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 8px;"/>
+    <img src="${
+        bookImageURL || "https://www.meetyourbooks.shop/images/errorImg.png"
+    }" alt="${bookname}" style="width: 150px; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 8px;"/>
   </div>
   <p style="margin-top: 8px; font-size: 0.95em; color: #555;">
     <strong>저자:</strong> ${authors}
