@@ -1,7 +1,7 @@
 import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
 import { Button, Spacing } from "@components/Common";
 import FilterDisplay from "@components/FilterDisplay/FilterDisplay";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
@@ -27,6 +27,10 @@ const HeaderInput = () => {
     };
 
     useOnClickOutside(inSideRef, () => setOpen(false));
+
+    useEffect(() => {
+        setInputValue(searchText)
+    }, [searchText])
 
     return (
         <Container ref={inSideRef}>

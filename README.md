@@ -4,10 +4,10 @@
 Meet Your Books는 도서관 정보나루의 Open API를 사용해 책을 검색하고 소장 도서관 및 대출 가능 여부를 확인할 수 있는 원스톱 도서 검색 사이트입니다.
 
 ## 🧑‍💻👩‍💻 팀원: 개인
-| Frontend/Backend |
-|:--------:|
-| <img src="https://avatars.githubusercontent.com/u/126482821?v=4" width=220> |
-| [조지](https://github.com/96limshyun) |
+| Frontend/Backend | Frontend/Backend |
+|:--------:|:--------:|
+| <img src="https://avatars.githubusercontent.com/u/126482821?v=4" width=220> | <img src="https://avatars.githubusercontent.com/u/131264106?v=4" width=220> |
+| [조지](https://github.com/96limshyun) | [marron](https://github.com/dmdeh) |
 
 ## 🔗 Links
 - [서비스 바로가기](https://www.meetyourbooks.shop/)

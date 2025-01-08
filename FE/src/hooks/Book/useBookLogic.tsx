@@ -1,12 +1,15 @@
 
 import { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 import useGenerateQuery from "./useGenerateQuery";
 import useInfiniteScroll from "../Common/useInfiniteScroll";
 import useBookInfinityQuery from "../Queries/useBookInfinityQuery";
 
 const useBookLogic = () => {
-    const queryString = useGenerateQuery();
+    useGenerateQuery();
+    const location = useLocation()
+    const queryString = decodeURIComponent(location.search.slice(1))
     const observerRef = useRef<HTMLDivElement | null>(null)
     const {
         data: books,
@@ -17,7 +20,7 @@ const useBookLogic = () => {
     } = useBookInfinityQuery(queryString);
     
     const { observe } = useInfiniteScroll(fetchNextPage);
-
+    
     const booksItem = books?.pages.flatMap((page) => page.data) || [];
 
     useEffect(() => {
