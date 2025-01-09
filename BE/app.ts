@@ -1,14 +1,16 @@
 import express from "express";
-import authRouter from "./routes/auth";
-import cors from "cors";
-import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import openAIRouter from "./routes/openAI";
 import mongoose from "mongoose";
+import bodyParser from "body-parser";
+
+import authRouter from "./routes/auth";
+import openAIRouter from "./routes/openAI";
 import commentRouter from "./routes/comment";
 import favoriteRouter from "./routes/favorites";
 import regionRouter from "./routes/region";
 import libraryOpenAPIRouter from "./routes/libraryOpenAPI";
+
+import corsMiddleware from "./middlewares/cors";
 
 dotenv.config();
 
@@ -16,7 +18,7 @@ const MONGO_URL = process.env.MONGO_URL!;
 const app = express();
 const port = 4000;
 
-app.use(cors());
+app.use(corsMiddleware);
 app.use(bodyParser.json());
 
 mongoose
