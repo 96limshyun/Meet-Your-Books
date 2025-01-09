@@ -1,5 +1,10 @@
 import express from "express";
+
 import CommentGroup from "../Models/CommentSchema";
+
+import { STATUS_CODES } from "../constants/statusCodes";
+import { COMMENT_MESSAGES } from "../constants/message";
+
 const commentRouter = express.Router();
 
 commentRouter.get("/comments/:isbn", async (req, res) => {
@@ -7,12 +12,14 @@ commentRouter.get("/comments/:isbn", async (req, res) => {
         const { isbn } = req.params;
         const commentGroup = await CommentGroup.findById(isbn);
         if (!commentGroup) {
-            res.status(200).json([]);
-        } else {
-            res.status(200).json(commentGroup?.comments);
+            res.status(STATUS_CODES.OK).json([]);
+            return;
         }
+        res.status(STATUS_CODES.OK).json(commentGroup?.comments);
     } catch (error) {
-        res.status(500).json({ message: "댓글 조회 중 에러 발생" });
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+            message: COMMENT_MESSAGES.FETCH_ERROR,
+        });
     }
 });
 
@@ -35,9 +42,9 @@ commentRouter.post("/comments/:isbn", async (req, res) => {
         } else {
             await CommentGroup.create({ _id: isbn, comments: [newComment] });
         }
-        res.status(201).json({ message: "댓글 추가 성공" });
+        res.status(STATUS_CODES.CREATED).json({ message: COMMENT_MESSAGES.ADD_SUCCESS });
     } catch (error) {
-        res.status(400).json({ message: "댓글 추가 실패" });
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ message: COMMENT_MESSAGES.ADD_ERROR });
     }
 });
 
@@ -49,10 +56,9 @@ commentRouter.delete("/comments/:isbn/:_id", async (req, res) => {
             { $pull: { comments: { _id: _id } } }
         );
 
-        res.status(200).json({ message: "댓글 삭제 성공" });
+        res.status(STATUS_CODES.OK).json({ message: COMMENT_MESSAGES.DELETE_SUCCESS });
     } catch (error) {
-        console.error("댓글 삭제 오류:", error);
-        res.status(400).json({ message: "댓글 삭제 실패" });
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ message: COMMENT_MESSAGES.DELETE_ERROR });
     }
 });
 
@@ -67,16 +73,16 @@ commentRouter.patch("/comments/:isbn/:_id", async (req, res) => {
             (comment) => comment._id && comment._id.toString() === _id
         );
         if (!comment) {
-            res.status(404).json({ message: "댓글을 찾을 수 없습니다." });
-        } else {
-            comment.content = content;
-            await commentGroup?.save();
-            res.status(200).json({ message: "댓글 수정 성공" });
+            res.status(STATUS_CODES.NOT_FOUND).json({ message: COMMENT_MESSAGES.NOT_FOUND });
+            return;
         }
+        comment.content = content;
+        await commentGroup?.save();
+        res.status(STATUS_CODES.OK).json({ message: COMMENT_MESSAGES.UPDATE_SUCCESS });
+        
     } catch (error) {
-        console.error("댓글 수정 오류:", error);
-        res.status(500).json({
-            message: "댓글 수정 실패",
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+            message: COMMENT_MESSAGES.UPDATE_ERROR,
         });
     }
 });

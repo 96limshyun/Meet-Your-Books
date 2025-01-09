@@ -1,6 +1,9 @@
 import express from "express";
 import RegionGroup from "../Models/RegionSchema";
 
+import { STATUS_CODES } from "../constants/statusCodes";
+import { REGION_MESSAGES } from "../constants/message";
+
 const regionRouter = express.Router();
 
 regionRouter.get("/region", async (req, res) => {
@@ -10,12 +13,12 @@ regionRouter.get("/region", async (req, res) => {
         const region = await RegionGroup.findOne({regionCode})
 
         if(!region) {
-            res.status(400).json({ message: "없는 지역입니다." })
-        } else {
-            res.status(200).json(region.subRegions)
-        }
+            res.status(STATUS_CODES.NOT_FOUND).json({ message: REGION_MESSAGES.NOT_FOUND })
+            return;
+        } 
+        res.status(STATUS_CODES.OK).json(region.subRegions)
     } catch (error) {
-        res.status(400).json({ message: "서비지역 불러오기 실패" })
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ message: REGION_MESSAGES.FETCH_ERROR })
     }
 });
 
