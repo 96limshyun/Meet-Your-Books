@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import { fetchAPI } from "../services/fetchAPI";
-import { MESSAGE } from "../constants";
+import { LOGIN_MESSAGE } from "../constants";
 import { Data } from "../types";
 dotenv.config();
 
@@ -53,14 +53,14 @@ authRouter.post("/kakaoAuth", async (req, res) => {
         if (accessToken) {
             const { id, nickname } = await getUserInfo(accessToken);
             res.status(200).json({
-                message: MESSAGE.AUTH_SUCCESSFUL,
+                message: LOGIN_MESSAGE.AUTH_SUCCESSFUL,
                 data: { accessToken, id, nickname },
             });
         } else {
-            res.status(500).json({ message: MESSAGE.EMPTY_TOKEN });
+            res.status(500).json({ message: LOGIN_MESSAGE.EMPTY_TOKEN });
         }
     } catch(error) {
-        res.status(500).json({ message: MESSAGE.AUTH_FAILED });
+        res.status(500).json({ message: LOGIN_MESSAGE.AUTH_FAILED });
     }
 });
 

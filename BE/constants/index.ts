@@ -1,8 +1,14 @@
-export const MESSAGE = {
+export const LOGIN_MESSAGE = {
     AUTH_SUCCESSFUL: "로그인 성공",
     EMPTY_TOKEN: "토큰을 받아오는데 실패했습니다.",
     AUTH_FAILED: "로그인에 실패했습니다.",
 };
+
+export const MONGODB_CONNECT_MESSAGE = {
+    CONNECT_SUCCESSFUL: "MongoDB 연결 성공",
+    CONNECT_FAILED: "MongoDB 연결 실패",
+
+}
 
 export const AI_DEFAULT_ROLE = `
     당신은 도서 추천에 특화된 AI 도우미입니다.
@@ -30,3 +36,4 @@ export const AI_DEFAULT_ROLE = `
 export const MAX_TOKENS = 4000;
 export const TEMPERATURE = 0.7
 export const INITIAL_INDEX = 0
+export const PORT = 4000;
