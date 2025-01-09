@@ -12,7 +12,8 @@ import libraryOpenAPIRouter from "./routes/libraryOpenAPI";
 
 import corsMiddleware from "./middlewares/cors";
 
-import { MONGODB_CONNECT_MESSAGE, PORT } from "./constants";
+import { PORT } from "./constants";
+import { MONGODB_CONNECT_MESSAGE } from "./constants/message";
 
 dotenv.config();
 

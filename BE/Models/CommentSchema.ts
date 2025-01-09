@@ -9,7 +9,7 @@ interface CommentsType {
 }
 
 export interface ICommentGroup {
-    _id: string; // isbn 코드를 줄거임
+    _id: string;
     comments: CommentsType[];
 }
 
