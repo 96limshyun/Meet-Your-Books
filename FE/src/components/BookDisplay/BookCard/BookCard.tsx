@@ -13,55 +13,74 @@ interface BookItemProps {
 }
 
 const BookCard = ({ bookData, viewMode }: BookItemProps) => {
-    const { bookname, authors, publisher, publication_year, bookImageURL, loan_count, isbn13 } = bookData;
     const [isVisible, setIsVisible] = useState(false);
-    const navigate = useNavigate()
 
     useEffect(() => {
         const timer = setTimeout(() => setIsVisible(true), ANIMATION_TIME);
         return () => clearTimeout(timer);
     }, []);
 
+    return viewMode === "grid" ? (
+        <GridCard bookData={bookData} isVisible={isVisible}/>
+    ) : (
+        <ListCard bookData={bookData} isVisible={isVisible}/>
+    )
+};
+
+interface CardProps {
+    bookData: BookDoc;
+    isVisible: boolean;
+}
+
+const GridCard = ({ bookData, isVisible }: CardProps) => {
+    const {isbn13, bookImageURL, bookname, authors} = bookData
+    const navigate = useNavigate()
     return (
-        <>
-            {viewMode === "grid" ? (
-                <GridCard $isVisible={isVisible} onClick={() => navigate(`/book/${isbn13}`)}>
-                    <FavoritesBtnWrap>
-                        <FavoriteBtn item={bookData} />
-                    </FavoritesBtnWrap>
-                    <Image
-                        src={bookImageURL || ERROR_IMG}
-                        alt={bookname}
-                        onError={handleImageError}
-                        loading="lazy"
-                    />
-                    <TextContainer $viewMode="grid">
-                        <Title>{bookname}</Title>
-                        <Subtitle>{authors}</Subtitle>
-                    </TextContainer>
-                </GridCard>
-            ) : (
-                <ListCard $isVisible={isVisible} onClick={() => navigate(`/book/${isbn13}`)}>
-                    <FavoritesBtnWrap>
-                        <FavoriteBtn item={bookData} />
-                    </FavoritesBtnWrap>
-                    <Image
-                        src={bookImageURL || ERROR_IMG}
-                        alt={bookname}
-                        onError={handleImageError}
-                    />
-                    <ListBookInfo>
-                        <ListTitle>{bookname}</ListTitle>
-                        <MetaInfo>저자: {authors}</MetaInfo>
-                        <MetaInfo>출판사: {publisher}</MetaInfo>
-                        <MetaInfo>출판일: {publication_year}</MetaInfo>
-                        <LibrariesCount>
-                            대출 권수: {loan_count}
-                        </LibrariesCount>
-                    </ListBookInfo>
-                </ListCard>
-            )}
-        </>
+        <GridCardStyled
+            $isVisible={isVisible}
+            onClick={() => navigate(`/book/${isbn13}`)}
+        >
+            <FavoritesBtnWrap>
+                <FavoriteBtn item={bookData} />
+            </FavoritesBtnWrap>
+            <Image
+                src={bookImageURL || ERROR_IMG}
+                alt={bookname}
+                onError={handleImageError}
+                loading="lazy"
+            />
+            <TextContainer $viewMode="grid">
+                <Title>{bookname}</Title>
+                <Subtitle>{authors}</Subtitle>
+            </TextContainer>
+        </GridCardStyled>
+    );
+};
+
+const ListCard = ({ bookData, isVisible }: CardProps) => {
+    const {isbn13, bookImageURL, bookname, authors, publisher, publication_year, loan_count} = bookData
+    const navigate = useNavigate()
+    return (
+        <ListCardStyled
+            $isVisible={isVisible}
+            onClick={() => navigate(`/book/${isbn13}`)}
+        >
+            <FavoritesBtnWrap>
+                <FavoriteBtn item={bookData} />
+            </FavoritesBtnWrap>
+            <Image
+                src={bookImageURL || ERROR_IMG}
+                alt={bookname}
+                onError={handleImageError}
+            />
+            <ListBookInfo>
+                <ListTitle>{bookname}</ListTitle>
+                <MetaInfo>저자: {authors}</MetaInfo>
+                <MetaInfo>출판사: {publisher}</MetaInfo>
+                <MetaInfo>출판일: {publication_year}</MetaInfo>
+                <LibrariesCount>대출 권수: {loan_count}</LibrariesCount>
+            </ListBookInfo>
+        </ListCardStyled>
     );
 };
 
@@ -87,12 +106,12 @@ const Card = styled.div<{ $isVisible: boolean }>`
     }
 `;
 
-const GridCard = styled(Card)`
+const GridCardStyled = styled(Card)`
     width: 150px;
     text-align: center;
 `;
 
-const ListCard = styled(Card)`
+const ListCardStyled = styled(Card)`
     display: flex;
     margin-bottom: 1rem;
 `;
