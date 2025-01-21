@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { ANIMATION_TIME } from "@/constants";
+import { ANIMATION_TIME, ERROR_IMG } from "@/constants";
 import { ViewType } from "@/types/booksType";
 import { BookDoc } from "@/types/booksType";
 import { handleImageError } from "@/utils";
@@ -30,7 +30,7 @@ const BookCard = ({ bookData, viewMode }: BookItemProps) => {
                         <FavoriteBtn item={bookData} />
                     </FavoritesBtnWrap>
                     <Image
-                        src={bookImageURL || "/images/errorImg.png"}
+                        src={bookImageURL || ERROR_IMG}
                         alt={bookname}
                         onError={handleImageError}
                         loading="lazy"
@@ -46,7 +46,7 @@ const BookCard = ({ bookData, viewMode }: BookItemProps) => {
                         <FavoriteBtn item={bookData} />
                     </FavoritesBtnWrap>
                     <Image
-                        src={bookImageURL || "/images/errorImg.png"}
+                        src={bookImageURL || ERROR_IMG}
                         alt={bookname}
                         onError={handleImageError}
                     />
@@ -65,9 +65,7 @@ const BookCard = ({ bookData, viewMode }: BookItemProps) => {
     );
 };
 
-
 export default BookCard;
-
 
 const Card = styled.div<{ $isVisible: boolean }>`
     position: relative;
