@@ -28,6 +28,9 @@ const BookDisplay = () => {
             </BookContainer>
         );
     }
+    const isLoadingNextPage = isFetchingNextPage && !isLastPage
+    const isEmptyContent = booksItem.length === 0 && !isFetchingNextPage
+    const isLastPageView = !hasNextPage && !isEmptyContent;
 
     return (
         <BookContainer>
@@ -46,18 +49,10 @@ const BookDisplay = () => {
                     />
                 ))}
             </BookWrap>
-            {isFetchingNextPage && !isLastPage && <LoadingSpin />}
-            {booksItem.length === 0 && !isFetchingNextPage ? (
-                <EmptyContentText>검색 결과가 없습니다.</EmptyContentText>
-            ) : (
-                <>
-                    {hasNextPage ? (
-                        <div ref={observerRef} style={{ height: "10px" }} />
-                    ) : (
-                        <LastPageView>마지막 페이지 입니다.</LastPageView>
-                    )}
-                </>
-            )}
+            {isLoadingNextPage && <LoadingSpin />}
+            {isEmptyContent && <EmptyContentText>검색 결과가 없습니다.</EmptyContentText>}
+            {isLastPageView && <LastPageView>마지막 페이지 입니다.</LastPageView>}
+            {!isEmptyContent && hasNextPage && <div ref={observerRef} style={{ height: "10px" }} />}
             <Spacing height="xl" />
         </BookContainer>
     );

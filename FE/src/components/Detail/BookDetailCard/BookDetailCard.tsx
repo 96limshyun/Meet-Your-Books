@@ -9,6 +9,7 @@ import { ShopOutlined } from "@ant-design/icons";
 import { Button, Heading, Spacing, Text } from "@components/Common";
 import styled from "styled-components";
 
+import { ERROR_IMG } from "@/constants";
 import useOpen from "@/hooks/Common/useOpen";
 import { BookDetailType } from "@/types/bookDetailType";
 import { handleImageError } from "@/utils";
@@ -44,7 +45,7 @@ const BookDetailCard = ({ bookData }: BookDetailCardProps) => {
             <CardContent>
                 <BookImageWrapper>
                     <StyledImage
-                        src={bookImageURL || "/images/errorImg.png"}
+                        src={bookImageURL || ERROR_IMG}
                         onError={handleImageError}
                         alt={bookname}
                         width={200}

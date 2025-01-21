@@ -1,8 +1,9 @@
 import React from "react";
 
+import { ERROR_IMG } from "@/constants";
 export const handleImageError = (
     e: React.SyntheticEvent<HTMLImageElement>,
-    fallbackSrc: string = "/images/errorImg.png"
+    fallbackSrc: string = ERROR_IMG
 ) => {
     e.currentTarget.src = fallbackSrc;
     e.currentTarget.style.objectFit = "cover";
