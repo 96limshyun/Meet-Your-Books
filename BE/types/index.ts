@@ -11,3 +11,17 @@ export interface Data {
     code: string;
     [key: string]: string;
 }
+
+export interface BookRecommendation {
+    title: string;
+    author: string;
+}
+
+export interface LibraryBook {
+    doc: {
+        bookname: string;
+        authors: string;
+        bookImageURL: string;
+        isbn13: string;
+    };
+}

@@ -1,6 +1,9 @@
 import express from "express";
 import Favorite from "../Models/FavoriteSchema";
 
+import { STATUS_CODES } from "../constants/statusCodes";
+import { FAVORITE_MESSAGES } from "../constants/message";
+
 const favoriteRouter = express.Router();
 
 favoriteRouter.get("/favorites", async (req, res) => {
@@ -11,9 +14,9 @@ favoriteRouter.get("/favorites", async (req, res) => {
             favorites = await Favorite.create({ userId, book: [] });
         }
 
-        res.status(200).json(favorites);
+        res.status(STATUS_CODES.OK).json(favorites);
     } catch (err) {
-        res.status(500).json({ error: "찜한 책 조회 중 에러 발생" });
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ error: FAVORITE_MESSAGES.FETCH_ERROR });
     }
 });
 
@@ -23,9 +26,9 @@ favoriteRouter.post("/favorites", async (req, res) => {
         const newFavorite = await Favorite.findOne({ userId });
         newFavorite?.book.push(book);
         await newFavorite?.save();
-        res.status(201).json(newFavorite);
+        res.status(STATUS_CODES.CREATED).json(newFavorite);
     } catch (err) {
-        res.status(500).json({ error: "책 찜하기 실패" });
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ error: FAVORITE_MESSAGES.ADD_ERROR });
     }
 });
 
@@ -37,9 +40,9 @@ favoriteRouter.delete("/favorites", async (req, res) => {
             { userId },
             { $pull: { book: { isbn13: isbn } } }
         );
-        res.status(200).json({ message: "내가 찜한 책에서 삭제 성공" });
+        res.status(STATUS_CODES.OK).json({ message: FAVORITE_MESSAGES.DELETE_SUCCESS });
     } catch (err) {
-        res.status(500).json({ error: "내가 찜한 책에서 삭제 실패" });
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ error: FAVORITE_MESSAGES.DELETE_ERROR });
     }
 });
 

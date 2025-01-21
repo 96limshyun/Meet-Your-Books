@@ -1,6 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 
+import { STATUS_CODES } from "../constants/statusCodes";
+import { LIBRARY_API_MESSAGES } from "../constants/message";
+
 dotenv.config();
 
 const libraryOpenAPIRouter = express.Router();
@@ -13,19 +16,19 @@ libraryOpenAPIRouter.get("/libraryOpenAPI", async (req, res) => {
         const data = await response.json();
 
         if (!response.ok) {
-            res.status(400).json("잘못된 요청입니다.");
+            res.status(STATUS_CODES.BAD_REQUEST).json(LIBRARY_API_MESSAGES.BAD_REQUEST);
             return;
         }
         if (data.response?.error) {
-            res.status(429).json({
-                message: "요청 가능한 하루 제한 횟수를 초과했습니다. 내일 다시 시도해주세요.",
+            res.status(STATUS_CODES.TOO_MANY_REQUESTS).json({
+                message: LIBRARY_API_MESSAGES.RATE_LIMIT_EXCEEDED,
                 error: data.response.error,
             });
             return;
         }
-        res.status(200).json(data);
+        res.status(STATUS_CODES.OK).json(data);
     } catch (error) {
-        res.status(500).json(error);
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(error);
     }
 });
 

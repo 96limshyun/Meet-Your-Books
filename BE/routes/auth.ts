@@ -1,12 +1,23 @@
 import express from "express";
 import dotenv from "dotenv";
-import { fetchAPI } from "../services/fetchAPI";
-import { MESSAGE } from "../constants";
+
 import { Data } from "../types";
+import { fetchAPI } from "../services/fetchAPI";
+import { LOGIN_MESSAGE } from "../constants/message";
+import { STATUS_CODES } from "../constants/statusCodes";
+
 dotenv.config();
 
+const KAKAO_API_CONFIG = {
+    contentType: process.env.KAKAO_CONTENT_TYPE!,
+    clientId: process.env.KAKAO_REST_API_KEY!,
+    redirectURL: process.env.REDIRECT_URL!,
+    tokenURL: process.env.KAKAO_GET_TOKEN_URL!,
+    userInfoUrl: process.env.KAKAO_GET_USER_INFO_URL!,
+}
+
 const header = {
-    "Content-Type": process.env.KAKAO_CONTENT_TYPE!,
+    "Content-Type": KAKAO_API_CONFIG.contentType,
 };
 
 const authRouter = express.Router();
@@ -14,8 +25,8 @@ const authRouter = express.Router();
 const getKakaoToken = async (code: string) => {
     const data: Data = {
         grant_type: "authorization_code",
-        client_id: process.env.KAKAO_REST_API_KEY!,
-        redirect_uri: process.env.REDIRECT_URL!,
+        client_id: KAKAO_API_CONFIG.clientId,
+        redirect_uri: KAKAO_API_CONFIG.redirectURL,
         code,
     };
 
@@ -23,7 +34,7 @@ const getKakaoToken = async (code: string) => {
         .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(data[k]))
         .join("&");
 
-    const response = await fetchAPI(process.env.KAKAO_GET_TOKEN_URL!, {
+    const response = await fetchAPI(KAKAO_API_CONFIG.tokenURL, {
         method: "POST",
         headers: header,
         body: queryString,
@@ -38,7 +49,7 @@ const getUserInfo = async (accessToken: string) => {
         Authorization: `Bearer ${accessToken}`,
     };
 
-    const response = await fetchAPI(process.env.KAKAO_GET_USER_INFO_URL!, {
+    const response = await fetchAPI(KAKAO_API_CONFIG.userInfoUrl, {
         method: "GET",
         headers: userInfoHeader,
     });
@@ -52,15 +63,15 @@ authRouter.post("/kakaoAuth", async (req, res) => {
     try {
         if (accessToken) {
             const { id, nickname } = await getUserInfo(accessToken);
-            res.status(200).json({
-                message: MESSAGE.AUTH_SUCCESSFUL,
+            res.status(STATUS_CODES.OK).json({
+                message: LOGIN_MESSAGE.AUTH_SUCCESSFUL,
                 data: { accessToken, id, nickname },
             });
         } else {
-            res.status(500).json({ message: MESSAGE.EMPTY_TOKEN });
+            res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ message: LOGIN_MESSAGE.EMPTY_TOKEN });
         }
     } catch(error) {
-        res.status(500).json({ message: MESSAGE.AUTH_FAILED });
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ message: LOGIN_MESSAGE.AUTH_FAILED });
     }
 });
 
