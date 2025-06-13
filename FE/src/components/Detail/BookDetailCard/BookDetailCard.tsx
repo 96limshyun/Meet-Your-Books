@@ -6,8 +6,9 @@ import {
     BookOutlined,
 } from "@ant-design/icons";
 import { ShopOutlined } from "@ant-design/icons";
-import { Button, Heading, Spacing } from "@components/Common";
+import { Button, Spacing } from "@components/Common";
 import { Text } from "@components/ui";
+import { Heading } from "@components/ui";
 import styled from "styled-components";
 import twc from "tailwind-styled-components";
 

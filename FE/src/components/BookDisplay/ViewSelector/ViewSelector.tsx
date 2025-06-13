@@ -1,5 +1,5 @@
 import { MenuOutlined, AppstoreOutlined } from "@ant-design/icons";
-import { Heading } from "@components/Common";
+import { Heading } from "@components/ui";
 import React from "react";
 import styled from "styled-components";
 

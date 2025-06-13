@@ -1,4 +1,5 @@
-import { Heading, Spacing } from "@components/Common";
+import { Spacing } from "@components/Common";
+import { Heading } from "@components/ui";
 import { useEffect } from "react";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
