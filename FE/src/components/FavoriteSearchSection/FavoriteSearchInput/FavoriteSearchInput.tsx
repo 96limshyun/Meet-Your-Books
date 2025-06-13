@@ -1,5 +1,5 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { Input } from "@components/Common";
+import { Input } from "@components/ui";
 import React, { useRef } from "react";
 import styled from "styled-components";
 
@@ -25,7 +25,7 @@ const FavoriteSearchInput: React.FC<FavoriteSearchInputProps> = ({
                 ref={inputRef}
                 placeholder="내가 찜한 책 검색..."
                 height="90%"
-                color="white"
+                bgColor="white"
             />
             <SearchOutlined onClick={handleSearch} />
         </InputWrap>

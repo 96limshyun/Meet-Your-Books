@@ -1,4 +1,4 @@
-import { Heading } from "@components/Common";
+import { Heading } from "@components/ui";
 import { ReactNode } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import styled from "styled-components";

@@ -1,9 +1,10 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Text, Heading } from "@components/Common";
 import ModalComponent from "@components/Common/Modal/Modal";
+import { Text } from "@components/ui";
 import { useState } from "react";
 import styled from "styled-components";
 
+import { Heading } from "@/components/ui";
 import { formatRelativeTime } from "@/utils";
 
 import CommentCreateTextarea from "../CommentCreateTextarea/CommentCreateTextarea";
