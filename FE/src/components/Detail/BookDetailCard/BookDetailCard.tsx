@@ -6,8 +6,10 @@ import {
     BookOutlined,
 } from "@ant-design/icons";
 import { ShopOutlined } from "@ant-design/icons";
-import { Button, Heading, Spacing, Text } from "@components/Common";
+import { Button, Heading, Spacing } from "@components/Common";
+import { Text } from "@components/ui";
 import styled from "styled-components";
+import twc from "tailwind-styled-components";
 
 import { ERROR_IMG } from "@/constants";
 import useOpen from "@/hooks/Common/useOpen";
@@ -152,16 +154,8 @@ const StyledImage = styled.img`
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
-const Badge = styled(Text)`
-    width: 65%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #e9ecef;
-    border-radius: 4px;
-    padding: 8px;
-    font-size: 0.875rem;
-    margin: 8px auto 0;
+const Badge = twc(Text)`
+  w-2/3 flex items-center justify-center bg-gray-200 rounded px-3 py-2 text-sm mt-2 mx-auto
 `;
 
 const BookDetails = styled.div`

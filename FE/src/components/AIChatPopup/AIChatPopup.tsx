@@ -1,4 +1,5 @@
-import { Button, Text } from "@components/Common";
+import { Button } from "@components/Common";
+import { Text } from "@components/ui";
 import { useRef, useState } from "react";
 import { IoChatbubbleSharp } from "react-icons/io5";
 import styled from "styled-components";

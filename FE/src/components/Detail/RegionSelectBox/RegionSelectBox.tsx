@@ -1,4 +1,4 @@
-import { Text } from "@components/Common";
+import { Text } from "@components/ui";
 import { useRef } from "react";
 import styled, { keyframes } from "styled-components";
 
