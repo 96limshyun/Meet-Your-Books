@@ -1,6 +1,7 @@
-import { Heading, Spacing } from "@components/Common";
+import { Spacing } from "@components/Common";
 import { HeaderInput } from "@components/header";
 import NavigationPanel from "@components/header/NavigationPanel/NavigationPanel";
+import { Heading } from "@components/ui";
 import { Link, Outlet } from "react-router-dom";
 import styled from "styled-components";
 

@@ -1,7 +1,7 @@
 import { EnvironmentOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Heading } from "@components/Common";
 import KakaoMap from "@components/Common/KakaoMap/KakaoMap";
 import LoadingSpin from "@components/Common/Spin/Spin";
+import { Heading } from "@components/ui";
 import styled, { css } from "styled-components";
 
 import { useLibrariesDisplayLogic } from "@/hooks/BookDetail/useLibrariesDisplayLogic";

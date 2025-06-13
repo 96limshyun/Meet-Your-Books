@@ -1,5 +1,5 @@
 import { CloseOutlined } from "@ant-design/icons";
-import { Heading } from "@components/Common";
+import { Heading } from "@components/ui";
 import styled, { keyframes } from "styled-components";
 
 import { REGIONS } from "@/constants/regions";

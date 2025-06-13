@@ -1,4 +1,4 @@
-import { Heading, Spacing } from "@components/Common";
+import { Spacing } from "@components/Common";
 import LoadingBook from "@components/Common/LoadingBook/LoadingBook";
 import {
     BookDetailCard,
@@ -7,6 +7,7 @@ import {
     LineRechart,
 } from "@components/Detail";
 import BarRechart from "@components/Detail/BarRechart/BarRechart";
+import { Heading } from "@components/ui";
 import styled from "styled-components";
 
 import useBookDetailLogic from "@/hooks/BookDetail/useBookDetailLogic";

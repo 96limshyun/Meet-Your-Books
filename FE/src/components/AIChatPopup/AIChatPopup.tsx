@@ -1,4 +1,5 @@
-import { Button, Text } from "@components/Common";
+import { Button } from "@components/ui";
+import { Text } from "@components/ui";
 import { useRef, useState } from "react";
 import { IoChatbubbleSharp } from "react-icons/io5";
 import styled from "styled-components";
@@ -17,37 +18,31 @@ const AIChatPopup = () => {
         useState<ChatHistory[]>(INITIAL_CHAT_MESSAGE);
     useOnClickOutside(inSideRef, () => setOpen(false))
     return (
-        <ChatPopupContainer ref={inSideRef}>
-            {isOpen && (
-                <AIChatBox
-                    ChatClose={toggleOpen}
-                    chatHistory={chatHistory}
-                    setHistory={setHistory}
-                />
-            )}
-            <AIButton
-                color="midnightBlue"
-                fontColor="white"
-                height="50px"
-                width="175px"
-                onClick={toggleOpen}
-            >
-                <IoChatbubbleSharp />
-                <Text color="white">AI로 도서 추천받기</Text>
-            </AIButton>
-        </ChatPopupContainer>
+      <ChatPopupContainer ref={inSideRef}>
+        {isOpen && (
+          <AIChatBox
+            ChatClose={toggleOpen}
+            chatHistory={chatHistory}
+            setHistory={setHistory}
+          />
+        )}
+        <Button
+          color="midnightBlue"
+          fontColor="white"
+          height="sm"
+          width="auto"
+          
+          onClick={toggleOpen}
+          className="flex items-center justify-center gap-1"
+        >
+          <IoChatbubbleSharp />
+          <Text color="white">AI로 도서 추천받기</Text>
+        </Button>
+      </ChatPopupContainer>
     );
 };
 
 export default AIChatPopup;
-
-
-const AIButton = styled(Button)`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-`;
 
 const ChatPopupContainer = styled.div`
     position: fixed;

@@ -1,4 +1,5 @@
-import { Heading, Spacing } from "@components/Common";
+import { Spacing } from "@components/Common";
+import { Heading } from "@components/ui";
 import styled from "styled-components";
 
 import { ORDER_ITEMS, SORT_ITEMS } from "@/constants";

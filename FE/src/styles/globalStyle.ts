@@ -1,11 +1,9 @@
 import { createGlobalStyle } from "styled-components";
-import reset from "styled-reset";
 
 import cinzel from "../assets/fonts/cinzel-v23-latin-regular.woff2";
 import nanum from "../assets/fonts/nanum-gothic-v26-latin-regular.woff2";
 
 const GlobalStyle = createGlobalStyle`
-    ${reset}
 
     :root {
     --border-color: #e9e7e7;
