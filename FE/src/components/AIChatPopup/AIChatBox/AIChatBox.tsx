@@ -1,5 +1,4 @@
 import { OpenAIOutlined, UserOutlined, SendOutlined } from "@ant-design/icons";
-import { Button } from "@components/Common";
 import { Text } from "@components/ui";
 import { Spin } from "antd";
 import React, {
@@ -13,7 +12,9 @@ import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import styled, { keyframes } from "styled-components";
+import twc from "tailwind-styled-components";
 
+import { Button } from "@/components/ui";
 import useAIRequestMutation from "@/hooks/Queries/openAI/useAIRequestMutation";
 import { ChatHistory, Role } from "@/types/openAIType";
 interface AIChatBoxProps {
@@ -95,13 +96,7 @@ const AIChatBox = ({ chatHistory, setHistory, ChatClose }: AIChatBoxProps) => {
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="메시지를 입력하세요..."
         />
-        <SendButton
-          color="midnightBlue"
-          fontColor="white"
-          fontSize="sm"
-          type="submit"
-          disabled={!inputValue.trim()}
-        >
+        <SendButton type="submit" fontSize="sm" disabled={!inputValue.trim()}>
           <SendOutlined />
         </SendButton>
       </ChatInputWrap>
@@ -186,16 +181,12 @@ const ChatInput = styled.input`
   outline: none;
 `;
 
-const SendButton = styled(Button)<{ disabled?: boolean }>`
-  margin-left: 8px;
-  border-radius: 8px;
-  padding: 10px 16px;
-  cursor: pointer;
-  background-color: ${({ disabled }) => (disabled ? "#ccc" : "#19275f")};
-  color: ${({ disabled }) => (disabled ? "#888" : "#fff")};
-  &:hover {
-    background-color: ${({ disabled }) => (disabled ? "#ccc" : "#3a4a8a")};
-  }
+const SendButton = twc(Button)<{ disabled?: boolean }>`
+  ml-2 px-4 py-2 rounded-lg
+  ${({ disabled }) =>
+    disabled
+      ? "bg-[#ccc] text-[#888] hover:bg-[#ccc] cursor-not-allowed"
+      : "bg-[#19275f] text-white hover:bg-[#3a4a8a]"}
 `;
 
 const MarkDownWrap = styled(Markdown)`
