@@ -34,9 +34,9 @@ interface ImageProps extends VariantProps<typeof imageVariants> {
   className?: string;
 }
 
-const BaseImage = twc.img``;
+const Image = twc.img``;
 
-const Image = ({
+const BaseImage = ({
   src,
   alt = "image",
   width,
@@ -45,7 +45,7 @@ const Image = ({
   className,
 }: ImageProps) => {
   return (
-    <BaseImage
+    <Image
       src={src}
       alt={alt}
       className={twMerge(imageVariants({ width, height, rounded }), className)}
@@ -53,4 +53,4 @@ const Image = ({
   );
 };
 
-export default Image;
+export default BaseImage;

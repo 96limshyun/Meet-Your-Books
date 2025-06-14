@@ -1,5 +1,5 @@
 import { CloseOutlined } from "@ant-design/icons";
-import { Heading } from "@components/ui";
+import { BaseHeading } from "@components/ui";
 import styled, { keyframes } from "styled-components";
 
 import { REGIONS } from "@/constants/regions";
@@ -29,9 +29,9 @@ const LibrariesFindPopup = ({
         <Overlay>
             <Card ref={inSideRef}>
                 <PopupHeader>
-                    <Heading fontWeight="bold" fontSize="lg">
+                    <BaseHeading fontWeight="bold" fontSize="lg">
                         소장 도서관 검색
-                    </Heading>
+                    </BaseHeading>
                     <CloseOutlined onClick={closePopup} />
                 </PopupHeader>
                 <RegionSelectWrap>

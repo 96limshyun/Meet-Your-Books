@@ -1,5 +1,5 @@
 import { Spacing } from "@components/Common";
-import { Heading } from "@components/ui";
+import { BaseHeading } from "@components/ui";
 import styled from "styled-components";
 
 import { ORDER_ITEMS, SORT_ITEMS } from "@/constants";
@@ -25,9 +25,9 @@ const FilterDisplay = () => {
     };
     return (
         <FilterContainer>
-            <Heading fontSize="xl" fontWeight="bold">
+            <BaseHeading fontSize="xl" fontWeight="bold">
                 Filter Option
-            </Heading>
+            </BaseHeading>
             <Spacing height="md" />
             <FilterWrap>
                 <DefaultFilterBox

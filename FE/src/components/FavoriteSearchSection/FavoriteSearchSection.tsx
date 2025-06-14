@@ -1,5 +1,5 @@
 import { Spacing } from "@components/Common";
-import { Heading } from "@components/ui";
+import { BaseHeading } from "@components/ui";
 import React from "react";
 import styled from "styled-components";
 
@@ -12,9 +12,9 @@ const FavoriteSearchSection: React.FC<FavoriteSearchInputProps> = ({
 }) => {
     return (
         <InputContainer>
-            <Heading fontSize="xl" fontWeight="bold">
+            <BaseHeading fontSize="xl" fontWeight="bold">
                 Search Books
-            </Heading>
+            </BaseHeading>
             <Spacing height="md" />
             <FavoriteSearchInput setSearchText={setSearchText} />
         </InputContainer>

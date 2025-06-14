@@ -67,7 +67,7 @@ interface ButtonProps
   children: ReactNode;
 }
 
-const Button = ({
+const BaseButton = ({
   type = "button",
   children,
   className,
@@ -104,4 +104,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default BaseButton;
