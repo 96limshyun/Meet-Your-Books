@@ -1,7 +1,8 @@
-import { cva, VariantProps } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 import twc from "tailwind-styled-components";
 
+// 1. variant 정의
 const imageVariants = cva("object-cover", {
   variants: {
     width: {
@@ -34,23 +35,9 @@ interface ImageProps extends VariantProps<typeof imageVariants> {
   className?: string;
 }
 
-const Image = twc.img``;
-
-const BaseImage = ({
-  src,
-  alt = "image",
-  width,
-  height,
-  rounded,
-  className,
-}: ImageProps) => {
-  return (
-    <Image
-      src={src}
-      alt={alt}
-      className={twMerge(imageVariants({ width, height, rounded }), className)}
-    />
-  );
-};
+const BaseImage = twc.img<ImageProps>`
+  ${({ width, height, rounded, className }) =>
+    twMerge(imageVariants({ width, height, rounded }), className)}
+`;
 
 export default BaseImage;

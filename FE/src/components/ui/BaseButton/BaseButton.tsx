@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { ReactNode, ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
+import twc from "tailwind-styled-components";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center transition-colors disabled:cursor-not-allowed p-6",
@@ -67,41 +68,21 @@ interface ButtonProps
   children: ReactNode;
 }
 
-const BaseButton = ({
-  type = "button",
-  children,
-  className,
-  color,
-  fontColor,
-  fontSize,
-  fontWeight,
-  width,
-  height,
-  border,
-  borderRadius,
-  ...props
-}: ButtonProps) => {
-  return (
-    <button
-      type={type}
-      className={twMerge(
-        buttonVariants({
-          color,
-          fontColor,
-          fontSize,
-          fontWeight,
-          width,
-          height,
-          border,
-          borderRadius,
-        }),
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-};
+const Button = twc.button<ButtonProps>`
+  ${({ color, fontColor, fontSize, fontWeight, width, height, border, borderRadius, className }) =>
+    twMerge(
+      buttonVariants({
+        color,
+        fontColor,
+        fontSize,
+        fontWeight,
+        width,
+        height,
+        border,
+        borderRadius,
+      }),
+      className
+    )}
+`;
 
-export default BaseButton;
+export default Button;
