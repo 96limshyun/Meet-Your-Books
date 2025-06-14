@@ -1,5 +1,5 @@
-import { Button } from "@components/ui";
-import { Text } from "@components/ui";
+import { BaseButton } from "@components/ui";
+import { BaseText } from "@components/ui";
 import { useRef, useState } from "react";
 import { IoChatbubbleSharp } from "react-icons/io5";
 import styled from "styled-components";
@@ -26,7 +26,7 @@ const AIChatPopup = () => {
             setHistory={setHistory}
           />
         )}
-        <Button
+        <BaseButton
           color="midnightBlue"
           fontColor="white"
           height="sm"
@@ -36,8 +36,8 @@ const AIChatPopup = () => {
           className="flex items-center justify-center gap-1"
         >
           <IoChatbubbleSharp />
-          <Text color="white">AI로 도서 추천받기</Text>
-        </Button>
+          <BaseText color="white">AI로 도서 추천받기</BaseText>
+        </BaseButton>
       </ChatPopupContainer>
     );
 };

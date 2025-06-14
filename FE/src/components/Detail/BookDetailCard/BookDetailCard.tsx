@@ -7,12 +7,12 @@ import {
 } from "@ant-design/icons";
 import { ShopOutlined } from "@ant-design/icons";
 import { Spacing } from "@components/Common";
-import { Text } from "@components/ui";
-import { Heading } from "@components/ui";
+import { BaseText } from "@components/ui";
+import { BaseHeading } from "@components/ui";
+import { BaseButton } from "@components/ui";
 import styled from "styled-components";
 import twc from "tailwind-styled-components";
 
-import { Button } from "@/components/ui";
 import { ERROR_IMG } from "@/constants";
 import useOpen from "@/hooks/Common/useOpen";
 import { BookDetailType } from "@/types/bookDetailType";
@@ -42,9 +42,9 @@ const BookDetailCard = ({ bookData }: BookDetailCardProps) => {
     <>
       <Card>
         <CardHeader>
-          <Heading fontSize="xl" fontWeight="bold">
+          <BaseHeading fontSize="xl" fontWeight="bold">
             {bookname}
-          </Heading>
+          </BaseHeading>
         </CardHeader>
         <CardContent>
           <BookImageWrapper>
@@ -89,8 +89,8 @@ const BookDetailCard = ({ bookData }: BookDetailCardProps) => {
             <Separator />
             <div>
               <DescriptionHeader>
-                <Heading fontSize="xl">책 소개</Heading>
-                <Button
+                <BaseHeading fontSize="xl">책 소개</BaseHeading>
+                <BaseButton
                   color="primary"
                   fontColor="white"
                   fontSize="sm"
@@ -101,7 +101,7 @@ const BookDetailCard = ({ bookData }: BookDetailCardProps) => {
                 >
                   <ShopOutlined />
                   소장 도서관
-                </Button>
+                </BaseButton>
               </DescriptionHeader>
               <Spacing height="md" />
               <Description>{description}</Description>
@@ -157,7 +157,7 @@ const StyledImage = styled.img`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
-const Badge = twc(Text)`
+const Badge = twc(BaseText)`
    w-2/3 flex items-center justify-center bg-gray-200 rounded px-3 py-2 text-sm mt-2 mx-auto
 `;
 

@@ -1,4 +1,4 @@
-import { Text } from "@components/ui";
+import { BaseText } from "@components/ui";
 import { useRef } from "react";
 import styled, { keyframes } from "styled-components";
 
@@ -24,7 +24,7 @@ const RegionSelectBox = ({
         <>
             <LabelStyled>{regionBoxName}</LabelStyled>
             <DropdownContainer onClick={toggleOpen} ref={inSideRef}>
-                <Text fontSize="sm">{curSelected}</Text>
+                <BaseText fontSize="sm">{curSelected}</BaseText>
                 {isOpen && (
                     <DropdownList>
                         {regions.map((item) => (

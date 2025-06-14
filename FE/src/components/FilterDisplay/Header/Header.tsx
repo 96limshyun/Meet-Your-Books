@@ -1,4 +1,4 @@
-import { Heading } from "@components/ui";
+import { BaseHeading } from "@components/ui";
 import { ReactNode } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import styled from "styled-components";
@@ -13,7 +13,7 @@ interface HeaderProps {
 const Header = ({ filterName, isOpen, children, onClick }: HeaderProps) => {
     return (
         <FilterHeader onClick={onClick}>
-            <Heading fontWeight="bold" fontSize="lg">{filterName}</Heading>
+            <BaseHeading fontWeight="bold" fontSize="lg">{filterName}</BaseHeading>
             {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
             {children}
         </FilterHeader>

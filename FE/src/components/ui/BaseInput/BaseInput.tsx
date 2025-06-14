@@ -42,7 +42,7 @@ interface InputProps
   borderRadius?: string;
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+const BaseInput = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       fontSize,
@@ -91,5 +91,5 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = "Input";
-export default Input;
+BaseInput.displayName = "BaseInput";
+export default BaseInput;

@@ -1,5 +1,5 @@
 import { Spacing } from "@components/Common";
-import { Heading } from "@components/ui";
+import { BaseHeading } from "@components/ui";
 import { useEffect } from "react";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
@@ -40,15 +40,15 @@ const Login = () => {
             <AuthContainer>
                 <AuthCard>
                     <Header>
-                        <Heading fontWeight="bold">Meet Your Books</Heading>
+                        <BaseHeading fontWeight="bold">Meet Your Books</BaseHeading>
                     </Header>
                     <Header>
                         <AuthTitle>Login</AuthTitle>
                     </Header>
-                    <Button onClick={handleLogin}>
+                    <BaseButton onClick={handleLogin}>
                         <KakaoIcon />
                         카카오 로그인
-                    </Button>
+                    </BaseButton>
                 </AuthCard>
             </AuthContainer>
         </>

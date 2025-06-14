@@ -1,5 +1,5 @@
-export { default as Text } from "./Text/Text";
-export { default as Heading } from "./Heading/Heading";
-export { default as Input } from "./Input/Input";
-export { default as Image } from "./Image/Image";
-export { default as Button } from "./Button/Button";
+export { default as BaseText } from "./BaseText/BaseText";
+export { default as BaseHeading } from "./BaseHeading/BaseHeading";
+export { default as BaseInput } from "./BaseInput/BaseInput";
+export { default as BaseImage } from "./BaseImage/BaseImage";
+export { default as BaseButton } from "./BaseButton/BaseButton";

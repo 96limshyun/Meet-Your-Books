@@ -7,7 +7,7 @@ import {
     LineRechart,
 } from "@components/Detail";
 import BarRechart from "@components/Detail/BarRechart/BarRechart";
-import { Heading } from "@components/ui";
+import { BaseHeading } from "@components/ui";
 import styled from "styled-components";
 
 import useBookDetailLogic from "@/hooks/BookDetail/useBookDetailLogic";
@@ -43,7 +43,6 @@ const BookDetail = () => {
                     XDataKey="month"
                 />
             )}
-
             {loanGrps.length !== 0 && (
                 <BarRechart
                     chartName="연령대별 대출 추이"
@@ -51,10 +50,9 @@ const BookDetail = () => {
                     XDataKey="age"
                 />
             )}
-
             <CommentContainer>
                 <HeadingWrap>
-                    <Heading fontWeight="bold">리뷰</Heading>
+                    <BaseHeading fontWeight="bold">리뷰</BaseHeading>
                 </HeadingWrap>
                 <Spacing height="sm" />
                 {comments?.length === 0 ? (

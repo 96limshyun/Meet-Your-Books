@@ -1,10 +1,10 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ModalComponent from "@components/Common/Modal/Modal";
-import { Text } from "@components/ui";
+import { BaseText } from "@components/ui";
+import { BaseHeading } from "@components/ui";
 import { useState } from "react";
 import styled from "styled-components";
 
-import { Heading } from "@/components/ui";
 import { formatRelativeTime } from "@/utils";
 
 import CommentCreateTextarea from "../CommentCreateTextarea/CommentCreateTextarea";
@@ -36,10 +36,10 @@ const CommentBox = ({
         <CommentArea key={_id}>
             <CommentHeader>
                 <CommentInfoWrap>
-                    <Heading fontWeight="bold" fontSize="md">
+                    <BaseHeading fontWeight="bold" fontSize="md">
                         {username}
-                    </Heading>
-                    <Text>{formatRelativeTime(timestamp)}</Text>
+                    </BaseHeading>
+                    <BaseText>{formatRelativeTime(timestamp)}</BaseText>
                 </CommentInfoWrap>
                 <ActionWrap>
                 {isEdit ? (

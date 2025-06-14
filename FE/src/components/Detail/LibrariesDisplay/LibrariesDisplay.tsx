@@ -1,7 +1,7 @@
 import { EnvironmentOutlined, PhoneOutlined } from "@ant-design/icons";
 import KakaoMap from "@components/Common/KakaoMap/KakaoMap";
 import LoadingSpin from "@components/Common/Spin/Spin";
-import { Heading } from "@components/ui";
+import { BaseHeading } from "@components/ui";
 import styled, { css } from "styled-components";
 
 import { useLibrariesDisplayLogic } from "@/hooks/BookDetail/useLibrariesDisplayLogic";
@@ -50,9 +50,9 @@ const LibrariesDisplay = ({
                         >
                             <LibraryContent>
                                 <LibraryDetails>
-                                    <Heading fontSize="md" fontWeight="bold">
+                                    <BaseHeading fontSize="md" fontWeight="bold">
                                         {item.lib.libName}
-                                    </Heading>
+                                    </BaseHeading>
                                     <LibraryInfo>
                                         <InfoRow>
                                             <EnvironmentOutlined />

@@ -1,5 +1,6 @@
 import { OpenAIOutlined, UserOutlined, SendOutlined } from "@ant-design/icons";
-import { Text } from "@components/ui";
+import { BaseText } from "@components/ui";
+import { BaseButton } from "@components/ui";
 import { Spin } from "antd";
 import React, {
   Dispatch,
@@ -14,7 +15,6 @@ import remarkGfm from "remark-gfm";
 import styled, { keyframes } from "styled-components";
 import twc from "tailwind-styled-components";
 
-import { Button } from "@/components/ui";
 import useAIRequestMutation from "@/hooks/Queries/openAI/useAIRequestMutation";
 import { ChatHistory, Role } from "@/types/openAIType";
 interface AIChatBoxProps {
@@ -53,9 +53,9 @@ const AIChatBox = ({ chatHistory, setHistory, ChatClose }: AIChatBoxProps) => {
   return (
     <ChatBox>
       <ChatHeader>
-        <Text color="white" fontWeight="bold">
+        <BaseText color="white" fontWeight="bold">
           AI 도서 추천받기
-        </Text>
+        </BaseText>
         <CloseButton onClick={ChatClose}>✕</CloseButton>
       </ChatHeader>
       <ChatContent ref={chatContentRef}>
@@ -73,9 +73,9 @@ const AIChatBox = ({ chatHistory, setHistory, ChatClose }: AIChatBoxProps) => {
               </>
             ) : (
               <>
-                <Text className="bg-[#19275f] text-white px-3 py-2 text-sm rounded-2xl max-w-[75%] break-words">
+                <BaseText className="bg-[#19275f] text-white px-3 py-2 text-sm rounded-2xl max-w-[75%] break-words">
                   {message.content}
-                </Text>
+                </BaseText>
                 <UserOutlined />
               </>
             )}
@@ -181,7 +181,7 @@ const ChatInput = styled.input`
   outline: none;
 `;
 
-const SendButton = twc(Button)<{ disabled?: boolean }>`
+const SendButton = twc(BaseButton)<{ disabled?: boolean }>`
   ml-2 px-4 py-2 rounded-lg
   ${({ disabled }) =>
     disabled

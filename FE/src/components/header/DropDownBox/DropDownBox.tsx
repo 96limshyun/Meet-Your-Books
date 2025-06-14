@@ -1,4 +1,4 @@
-import { Text } from "@components/ui";
+import { BaseText } from "@components/ui";
 import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 
@@ -22,9 +22,9 @@ const DropDownBox = () => {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <Text fontWeight="bold" className="mx-auto">
+      <BaseText fontWeight="bold" className="mx-auto">
         {curSelect.label}
-      </Text>
+      </BaseText>
       {isHover && (
         <DropdownList>
           {DROP_DOWN_ITEMS.map((item) => (

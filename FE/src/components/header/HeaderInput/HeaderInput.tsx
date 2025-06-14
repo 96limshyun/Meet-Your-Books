@@ -1,7 +1,7 @@
 import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
 import { Spacing } from "@components/Common";
 import FilterDisplay from "@components/FilterDisplay/FilterDisplay";
-import { Button } from "@components/ui";
+import { BaseButton } from "@components/ui";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
@@ -49,7 +49,7 @@ const HeaderInput = () => {
                             />
                         </Wrap>
                         <Spacing height="sm" />
-                        <Button
+                        <BaseButton
                             width="full"
                             color="primary"
                             fontColor="white"
@@ -58,7 +58,7 @@ const HeaderInput = () => {
                             onClick={handleSubmit}
                         >
                             검색하기
-                        </Button>
+                        </BaseButton>
                     </InputWrap>
                     <FilterWrap>
                         <Spacing height="md" />

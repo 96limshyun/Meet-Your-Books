@@ -3,7 +3,7 @@ import { ReactNode, HTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 import twc from "tailwind-styled-components";
 
-const textVariants = cva("text-black", {
+const headingVariants = cva("text-black", {
   variants: {
     fontSize: {
       xs: "text-xs",
@@ -39,25 +39,22 @@ const textVariants = cva("text-black", {
     },
   },
   defaultVariants: {
-    fontSize: "md",
+    fontSize: "2xl",
     fontWeight: "normal",
     lineHeight: "normal",
     color: "black",
   },
 });
 
-interface TextProps
-  extends VariantProps<typeof textVariants>,
-    Omit<HTMLAttributes<HTMLParagraphElement>, "color"> {
+interface HeadingProps
+  extends VariantProps<typeof headingVariants>,
+    Omit<HTMLAttributes<HTMLHeadingElement>, "color"> {
   children?: ReactNode;
 }
 
-const text = (variants: VariantProps<typeof textVariants>) =>
-  twMerge(textVariants(variants));
+const Heading = twc.h1``;
 
-const BaseText = twc.p``;
-
-const Text = ({
+const BaseHeading = ({
   fontSize,
   fontWeight,
   lineHeight,
@@ -65,18 +62,18 @@ const Text = ({
   className,
   children,
   ...props
-}: TextProps) => {
+}: HeadingProps) => {
   return (
-    <BaseText
+    <Heading
       {...props}
       className={twMerge(
-        text({ fontSize, fontWeight, lineHeight, color }),
+        headingVariants({ fontSize, fontWeight, lineHeight, color }),
         className
       )}
     >
       {children}
-    </BaseText>
+    </Heading>
   );
 };
 
-export default Text;
+export default BaseHeading;
