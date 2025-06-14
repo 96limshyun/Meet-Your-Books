@@ -52,28 +52,11 @@ interface HeadingProps
   children?: ReactNode;
 }
 
-const Heading = twc.h1``;
-
-const BaseHeading = ({
-  fontSize,
-  fontWeight,
-  lineHeight,
-  color,
-  className,
-  children,
-  ...props
-}: HeadingProps) => {
-  return (
-    <Heading
-      {...props}
-      className={twMerge(
+const BaseHeading = twc.h1<HeadingProps>`
+  ${({ fontSize, fontWeight, lineHeight, color, className }) => twMerge(
         headingVariants({ fontSize, fontWeight, lineHeight, color }),
         className
       )}
-    >
-      {children}
-    </Heading>
-  );
-};
+`;
 
 export default BaseHeading;

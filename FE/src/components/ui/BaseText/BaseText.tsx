@@ -52,31 +52,9 @@ interface TextProps
   children?: ReactNode;
 }
 
-const text = (variants: VariantProps<typeof textVariants>) =>
-  twMerge(textVariants(variants));
-
-const Text = twc.p``;
-
-const BaseText = ({
-  fontSize,
-  fontWeight,
-  lineHeight,
-  color,
-  className,
-  children,
-  ...props
-}: TextProps) => {
-  return (
-    <Text
-      {...props}
-      className={twMerge(
-        text({ fontSize, fontWeight, lineHeight, color }),
-        className
-      )}
-    >
-      {children}
-    </Text>
-  );
-};
+const BaseText = twc.p<TextProps>`
+  ${({ fontSize, fontWeight, lineHeight, color, className }) =>
+    twMerge(textVariants({ fontSize, fontWeight, lineHeight, color }), className)}
+`;
 
 export default BaseText;
